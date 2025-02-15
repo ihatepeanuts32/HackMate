@@ -7,12 +7,12 @@ Team #4
 <br><h4>Team names:</h4>
 
 - 
-- Saivishaal Sureshkannan
+- 
 - Naomi Ntuli
 - Hrishikesh Srirangam
 - Earl Velasquez 
 - Dhakshin Parimalakumar
--
+- Ifrah Zainab
 -
 
 <h4>Statement of Work: </h4>
