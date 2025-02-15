@@ -8,7 +8,7 @@ Team #4
 
 - 
 - 
-- 
+- Naomi Ntuli
 - 
 - Earl Velasquez 
 - 
