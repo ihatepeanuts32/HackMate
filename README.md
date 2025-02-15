@@ -7,7 +7,7 @@ Team #4
 <br><h4>Team names:</h4>
 
 - 
-- Vaishali Sathiyachalam
+- 
 - Naomi Ntuli
 - Hrishikesh Srirangam
 - Earl Velasquez 
