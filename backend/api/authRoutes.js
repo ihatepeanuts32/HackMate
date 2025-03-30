@@ -5,6 +5,7 @@ import bcrypt from "bcrypt"
 
 const router = express.Router();
 
+//Naomi - the following POST request allows users to register their account
 router.post('/register', async (req, res) => {
 
     try {

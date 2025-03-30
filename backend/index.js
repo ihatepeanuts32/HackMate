@@ -3,19 +3,27 @@ import connectDB from "./db.js"
 import dotenv from "dotenv"
 import cors from "cors"
 import authRoutes from "./api/authRoutes.js"
+import messagesRoutes from "./api/messagesRoutes.js"
+import { Server } from "socket.io"
+import connectSoket from "./socket.js"
+import { createServer } from 'http'
 
 dotenv.config();
 connectDB();
 
 const app = express();
+const server = createServer(app);
+
 app.use(express.json());
 app.use(cors({
-    origin: '*',//or http://localhost:5173
+    origin: '*',
     credentials: true
-}));
+}))
+
+connectSoket(server);
 
 app.use("/api/auth", authRoutes);
+app.use("/api/messages", messagesRoutes);
 
-app.listen(process.env.PORT || 5173, () => 
-    console.log(`Server running on port ${process.env.PORT || 5173}`)
-  );
+const PORT = process.env.PORT || 5173;
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`))

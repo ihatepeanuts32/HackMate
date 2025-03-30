@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+//Naomi - this following is the schema for obtaining user info during their registration
 const UserSchema = new mongoose.Schema({
     firstName: {
         type: String,
