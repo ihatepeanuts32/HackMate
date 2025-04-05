@@ -1,0 +1,30 @@
+.navbar {
+    background-color: #1C0049; 
+    padding: 2px;
+    position: fixed;
+    top: 0px;
+    width: 100%;  /* Ensure the navbar takes up the full width */
+    left: 0;
+  }
+  
+  .navbar ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .navbar li {
+    padding: 5px 10px;
+  }
+  
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .navbar a:hover {
+    color: purple;
+  }
+  

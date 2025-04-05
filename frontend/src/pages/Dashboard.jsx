@@ -7,9 +7,6 @@ const Dashboard = () => {
                 <img src={hackmateLogo} className="logo" alt="hackmate logo" />
             </div>
             <h1>HackMate</h1>
-            { <p className="subtitle">
-                Find Your Perfect Hackathon Team
-            </p> }
         </div>
     )
 }
