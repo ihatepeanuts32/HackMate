@@ -2,9 +2,9 @@
 const Register = () => {
     return (
         <div>
-            <h2>Register with HackMate</h2>
+            <h3>Register with HackMate</h3>
         <form>
-        <div className="first-row">
+        <div className="split-row">
         <div>
           <input type="text" name="firstName" placeholder = "First Name"/>
         </div>

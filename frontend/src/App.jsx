@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/LogIn';
 import Register from './pages/Register';
+import EditProfile from './pages/EditProfile';
 
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/register" element={<Register/>}/>
+          <Route path="/editProfile" element={<EditProfile/>}/>
         </Routes>
     </Router>
   )
