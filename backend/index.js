@@ -4,6 +4,7 @@ import dotenv from "dotenv"
 import cors from "cors"
 import authRoutes from "./api/authRoutes.js"
 import messagesRoutes from "./api/messagesRoutes.js"
+import groupRoutes from "./api/groupRoutes.js"
 import { Server } from "socket.io"
 import connectSoket from "./socket.js"
 import { createServer } from 'http'
@@ -24,6 +25,7 @@ connectSoket(server);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messagesRoutes);
+app.use("/api/groups", groupRoutes); 
 
 const PORT = process.env.PORT || 5173;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
