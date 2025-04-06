@@ -136,8 +136,73 @@ router.post('/:id/join', async (req, res) => {
 
 /**
  * Rajit - Description: Search for groups
+ * Dhakshin - Added Filter implementations to Search
  * Access: Public
  */
+router.get('/search', async (req, res) => {
+    try {
+        const {
+            query,       // Search by group name
+            skills,      // Comma-separated list of required skills
+            groupType,   // e.g., "public", "private"
+            visibility,  // e.g., "visible", "hidden"
+            minMembers,  // Minimum number of members
+            maxMembers,  // Maximum number of members
+            owner        // Filter by owner ID
+        } = req.query;
+
+        // Step 1: Build MongoDB query filter
+        const filter = {};
+
+        if (query) {
+            filter.name = { $regex: query, $options: 'i' }; // case-insensitive search
+        }
+
+        if (skills) {
+            const skillArray = skills.split(',').map(s => s.trim());
+            filter.skills = { $all: skillArray }; // group must have *all* these skills
+        }
+
+        if (groupType) {
+            filter.groupType = groupType;
+        }
+
+        if (visibility) {
+            filter.visibility = visibility;
+        }
+
+        if (owner) {
+            filter.owner = owner;
+        }
+
+        // Populate member count filters
+        if (minMembers || maxMembers) {
+            filter.$expr = {
+                $and: []
+            };
+
+            if (minMembers) {
+                filter.$expr.$and.push({ $gte: [{ $size: "$members" }, parseInt(minMembers)] });
+            }
+
+            if (maxMembers) {
+                filter.$expr.$and.push({ $lte: [{ $size: "$members" }, parseInt(maxMembers)] });
+            }
+        }
+
+        // Step 2: Query groups with the built filter
+        const groups = await Group.find(filter)
+            .populate('owner', 'name email') // populate owner details
+            .populate('members', 'name email'); // populate member details
+
+        // Step 3: Return results
+        res.status(200).json(groups);
+    } catch (error) {
+        res.status(500).json({ message: "Error searching groups", error: error.message });
+    }
+});
+
+/** Archive for Grouping
 router.get('/search', async (req, res) => {
     try {
         // Step 1: Extract query, skills, and groupType from request query params
@@ -148,6 +213,7 @@ router.get('/search', async (req, res) => {
         res.status(500).json({ message: "Error searching groups", error: error.message });
     }
 });
+*/
 
 /**
  * Rajit - Description: Get group details
