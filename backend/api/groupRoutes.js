@@ -13,7 +13,9 @@ const router = express.Router();
 
 const verifyToken = (req) => {
     try {
-
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) return null;
+        return jwt.verify(token, process.env.JWT_SECRET);
     } catch(error){
         return null; 
     }
@@ -115,6 +117,85 @@ router.delete('/:id', async (req, res) => {
         // Handle any errors that occur during deletion 
     }
 }); 
+
+/**
+ * Rajit - Description: Allows a user to join a hackathon group
+ * Access: Private (requires authentication)
+ */
+router.post('/:id/join', async (req, res) => {
+    try {
+        // Step 1: Verify the user's token
+        // Step 2: Find the group by ID
+        // Step 3: Check if user is already a member
+        // Step 4: Add user to group members
+        // Step 5: Save group and return success response
+    } catch (error) {
+        res.status(500).json({ message: "Error joining group", error: error.message });
+    }
+});
+
+/**
+ * Rajit - Description: Search for groups
+ * Access: Public
+ */
+router.get('/search', async (req, res) => {
+    try {
+        // Step 1: Extract query, skills, and groupType from request query params
+        // Step 2: Build MongoDB search filter
+        // Step 3: Query groups with filters, populate relevant fields
+        // Step 4: Return results or handle error
+    } catch (error) {
+        res.status(500).json({ message: "Error searching groups", error: error.message });
+    }
+});
+
+/**
+ * Rajit - Description: Get group details
+ * Access: Public
+ */
+router.get('/:id', async (req, res) => {
+    try {
+        // Step 1: Find group by ID and populate owner and members
+        // Step 2: Return group details or error if not found
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching group details", error: error.message });
+    }
+});
+
+/**
+ * Rajit - Description: Request to join a group
+ * Access: Private (requires authentication)
+ */
+router.post('/:id/request-join', async (req, res) => {
+    try {
+        // Step 1: Verify the user's token
+        // Step 2: Find the group by ID
+        // Step 3: Check if user is already a member or has a pending request
+        // Step 4: If group is open, add user directly (if capacity allows)
+        // Step 5: If invite-only, add a join request
+        // Step 6: Save group and return response
+    } catch (error) {
+        res.status(500).json({ message: "Error processing join request", error: error.message });
+    }
+});
+
+/**
+ * Rajit - Description: Handle join request (approve/reject)
+ * Access: Private (requires group owner authentication)
+ */
+router.post('/:id/join-requests/:requestId', async (req, res) => {
+    try {
+        // Step 1: Verify the user's token
+        // Step 2: Extract action from request body
+        // Step 3: Validate group and request existence
+        // Step 4: Check group owner authorization
+        // Step 5: Handle approval (check capacity, add member) or rejection
+        // Step 6: Update request status and save group
+        // Step 7: Return success response
+    } catch (error) {
+        res.status(500).json({ message: "Error handling join request", error: error.message });
+    }
+});
 
 // Export the router for use in other files
 export default router; 

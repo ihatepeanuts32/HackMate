@@ -33,6 +33,34 @@ const GroupSchema = new mongoose.Schema({
         type: Boolean,
         default: true
     },
+    // Group type - 'open' or 'invite-only'
+    groupType: {
+        type: String,
+        enum: ['open', 'invite-only'],
+        default: 'open'
+    },
+    // Maximum number of members allowed
+    maxCapacity: {
+        type: Number,
+        default: 4
+    },
+    // Join requests for invite-only groups
+    joinRequests: [{
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+        status: {
+            type: String,
+            enum: ['pending', 'approved', 'rejected'],
+            default: 'pending'
+        },
+        message: String,
+        requestedAt: {
+            type: Date,
+            default: Date.now
+        }
+    }],
     // Creation timestamp - automatically set when document is created
     createdAt: {
         type: Date,

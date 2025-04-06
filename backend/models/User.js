@@ -23,6 +23,41 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    // Profile information
+    bio: {
+        type: String,
+        default: ''
+    },
+    skills: [{
+        type: String
+    }],
+    github: {
+        type: String,
+        default: ''
+    },
+    linkedin: {
+        type: String,
+        default: ''
+    },
+    portfolio: {
+        type: String,
+        default: ''
+    },
+    // Profile visibility settings
+    isPublic: {
+        type: Boolean,
+        default: true
+    },
+    // Groups the user is a member of
+    groups: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Group'
+    }],
+    // Profile picture URL
+    profilePicture: {
+        type: String,
+        default: ''
     }
 }, { timestamps: true })
 
