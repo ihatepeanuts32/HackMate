@@ -26,6 +26,7 @@ connectSoket(server);
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messagesRoutes);
 app.use("/api/groups", groupRoutes); 
+app.use("/api/hackathons", hackathonRoutes); 
 
 const PORT = process.env.PORT || 5173;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
