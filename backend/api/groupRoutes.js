@@ -179,10 +179,31 @@ router.delete('/:id', async (req, res) => {
 router.post('/:id/join', async (req, res) => {
     try {
         // Step 1: Verify the user's token
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
+
         // Step 2: Find the group by ID
+        const group = await Group.findById(req.params.id);
+        if (!group) {
+            return res.status(404).json({ message: "Group not found" });
+        }
+
         // Step 3: Check if user is already a member
-        // Step 4: Add user to group members
-        // Step 5: Save group and return success response
+        if (group.members.includes(decoded.userId)) {
+            return res.status(400).json({ message: "You are already a member of this group" });
+        }
+
+        // Step 4: Add user to members array
+        group.members.push(decoded.userId);
+        await group.save();
+
+        // Step 5: Return success response
+        res.status(200).json({ 
+            message: "Successfully joined the group",
+            group: group
+        });
     } catch (error) {
         res.status(500).json({ message: "Error joining group", error: error.message });
     }
@@ -276,7 +297,16 @@ router.get('/search', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         // Step 1: Find group by ID and populate owner and members
+        const group = await Group.findById(req.params.id)
+            .populate('owner', 'firstName lastName username')
+            .populate('members', 'firstName lastName username');
+
         // Step 2: Return group details or error if not found
+        if (!group) {
+            return res.status(404).json({ message: "Group not found" });
+        }
+        
+        res.status(200).json(group);
     } catch (error) {
         res.status(500).json({ message: "Error fetching group details", error: error.message });
     }
@@ -289,11 +319,50 @@ router.get('/:id', async (req, res) => {
 router.post('/:id/request-join', async (req, res) => {
     try {
         // Step 1: Verify the user's token
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
         // Step 2: Find the group by ID
+        const group = await Group.findById(req.params.id);
+        if (!group) {
+            return res.status(404).json({ message: "Group not found" });
+        }
         // Step 3: Check if user is already a member or has a pending request
+        if (group.members.includes(decoded.userId)) {
+            return res.status(400).json({ message: "You are already a member of this group" });
+        }
+        const existingRequest = group.joinRequests.find(
+            request => request.user.toString() === decoded.userId && request.status === 'pending'
+        );
+        if (existingRequest) {
+            return res.status(400).json({ message: "You already have a pending request to join this group" });
+        }
         // Step 4: If group is open, add user directly (if capacity allows)
+        if (group.groupType === 'open') {
+            if (group.members.length >= group.maxCapacity) {
+                return res.status(400).json({ message: "Group is at maximum capacity" });
+            }
+            
+            group.members.push(decoded.userId);
+            await group.save();
+            // Step 6: Save group and return response
+            return res.status(200).json({ 
+                message: "Successfully joined the group",
+                group: group
+            });
+        }
         // Step 5: If invite-only, add a join request
+        group.joinRequests.push({
+            user: decoded.userId,
+            message: req.body.message || ''
+        });
+        await group.save();
         // Step 6: Save group and return response
+        res.status(200).json({ 
+            message: "Join request submitted successfully",
+            group: group
+        });
     } catch (error) {
         res.status(500).json({ message: "Error processing join request", error: error.message });
     }
@@ -306,12 +375,49 @@ router.post('/:id/request-join', async (req, res) => {
 router.post('/:id/join-requests/:requestId', async (req, res) => {
     try {
         // Step 1: Verify the user's token
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
         // Step 2: Extract action from request body
+        const { action } = req.body;
+        if (!['approve', 'reject'].includes(action)) {
+            return res.status(400).json({ message: "Invalid action" });
+        }
         // Step 3: Validate group and request existence
+        const group = await Group.findById(req.params.id);
+        if (!group) {
+            return res.status(404).json({ message: "Group not found" });
+        }
         // Step 4: Check group owner authorization
+        if (group.owner.toString() !== decoded.userId) {
+            return res.status(403).json({ message: "Only the group owner can handle join requests" });
+        }
         // Step 5: Handle approval (check capacity, add member) or rejection
+        const request = group.joinRequests.id(req.params.requestId);
+        if (!request) {
+            return res.status(404).json({ message: "Join request not found" });
+        }
         // Step 6: Update request status and save group
+        if (request.status !== 'pending') {
+            return res.status(400).json({ message: "This request has already been handled" });
+        }
+
+        if (action === 'approve') {
+            if (group.members.length >= group.maxCapacity) {
+                return res.status(400).json({ message: "Group is at maximum capacity" });
+            }
+            
+            group.members.push(request.user);
+        }
+
+        request.status = action === 'approve' ? 'approved' : 'rejected';
+        await group.save();
         // Step 7: Return success response
+        res.status(200).json({ 
+            message: `Join request ${action}d successfully`,
+            group: group
+        });
     } catch (error) {
         res.status(500).json({ message: "Error handling join request", error: error.message });
     }
