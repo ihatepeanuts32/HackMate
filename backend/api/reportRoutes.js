@@ -10,44 +10,71 @@ import jwt from "jsonwebtoken";
  * Access: Private (requires authentication of user before initiating)
  * 
  */
-router.post("/:userID/report", async(req,res) =>
+router.post("/:username/report", async(req,res) =>
 {
     try{
-        //Step 1: Verify user token : UserID 
-        //Step 2: Present choice for bug or report
+        verifyToken(token); //send token for verification, errors if failed to verify
+        //Step 2: Present choice for bug or report - Requires Integration with Front End
+        const { option } = req.body;
+        const newReport = new Report();
         //Step 3: Run the respective async function below
+        if(option == "Bug")
+        {
+            newReport = await reportBug();
+        }
+        else
+        {
+            newReport = await reportUser();
+        }
+
         //Step 4: Update database with returned report instance
+        await newReport.save();
     }
     catch(error)
     {
-        //Catch any errors that may come up
+        return res.status(500).json({ message: "error.message" });
     }
 });
 
 const reportBug = async(req,res) =>
 {
     try{
-        // Create an instance of a report model
-        // Present and select options for bug report
-        // Prompt user to enter description of bug if desired
-        // Return report instance
+        //awaits user response then returns it
+        const { ReportOption, ReportUsername, ReporterMessage } = req.body;
+
+        const newReport = new User({
+            ReportType : "Bug",
+            ReportOption,
+            TargetUser : null, 
+            ReportUsername,
+            ReporterMessage
+        });
+
+        return newReport;
     }
     catch(error)
     {
-        //Catch any errors that may come up
+        return res.status(500).json({ message: "error.message" });
     }
 }
 const reportUser = async(req,res) =>
 {
     try{
-        // Create an instance of a report model
-        // Present and select options for player report
-        // Prompt user to enter the ID of the user. Not allowed to progress until ID is entered
-        // Prompt user to enter description of player report if desired
-        // Return report instance
+        //awaits user response then returns it
+        const { ReportOption, TargetUser, ReportUsername, ReporterMessage } = req.body;
+
+        const newReport = new User({
+            ReportType : "User",
+            ReportOption,
+            TargetUser, 
+            ReportUsername,
+            ReporterMessage
+        });
+
+        return newReport;
     }
     catch(error)
     {
-        //Catch any errors that may come up
+        return res.status(500).json({ message: "error.message" });
     }
 }

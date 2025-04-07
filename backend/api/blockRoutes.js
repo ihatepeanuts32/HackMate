@@ -13,13 +13,22 @@ import jwt from "jsonwebtoken";
 router.put("/:userID/unblock/:id", async(req,res) =>
 {
     try{
-    //Step 1: Verify user token : UserID 
-    //Step 2: Validate target user ID (from the URL) in the database : id
-    //Step 3: Update database to remove target user from blocked list
+        if(userID = verifyToken(token)) //send token for verification, errors if failed to verify
+        {
+            const existingUser = await User.findOne({ id });
+
+            if (!existingUser) {
+                return res.status(400).json({ message: "User doesnt exist"});
+            }
+            if(!isBlocked(userID, id))
+                insertUser(userID, id);
+        }
+        else    
+            return res.status(500).json({ message: "userID didnt match token" });
     }
     catch(error)
     {
-        //Catch any errors that may come up
+        return res.status(500).json({ message: error.message });
     }
 });
 
@@ -32,14 +41,23 @@ router.put("/:userID/unblock/:id", async(req,res) =>
 
 router.put("/:userID/block/:id", async(req, res) => {
     try{
-        //Step 1: Verify user token : UserID 
-        //Step 2: Validate target user ID (from the URL) in the database : id
-        //Step 3a: Check if user has existing blocked table, if not, create one
-        //Step 3b: Update database to add target user into blocked list
+        if(userID = verifyToken(token)) //send token for verification, errors if failed to verify
+        {
+            const existingUser = await User.findOne({ id });
+
+            if (!existingUser) {
+                return res.status(400).json({ message: "User doesnt exist"});
+            }
+            if(isBlocked(userID, id))
+                unblockUser(userID, id);
+        }
+        else    
+            return res.status(500).json({ message: "userID didnt match token" });
+
     }
     catch(error)
     {
-        //Catch any errors that may come up
+        return res.status(500).json({ message: "error.message" });
     }
 }); 
 
@@ -50,18 +68,40 @@ router.put("/:userID/block/:id", async(req, res) => {
  * 
  */
 
-const getBlockStatus = async(req,res) =>
-{
+async function isBlocked(currentUserId, blockedUserId) {
     try{
-        //Step 1: Verify user token : UserID 
-        //Step 2: Validate target user ID (from the URL) in the database : id
-        //Step 3a: Check if user has existing blocked table, if not, return false
-        //Step 3b: If so, check if target user ID is in the list
-            //return true if true, return false if false
+        const user = await User.findById(currentUserId);
+        if (user.blocked.includes(blockedUserId)) {
+            return true; // The user is already blocked
+        }
+        return false; // The user is not blocked
     }
     catch(error)
     {
-        //Catch any errors that may come up
-        //return false; 
+        return res.status(500).json({ message: "error.message" });
+    }
+}
+
+async function insertUser(currentUserId, blockedUserId) {
+    try {
+        const result = await User.findByIdAndUpdate(currentUserId, {
+            $addToSet: { blocked: blockedUserId }
+        });
+        return result;
+    } catch (error) {
+        console.error('Error unblocking user:', error);
+        throw error; 
+    }
+}
+
+async function unblockUser(currentUserId, blockedUserId) {
+    try {
+        const result = await User.findByIdAndUpdate(currentUserId, {
+            $pull: { blocked: blockedUserId }
+        });
+        return result;
+    } catch (error) {
+        console.error('Error unblocking user:', error);
+        throw error; 
     }
 }
