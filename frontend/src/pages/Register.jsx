@@ -1,9 +1,11 @@
-
+// Ifrah
+// Description: Page allowing users to register with a Hackmate account
 const Register = () => {
     return (
         <div>
             <h3>Register with HackMate</h3>
         <form>
+            {/* form to input new user credentials and info */}
         <div className="split-row">
         <div>
           <input type="text" name="firstName" placeholder = "First Name"/>
