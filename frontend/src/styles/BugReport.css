@@ -1,0 +1,39 @@
+header {
+    background-color: #2D0075;
+    color: white;
+}
+
+.prompts {
+    background-color: #2D0075;
+    color: rgb(255, 255, 255);
+}
+
+.inputs {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 0.5rem;
+    font-size: 16px;
+}
+
+.multilineInputs {
+    background-color: #f0f0f0;
+    color: #333;
+    width: 100%;
+    height: 100px;
+    resize: vertical;
+    padding: 0.5rem;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.submitButton {
+    width: 100%;
+    height: 100px;
+    resize: vertical;
+    padding: 0.5rem;
+    border-radius: 20px;
+    font-size: 32px;
+    background-color: #1C0049;
+    color: #f0f0f0;
+}
