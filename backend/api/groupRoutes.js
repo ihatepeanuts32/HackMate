@@ -13,9 +13,8 @@ const router = express.Router();
 
 const verifyToken = (req) => {
     try {
-        const token = req.headers.authorization?.split(' ')[1];
-        if (!token) return null;
-        return jwt.verify(token, process.env.JWT_SECRET);
+
+
     } catch(error){
         return null; 
     }
@@ -30,16 +29,42 @@ router.post('/create', async(req, res) => {
 
     try{
         // Step 1: Verify the user's token 
+
         // Step 2: Extract group details from request body 
+
+        const {name, description, skills, isPublic} = req.body; 
+
         // Step 3: Validate required fields 
+
+        if(!name || !description)
+        {
+            return res.status(400).json({message: "REQUIRED: Name and Description"}); 
+        }
+
         // Step 4: Create new group with the authenticated user as owner 
+
+        const newGroup = new Group({
+            name, 
+            description, 
+            owner: decoded.userID, // Set from decoded token
+            members: [decoded.userID], // Owner is a member 
+            skills: skills || [], // Default is empty array 
+            isPublic: isPublic !== undefined ? isPublic:true // Default is Public
+        })
+
         // Step 5: Save the group to the database 
+
+        await newGroup.save(); 
+
         // Step 6: Return success response with the created group 
 
     }catch(error){
 
         // Handle any errors that occur during group creation 
-
+        return res.status(500).json({
+            message: "Unable to create group", 
+            error: error.message
+        }); 
     }
 }); 
 
@@ -51,14 +76,43 @@ router.post('/create', async(req, res) => {
 router.put('/:id', async (req, res) =>{
     try {
         // Step 1: Verify the user's token 
+
         // Step 2: Extract update fields from request body 
+
+        const {name, description, skills, isPublic} = req.body;        
+
         // Step 3: Find the group by ID. Else return the message(Group not found) if group not found
+
+        const group = await Group.findById(req.params.id); 
+        if(!group)
+        {
+            return res.status(404).json({message: "Group not found"}); 
+        }
+
         // Step 4: Check if the authticated user is the owner 
+
+        if(group.owner.toString() !== decoded.userID)
+        {
+            return res.status(403).json({message: "Only group owner can update group details."}); 
+        }
+
         // Step 5: Update fields if provided(name, description, skills, visibility) and then save the updates 
+
+        if(name !== undefined) group.name = name; 
+        if(description !== undefined) group.description = description; 
+        if(skills !== undefined) group.skills = skills; 
+        if(typeof isPublic == "boolean") group.isPublic = isPublic; 
+
+        await group.save() // Saves the updated group
+
         // Step 6: Return with success response 
 
     }catch{
         // Handle any errors that occur during updating 
+        return res.status(500).json({
+            message: "Failed to update group", 
+            error: error.message
+        }); 
     }
 }); 
 
