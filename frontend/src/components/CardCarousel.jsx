@@ -2,7 +2,12 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 
-function CardCarousel() {
+function CardCarousel({ data }) {
+  console.log(data);
+
+  if (!data || !Array.isArray(data) || data.length === 0) {
+    return <div>No hackathons available</div>;
+  }
   const settings = {
     dots: true,
     infinite: true,
@@ -10,51 +15,73 @@ function CardCarousel() {
     slidesToShow: 3,
     slidesToScroll: 1
   };
+
   return (
     <div style={{ width: '75%', margin: '0 auto' }}>
       <div style={{ marginTop: '40px' }}>
         <Slider {...settings}>
-          {data.map((d) => (
+          {data?.map((d) => (
             <div
-              key={d.name}
+            key={d.id}
+            style={{
+              backgroundColor: 'white',
+              height: '320px',
+              color: 'black',
+              borderRadius: '12px',
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+          >
+            <div
               style={{
-                backgroundColor: 'white',
-                height: '320px',
-                color: 'black',
-                borderRadius: '12px',
-                overflow: 'hidden',
+                height: '140px',
+                backgroundColor: '#6366f1',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderTopLeftRadius: '12px',
+                borderTopRightRadius: '12px',
               }}
             >
-              <div
-                style={{
-                  height: '140px',
-                  backgroundColor: '#6366f1',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderTopLeftRadius: '12px',
-                  borderTopRightRadius: '12px',
-                }}
-              >
-                <img
-                  src={d.img}
-                  alt=""
-                  style={{ height: '96px', width: '96px', borderRadius: '50%' }}
-                />
+              <img
+                src={d.logoUrl}
+                alt={d.name}
+                style={{ height: '96px', width: '96px', borderRadius: '50%' }}
+              />
+            </div>
+          
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '180px', 
+                padding: '12px',
+              }}
+            >
+              <p style={{ fontSize: '16px', fontWeight: '600', margin: '0 0 8px 0', textAlign: 'center' }}>
+                {d.name}
+              </p>
+              
+              <div style={{ 
+                height: '80px', 
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                display: '-webkit-box',
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: 'vertical',
+                marginBottom: '12px',
+                fontSize: '12px',
+                textAlign: 'center'
+              }}>
+                {d.description}
               </div>
-  
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  padding: '12px',
-                }}
-              >
-                <p style={{ fontSize: '16px', fontWeight: '600' }}>{d.name}</p>
-                <p style={{ textAlign: 'center', fontSize: '12px' }}>{d.review}</p>
+              
+              <div style={{
+                marginTop: 'auto', 
+                display: 'flex',
+                justifyContent: 'center'
+              }}>
                 <button
                   style={{
                     backgroundColor: '#6366f1',
@@ -65,20 +92,21 @@ function CardCarousel() {
                     border: 'none',
                     cursor: 'pointer',
                   }}
+                  onClick={() => window.open(d.website, '_blank')}
                 >
                   Read More
                 </button>
               </div>
             </div>
+          </div>
           ))}
         </Slider>
       </div>
     </div>
   );
-  
 }
 
-const data = [
+const dataa = [
   {
     name: `John Morgan`,
     img: `/students/John_Morgan.jpg`,
