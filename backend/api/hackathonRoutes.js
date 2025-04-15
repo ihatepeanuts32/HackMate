@@ -1,5 +1,5 @@
 import express from "express"; 
-import Hackathon from "../models/Hackathon";
+import Hackathon from "../models/Hackathon.js";
 import jwt from "jsonwebtoken"; 
 
 const router = express.Router(); 
@@ -187,3 +187,4 @@ router.delete('/:id', async (req, res) => {
     }
 }); 
 
+export default router;

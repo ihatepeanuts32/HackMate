@@ -2,6 +2,7 @@ import User from "../models/User.js";
 import express from "express"
 import generateToken from "../utils/generateToken.js"
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
@@ -10,7 +11,7 @@ router.post('/register', async (req, res) => {
 
     try {
 
-        const { firstName, lastName, username, email, password, } = req.body;
+        const { firstName, lastName, username, email, password } = req.body;
 
         const existingUser = await User.findOne({ email });
 
@@ -41,6 +42,36 @@ router.post('/register', async (req, res) => {
     } catch (error) {
         return res.status(500).json({message: "Unable to register user.", error: error.message});
     }
+})
+
+//Naomi - the following POST requeest allows users to log back into their account
+router.post('/login', async (req, res) => {
+
+    try {
+        const { email, password } = req.body;
+
+        const user = await User.findOne({ email });
+
+        if (!user) {
+            return res.status(401).json({message: "Error: Invalid credentials", error});
+        }
+
+        const validPassword = await bcrypt.compare(password, user.password);
+
+        if (!validPassword) {
+            return res.status(401).json({message: "Error: Invalid password", error});
+        }
+
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
+            expiresIn: '1h'
+        })
+
+        res.json({message: "User logged in successfully", token});
+
+    } catch(error) {
+        return res.status(500).json({message: "Unable to login user.", error: error.message});
+    }
+
 })
 
 export default router;
