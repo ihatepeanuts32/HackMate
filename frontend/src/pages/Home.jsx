@@ -29,14 +29,16 @@ const Home = () => {
                 <h3>Welcome Vaishali!</h3>
             </div>
             <div>
-                <h3>Upcoming Hackathons Near You</h3>
-                <div>
+                <h4>Upcoming Hackathons Near You</h4>
+                <div style={{ paddingBottom: '30px' }}>
                     <CardCarousel data={hackathons} />
                 </div>
-                <h3>Ready to Find your Perfect Hackathon Group?</h3>
+                <h4>Ready to Find your Perfect Hackathon Group?</h4>
+                <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
                 <div className="split-row">
-                    <button type="submit" className="submit-button">Find Fellow Hackers</button>
-                    <button type="submit" className="submit-button">Find Groups to Join</button>
+                    <button className="link-button">Find Fellow Hackers</button>
+                    <button className="link-button">Find Groups to Join</button>
+                </div>
                 </div>
             </div>
         </div>

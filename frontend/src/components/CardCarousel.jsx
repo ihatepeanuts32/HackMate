@@ -25,7 +25,7 @@ function CardCarousel({ data }) {
             key={d.id}
             style={{
               backgroundColor: 'white',
-              height: '320px',
+              height: '300px',
               color: 'black',
               borderRadius: '12px',
               overflow: 'hidden',
@@ -34,8 +34,9 @@ function CardCarousel({ data }) {
             }}
           >
             <div
+            // title text below
               style={{
-                height: '140px',
+                height: '60px',
                 backgroundColor: '#6366f1',
                 display: 'flex',
                 justifyContent: 'center',
@@ -44,27 +45,32 @@ function CardCarousel({ data }) {
                 borderTopRightRadius: '12px',
               }}
             >
-              <img
+              {/* image code below */}
+              {/* <img
                 src={d.logoUrl}
                 alt={d.name}
                 style={{ height: '96px', width: '96px', borderRadius: '50%' }}
-              />
+              /> */}
+              <p>{d.name}</p>
             </div>
-          
+            {/* body text below */}
             <div
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                height: '180px', 
+                height: '70px', 
+                backgroundColor: '#1C0049',
+                borderBottomLeftRadius: '12px',
+                borderBottomRightRadius: '12px',
                 padding: '12px',
               }}
             >
-              <p style={{ fontSize: '16px', fontWeight: '600', margin: '0 0 8px 0', textAlign: 'center' }}>
-                {d.name}
+              <p style={{ fontSize: '18px', fontWeight: '600', margin: '0 0 8px 0', textAlign: 'center' }}>
+                {/* {d.name} */}
               </p>
               
               <div style={{ 
-                height: '80px', 
+                height: '50px', 
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 display: '-webkit-box',
@@ -76,13 +82,13 @@ function CardCarousel({ data }) {
               }}>
                 {d.description}
               </div>
-              
-              <div style={{
+              {/* button link code below*/}
+              {/* <div style={{
                 marginTop: 'auto', 
                 display: 'flex',
                 justifyContent: 'center'
-              }}>
-                <button
+              }}> */}
+                {/* <button
                   style={{
                     backgroundColor: '#6366f1',
                     color: 'white',
@@ -95,10 +101,10 @@ function CardCarousel({ data }) {
                   onClick={() => window.open(d.website, '_blank')}
                 >
                   Read More
-                </button>
+                </button> */}
               </div>
             </div>
-          </div>
+          // </div>
           ))}
         </Slider>
       </div>
@@ -106,33 +112,33 @@ function CardCarousel({ data }) {
   );
 }
 
-const dataa = [
-  {
-    name: `John Morgan`,
-    img: `/students/John_Morgan.jpg`,
-    review: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`
-  },
-  {
-    name: `Ellie Anderson`,
-    img: `/students/Ellie_Anderson.jpg`,
-    review: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`
-  },
-  {
-    name: `Nia Adebayo`,
-    img: `/students/Nia_Adebayo.jpg`,
-    review: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`
-  },
-  {
-    name: `Rigo Louie`,
-    img: `/students/Rigo_Louie.jpg`,
-    review: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`
-  },
-  {
-    name: `Mia Williams`,
-    img: `/students/Mia_Williams.jpg`,
-    review: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`
-  },
+// const dataa = [
+//   {
+//     name: `John Morgan`,
+//     img: `/students/John_Morgan.jpg`,
+//     review: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`
+//   },
+//   {
+//     name: `Ellie Anderson`,
+//     img: `/students/Ellie_Anderson.jpg`,
+//     review: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`
+//   },
+//   {
+//     name: `Nia Adebayo`,
+//     img: `/students/Nia_Adebayo.jpg`,
+//     review: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`
+//   },
+//   {
+//     name: `Rigo Louie`,
+//     img: `/students/Rigo_Louie.jpg`,
+//     review: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`
+//   },
+//   {
+//     name: `Mia Williams`,
+//     img: `/students/Mia_Williams.jpg`,
+//     review: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`
+//   },
   
-];
+// ];
 
 export default CardCarousel;

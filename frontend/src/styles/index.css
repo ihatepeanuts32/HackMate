@@ -2,6 +2,7 @@
 Description: CSS stylings for pages, buttons, images, etc.
 */
 
+
 :root {
   /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
   font-family: 'Poppins', sans-serif;
@@ -52,6 +53,11 @@ h3 {
   line-height: 1.1;
 }
 
+h4 {
+  font-size: 1.2em;
+  line-height: 1.1;
+}
+
 button {
   width: 50%;
   padding: 4px;
@@ -61,6 +67,20 @@ button {
   border-radius: 20px;
   /* background-color: #1C0049;
   color: white; */
+}
+
+.link-button
+{
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 400px;         /* ← this keeps the buttons from getting too small */
+  padding: 5px 20px;
+  background-color: #1C0049;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
 }
 
 .submit-button
@@ -213,5 +233,5 @@ input.photo-selector
 }
 
 .slick-dots li.slick-active button:before {
-  color: orange !important;
+  color: #6366f1 !important;
 }
