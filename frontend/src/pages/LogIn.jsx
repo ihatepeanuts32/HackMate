@@ -9,7 +9,7 @@ const Login = () => {
     const [message, setMessage] = useState('');
     const [token, setToken] = useState('');
 
-
+    //Naomi - collecting user info to send to database and verify user info
     const handleSubmit = async (e) => {
         e.preventDefault();
 
