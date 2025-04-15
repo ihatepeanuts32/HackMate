@@ -1,3 +1,7 @@
+/* Ifrah 
+Description: CSS stylings for pages, buttons, images, etc.
+*/
+
 :root {
   /* font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif; */
   font-family: 'Poppins', sans-serif;
@@ -201,3 +205,13 @@ input.photo-selector
   width: 100px;
 }
 
+
+/* //carousel css below */
+/* Carousel Styles (for slick carousel) */
+.slick-slide > div {
+  margin: 0 10px;
+}
+
+.slick-dots li.slick-active button:before {
+  color: orange !important;
+}

@@ -9,6 +9,8 @@ import Register from './pages/Register';
 import EditProfile from './pages/EditProfile';
 import BugReport from './pages/BugReport';
 import GroupView from './pages/GroupView';
+import Home from './pages/Home';
+
 
 
 function App() {
@@ -23,6 +25,7 @@ function App() {
           <Route path="/editProfile" element={<EditProfile/>}/>
           <Route path="/bugReport" element={<BugReport/>}/>
           <Route path="/groupViewExample" element={<GroupView/>}/>
+          <Route path="/home" element={<Home/>}/>
         </Routes>
     </Router>
   )
