@@ -58,7 +58,7 @@ function CardCarousel({ data }) {
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                height: '70px', 
+                height: '120px', 
                 backgroundColor: '#1C0049',
                 borderBottomLeftRadius: '12px',
                 borderBottomRightRadius: '12px',
@@ -82,13 +82,12 @@ function CardCarousel({ data }) {
               }}>
                 {d.description}
               </div>
-              {/* button link code below*/}
-              {/* <div style={{
+              <div style={{
                 marginTop: 'auto', 
                 display: 'flex',
                 justifyContent: 'center'
-              }}> */}
-                {/* <button
+              }}> 
+                {<button
                   style={{
                     backgroundColor: '#6366f1',
                     color: 'white',
@@ -101,10 +100,10 @@ function CardCarousel({ data }) {
                   onClick={() => window.open(d.website, '_blank')}
                 >
                   Read More
-                </button> */}
+                </button>}
               </div>
-            </div>
-          // </div>
+               </div>
+           </div>
           ))}
         </Slider>
       </div>
