@@ -74,4 +74,33 @@ router.post('/login', async (req, res) => {
 
 })
 
+//Naomi - getting user info to be displayed on frontend
+router.get('/userProfile', async (req, res) => {
+    try {
+      const token = req.headers.authorization?.split(' ')[1];
+      
+      if (!token) {
+        return res.status(401).json({ message: "No token provided" });
+      }
+      
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      
+      const user = await User.findById(decoded.userId);
+      
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      res.json({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        email: user.email
+      });
+      
+    } catch (error) {
+      return res.status(500).json({ message: "Unable to fetch user profile", error: error.message });
+    }
+  })
+
 export default router;
