@@ -28,26 +28,67 @@
 .hero-section {
     position: relative;
     height: 300px;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                url('/background-image.jpg');
-    background-size: cover;
-    background-position: center;
+    overflow: hidden;
+}
+
+.banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, 
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.4) 50%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    z-index: 1;
 }
 
 .group-header {
     position: absolute;
-    bottom: 2rem;
+    bottom: .5rem;
     left: 2rem;
+    right: 2rem;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 2rem;
+    z-index: 2;
 }
 
-.group-avatar {
-    width: 100px;
-    height: 100px;
+.group-info {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.group-logo {
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    background-color: #FF69B4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background-color: transparent;
+}
+
+.group-logo img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    overflow: hidden;
+}
+
+.group-info h1 {
+    font-size: 2.5rem;
+    margin: 0;
 }
 
 .group-actions {
@@ -58,10 +99,10 @@
 .btn-request, .btn-contact {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
     padding: 0.75rem 1.5rem;
-    border: none;
     border-radius: 2rem;
+    border: none;
     font-size: 1rem;
     cursor: pointer;
     transition: transform 0.2s;
@@ -69,13 +110,23 @@
 
 .btn-request {
     background-color: #FF69B4;
+    white-space: nowrap;
     color: white;
 }
 
 .btn-contact {
-    background-color: transparent;
-    border: 2px solid white;
+    background-color: #FF69B4;
     color: white;
+}
+
+.btn-request img {
+    /* width: 20px; */
+    height: 32px;
+}
+
+.btn-contact img {
+    /* width: 20px; */
+    height: 43px;
 }
 
 .btn-request:hover, .btn-contact:hover {
@@ -88,7 +139,9 @@
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
     padding: 2rem;
-    background-color: #1C0049;
+    margin-top: 1rem;
+    position: relative;
+    z-index: 3;
 }
 
 .description-section, .members-section {
@@ -97,10 +150,15 @@
     border-radius: 1rem;
 }
 
+.description-section {
+    text-align: left;
+  }
+
 .description-section h2, .members-section h2 {
-    margin-top: 0;
-    margin-bottom: 1.5rem;
     font-size: 1.5rem;
+    margin: 0 0 1rem -1rem;
+    text-align: left;
+    
 }
 
 .description-section p {
@@ -117,16 +175,11 @@
 }
 
 .skill-tag {
+    background-color: #FF69B4;
     padding: 0.5rem 1rem;
     border-radius: 2rem;
     font-size: 0.9rem;
-    font-weight: 500;
 }
-
-.skill-tag.engineering { background-color: #FF69B4; }
-.skill-tag.ui-ux { background-color: #FF69B4; }
-.skill-tag.casual { background-color: #FF69B4; }
-.skill-tag.tech { background-color: #FF69B4; }
 
 /* Members List */
 .members-list {
@@ -137,57 +190,62 @@
 
 .member-card {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 1rem;
     padding: 1rem;
     background-color: #3A0088;
     border-radius: 0.75rem;
 }
 
-.member-avatar {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: #FF69B4;
+.member-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-.member-info {
-    flex: 1;
+.member-avatar {
+    height: 80px;
+    border-radius: 50%;
 }
 
 .member-info h3 {
     margin: 0;
+    margin-bottom: -1rem;
     font-size: 1.1rem;
 }
 
 .member-role {
     font-size: 0.9rem;
     color: #B8B8B8;
+    display: block;
+    margin-top: 0;
+    line-height: 1.2;
 }
 
-.btn-message {
+.message-btn {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     border: none;
     background-color: #FF69B4;
-    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     transition: transform 0.2s;
 }
 
-.btn-message:hover {
+.message-btn img {
+    width: 20px;
+    height: 20px;
+}
+
+.message-btn:hover {
     transform: scale(1.1);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .content-section {
-        grid-template-columns: 1fr;
-    }
-
     .group-header {
         flex-direction: column;
         align-items: flex-start;
@@ -197,6 +255,10 @@
     .group-actions {
         flex-direction: column;
         width: 100%;
+    }
+
+    .content-section {
+        grid-template-columns: 1fr;
     }
 
     .btn-request, .btn-contact {

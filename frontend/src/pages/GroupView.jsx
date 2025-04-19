@@ -1,25 +1,32 @@
 import React from 'react';
 import '../styles/GroupView.css';
-import hackmateLogo from "../assets/hackmateLogo.png"
+import hackmateLogo from '../assets/hackmateLogo2.png';
+import exampleBanner from '../assets/examplebanner.jpg';
+import personAddAlt1 from '../assets/person_add_alt_1.png';
+import messageIcon from '../assets/message.png';
+import planeIcon from '../assets/planeIcon.png';
+import profileIcon from '../assets/Profile icon.png';
 
-//Created by Hrishikesh Srirangam
 const GroupView = () => {
     return (
         <div className="group-view">
-            {/* Hero Section with Background Image */}
+            {/* Hero Section with Banner */}
             <div className="hero-section">
+                <div className="banner-overlay"></div>
+                <img src={exampleBanner} alt="group banner" className="banner-image" />
+                
                 <div className="group-header">
-                    <div className="group-avatar">
-                        {/* Group icon/avatar */}
+                    <div className="group-info">
+                        <img src={hackmateLogo} alt="group logo" className="group-logo" />
+                        <h1>Group 1</h1>
                     </div>
-                    <h1>Group 1</h1>
                     <div className="group-actions">
                         <button className="btn-request">
-                            <span className="icon-user-plus"></span>
+                            <img src={personAddAlt1} alt="join" />
                             Request to Join
                         </button>
                         <button className="btn-contact">
-                            <span className="icon-message"></span>
+                            <img src={planeIcon} alt="message" />
                             Contact Us
                         </button>
                     </div>
@@ -31,18 +38,17 @@ const GroupView = () => {
                 <div className="description-section">
                     <h2>Description</h2>
                     <p>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce molestie 
-                        ultricies urna, nec vehicula purus porttitor id. Nullam porta ligula 
-                        eget mi finibus, finibus mollis libero tincidunt.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Fusce molestie ultricies urna, nec vehicula purus porttitor id.
+                        Nullam porta ligula eget mi finibus, finibus mollis libero tincidunt.
                     </p>
                     
-                    {/* Skills/Tags */}
                     <div className="skills-container">
-                        <span className="skill-tag engineering">Engineering</span>
-                        <span className="skill-tag ui-ux">UI/UX</span>
-                        <span className="skill-tag casual">Casual</span>
-                        <span className="skill-tag tech">React.js</span>
-                        <span className="skill-tag tech">Next.js</span>
+                        <span className="skill-tag">Engineering</span>
+                        <span className="skill-tag">UI/UX</span>
+                        <span className="skill-tag">Casual</span>
+                        <span className="skill-tag">React.js</span>
+                        <span className="skill-tag">Next.js</span>
                     </div>
                 </div>
 
@@ -50,30 +56,42 @@ const GroupView = () => {
                     <h2>Members</h2>
                     <div className="members-list">
                         <div className="member-card">
-                            <div className="member-avatar"></div>
-                            <div className="member-info">
-                                <h3>Rajit Goel</h3>
-                                <span className="member-role">Leader</span>
+                            <div className="member-left">
+                                <img src={profileIcon} alt="profile" className="member-avatar" />
+                                <div className="member-info">
+                                    <h3>Rajit Goel</h3>
+                                    <span className="member-role">Leader</span>
+                                </div>
                             </div>
-                            <button className="btn-message"></button>
+                            <button className="message-btn">
+                                <img src={messageIcon} alt="message" />
+                            </button>
                         </div>
 
                         <div className="member-card">
-                            <div className="member-avatar"></div>
-                            <div className="member-info">
-                                <h3>Earl Velasquez</h3>
-                                <span className="member-role">Member</span>
+                            <div className="member-left">
+                                <img src={profileIcon} alt="profile" className="member-avatar" />
+                                <div className="member-info">
+                                    <h3>Earl Velasquez</h3>
+                                    <span className="member-role">Member</span>
+                                </div>
                             </div>
-                            <button className="btn-message"></button>
+                            <button className="message-btn">
+                                <img src={messageIcon} alt="message" />
+                            </button>
                         </div>
 
                         <div className="member-card">
-                            <div className="member-avatar"></div>
-                            <div className="member-info">
-                                <h3>Ifrah Zainab</h3>
-                                <span className="member-role">Member</span>
+                            <div className="member-left">
+                                <img src={profileIcon} alt="profile" className="member-avatar" />
+                                <div className="member-info">
+                                    <h3>Ifrah Zainab</h3>
+                                    <span className="member-role">Member</span>
+                                </div>
                             </div>
-                            <button className="btn-message"></button>
+                            <button className="message-btn">
+                                <img src={messageIcon} alt="message" />
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -82,4 +100,4 @@ const GroupView = () => {
     );
 };
 
-export default GroupView;
+export default GroupView; 
