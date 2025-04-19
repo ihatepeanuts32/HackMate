@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/GroupView.css';
 import hackmateLogo from '../assets/hackmateLogo2.png';
 import exampleBanner from '../assets/examplebanner.jpg';
@@ -6,8 +6,23 @@ import personAddAlt1 from '../assets/person_add_alt_1.png';
 import messageIcon from '../assets/message.png';
 import planeIcon from '../assets/planeIcon.png';
 import profileIcon from '../assets/Profile icon.png';
+import ContactGroup from '../components/ContactGroup';
+import JoinRequestModal from '../components/JoinRequestModal';
 
 const GroupView = () => {
+    const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+    const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
+    const [showJoinConfirmation, setShowJoinConfirmation] = useState(false);
+
+    const handleJoinRequest = () => {
+        setShowJoinConfirmation(true);
+        // Here you would typically make an API call to send the join request
+        setTimeout(() => {
+            setShowJoinConfirmation(false);
+            setIsJoinModalOpen(false);
+        }, 2000); // Close after 2 seconds
+    };
+
     return (
         <div className="group-view">
             {/* Hero Section with Banner */}
@@ -21,11 +36,17 @@ const GroupView = () => {
                         <h1>Group 1</h1>
                     </div>
                     <div className="group-actions">
-                        <button className="btn-request">
+                        <button 
+                            className="btn-request"
+                            onClick={() => setIsJoinModalOpen(true)}
+                        >
                             <img src={personAddAlt1} alt="join" />
                             Request to Join
                         </button>
-                        <button className="btn-contact">
+                        <button 
+                            className="btn-contact"
+                            onClick={() => setIsContactModalOpen(true)}
+                        >
                             <img src={planeIcon} alt="message" />
                             Contact Us
                         </button>
@@ -96,6 +117,23 @@ const GroupView = () => {
                     </div>
                 </div>
             </div>
+
+            <ContactGroup 
+                isOpen={isContactModalOpen}
+                onClose={() => setIsContactModalOpen(false)}
+                groupName="Group 1"
+            />
+
+            <JoinRequestModal 
+                isOpen={isJoinModalOpen}
+                onClose={() => {
+                    setIsJoinModalOpen(false);
+                    setShowJoinConfirmation(false);
+                }}
+                onConfirm={handleJoinRequest}
+                groupName="Group 1"
+                showConfirmation={showJoinConfirmation}
+            />
         </div>
     );
 };

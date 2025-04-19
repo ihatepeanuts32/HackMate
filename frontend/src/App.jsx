@@ -16,6 +16,7 @@ import Explore from './pages/Explore';
 import ResetPassword from './pages/ResetPassword';
 import ContactUs from './pages/ContactUs';
 import ProfileView from './pages/ProfileView';
+import Groups from './pages/Groups';
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/editProfile" element={<EditProfile />} />
           <Route path="/bugReport" element={<BugReport />} />
-          <Route path="/groupViewExample" element={<GroupView />} />
+          <Route path="/groupViewExample/:id" element={<GroupView />} />
+          <Route path="/groups" element={<Groups />} />
           <Route path="/home" element={<Home />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/explore" element={<Explore />} />

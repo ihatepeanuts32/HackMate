@@ -3,45 +3,52 @@ import '../styles/BugReport.css';
 
 //Created by Hrishikesh Srirangam
 const BugReport = () => {
-
     return (
-        <div>
-            <header classname="header">
-                <h1 style={{fontSize: 60 }}>Report Bugs</h1>
-            </header>
-
-            <div style={{ display: 'flex' }}>
-                <div style={{ flex: 1, padding: '1rem', backgroundColor: '#2D0075' }}>
-                    <header classname="prompts">
-                        <h2 style={{ textAlign: 'left', fontSize: 40 }}>First Name</h2> {/* Allow users to enter their first name */}
-                    </header>
-                    <input type="text" className="inputs" name="firstName" placeholder="" />
+        <div className="bug-report-container">
+            <form className="bug-report-form">
+                <div className="form-row">
+                    <div className="form-group">
+                        <label>Full Name</label>
+                        <input 
+                            type="text" 
+                            className="form-input"
+                            name="fullName"
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Email</label>
+                        <input 
+                            type="email" 
+                            className="form-input"
+                            name="email"
+                        />
+                    </div>
                 </div>
 
-                <div style={{ flex: 1, padding: '1rem', backgroundColor: '#2D0075' }}>
-                    <header classname="prompts">
-                        <h2 style={{ textAlign: 'left', fontSize: 40 }}>Last Name</h2> {/* Allow users to enter their last name */}
-                    </header>
-                    <input type="text" className="inputs" name="lastName" placeholder="" />
+                <div className="form-group">
+                    <label>Subject</label>
+                    <input 
+                        type="text" 
+                        className="form-input"
+                        name="subject"
+                    />
                 </div>
-            </div>
 
-            <div>
-                <header classname="prompts">
-                    <h2 style={{ textAlign: 'left', fontSize: 40 }}>Subject</h2> {/* Allow users to enter the subject of their report */}
-                </header>
-                <input type="text" className="inputs" name="firstName" placeholder="" />
-            </div>
+                <div className="form-group">
+                    <label>Description</label>
+                    <textarea 
+                        className="form-input description-input"
+                        name="description"
+                        rows="6"
+                    />
+                </div>
 
-            <header classname="prompts">
-                <h2 style={{ textAlign: 'left', fontSize: 40 }}>Description</h2> {/* Allow users to enter their report */}
-            </header>
-            <textarea wrap="soft" className="multilineInputs" placeholder="Type your bug report here..."
-            />
-
-            <button className="submitButton">Submit Report</button> {/* Sends the report to developers */}
+                <button type="submit" className="submit-button">
+                    Submit Report
+                </button>
+            </form>
         </div>
-    )
-}
+    );
+};
 
 export default BugReport;

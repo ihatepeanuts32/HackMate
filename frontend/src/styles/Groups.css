@@ -1,0 +1,114 @@
+.groups-page {
+    min-height: 100vh;
+    background-color: #1C0049;
+    color: white;
+    padding: 4rem 2rem;
+    border-radius: 30px;
+}
+
+.groups-page h1 {
+    text-align: left;
+    font-size: 4rem;
+    margin-bottom: 4rem;
+    margin-left: 2rem;
+    font-weight: bold;
+}
+
+.groups-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.groups-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.group-row {
+    background-color: #2A0066;
+    border-radius: 20px;
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 4rem;
+}
+
+.group-name {
+    font-size: 2rem;
+    font-weight: 500;
+    color: white;
+    min-width: 200px;
+}
+
+.group-actions {
+    display: flex;
+    gap: 2rem;
+    margin-left: auto;
+}
+
+.view-button, .leave-button {
+    border-radius: 15px;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+}
+
+.view-button {
+    background-color: #9333EA;
+    color: white;
+    min-width: 80px;
+    padding: 0.5rem 1.5rem;
+}
+
+.leave-button {
+    background-color: #3A0088;
+    color: white;
+    min-width: 100px;
+    padding: 0.75rem 2rem;
+}
+
+.view-button:hover {
+    background-color: #A855F7;
+    transform: translateY(-2px);
+}
+
+.leave-button:hover {
+    background-color: #4B0099;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .groups-page h1 {
+        text-align: center;
+        margin-left: 0;
+    }
+
+    .groups-container {
+        padding: 0 1rem;
+    }
+
+    .group-row {
+        padding: 1.5rem;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .group-actions {
+        width: 100%;
+        justify-content: center;
+        margin-left: 0;
+    }
+
+    .view-button, .leave-button {
+        padding: 0.75rem 2rem;
+    }
+} 

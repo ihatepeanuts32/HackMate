@@ -1,0 +1,124 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #2A0066;
+    padding: 3rem;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    animation: slideIn 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-content h2 {
+    color: white;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.modal-content p {
+    color: white;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.close-button {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    line-height: 1;
+    width: auto;
+    min-width: auto;
+}
+
+.close-button:hover {
+    color: #9333EA;
+}
+
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    width: 100%;
+}
+
+.confirm-button, .cancel-button {
+    padding: 0.75rem 2rem;
+    border: none;
+    border-radius: 15px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 160px;
+    white-space: nowrap;
+}
+
+.confirm-button {
+    background-color: #9333EA;
+    color: white;
+}
+
+.confirm-button:hover {
+    background-color: #A855F7;
+    transform: translateY(-2px);
+}
+
+.cancel-button {
+    background-color: #3A0088;
+    color: white;
+}
+
+.cancel-button:hover {
+    background-color: #4B0099;
+    transform: translateY(-2px);
+}
+
+.confirmation-sent {
+    background-color: #2A0066;
+    text-align: center;
+}
+
+.confirmation-sent h2 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+.confirmation-sent p {
+    color: white;
+    font-size: 1.2rem;
+    opacity: 0.9;
+} 
