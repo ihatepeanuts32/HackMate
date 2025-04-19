@@ -18,7 +18,8 @@ import ContactUs from './pages/ContactUs';
 import ProfileView from './pages/ProfileView';
 import Groups from './pages/Groups';
 import ExploreGroup from './pages/ExploreGroup';
-
+import CreateGroup from './pages/CreateGroup';
+import BlockedUsers from './pages/BlockedUsers';
 
 function App() {
   return (
@@ -39,6 +40,8 @@ function App() {
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/profileView" element={<ProfileView />} />
           <Route path="/exploreGroup" element={<ExploreGroup />} />
+          <Route path="/createGroup" element={<CreateGroup />} />
+          <Route path="/blockedUsers" element={<BlockedUsers />} />
           <Route path="/profile/:id" element={<ProfileView />} />
         </Route>
       </Routes>
