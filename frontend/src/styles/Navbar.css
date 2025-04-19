@@ -1,6 +1,6 @@
 .navbar {
     background-color: #1C0049;
-    padding: 1rem 2rem;
+    padding: .5rem 1rem;
     position: fixed;
     top: 0;
     left: 0;
@@ -19,13 +19,15 @@
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-left: 0;
+    margin-left: 1rem;
 }
 
 .nav-left h1 {
-    color: white;
-    font-size: 1.5rem;
-    margin: 0;
+  font-size: 1.2rem;
+  color: white;
+  margin: 0;
+  padding-left: 0;
+  line-height: 1;
 }
 
 .logo {
@@ -33,7 +35,6 @@
     width: auto;
 }
 
-/* Hamburger Button */
 .hamburger-btn {
     background: none;
     border: none;
@@ -48,11 +49,20 @@
     top: 1rem;
     right: 1rem;
     z-index: 1002;
+    outline: none;
 }
 
-.hamburger-icon {
-    width: 24px;
-    height: 20px;
+.hamburger-btn:focus {
+    outline: none;
+}
+
+.hamburger-btn:focus-visible {
+    box-shadow: 0 0 0 2px rgba(255, 105, 180, 0.4);
+    border-radius: 4px;
+}
+
+.menu-icon {
+    height: 32px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -81,7 +91,6 @@
     transform: translateY(-9px) rotate(-45deg);
 }
 
-/* Sliding Menu */
 .slide-menu {
     position: fixed;
     top: 0;
@@ -137,7 +146,6 @@
     justify-content: center;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .navbar {
         padding: 1rem;
@@ -161,5 +169,5 @@
   font-weight: 700;
 }
 .nav-left h1 .mate {
-  font-weight: 400; /* or 300 for extra contrast */
+  font-weight: 400; 
 }
