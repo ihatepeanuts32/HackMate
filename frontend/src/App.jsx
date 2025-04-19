@@ -14,6 +14,7 @@ import Layout from './Layout';
 import Settings from './pages/Settings';
 import Explore from './pages/Explore';
 import ResetPassword from './pages/ResetPassword';
+import ProfileView from './pages/ProfileView';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/profileView" element={<ProfileView />} />
         </Route>
       </Routes>
     </Router>
