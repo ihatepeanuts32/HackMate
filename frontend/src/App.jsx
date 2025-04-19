@@ -11,8 +11,9 @@ import BugReport from './pages/BugReport';
 import GroupView from './pages/GroupView';
 import Home from './pages/Home';
 import Layout from './Layout';
-
-
+import Settings from './pages/Settings';
+import Explore from './pages/Explore';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
           <Route path="/bugReport" element={<BugReport />} />
           <Route path="/groupViewExample" element={<GroupView />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/explore" element={<Explore />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
         </Route>
       </Routes>
     </Router>

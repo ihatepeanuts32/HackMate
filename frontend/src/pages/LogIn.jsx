@@ -1,6 +1,8 @@
 import hackmateLogo from "../assets/hackmateLogo.png"
 import axios from "axios";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import "../styles/Login.css";
 
 const Login = () => {
 
@@ -37,40 +39,43 @@ const Login = () => {
         }
     }
     return (
-        <div>
-        <div>
+        <div className="login-page">
             <div>
-                <img src={hackmateLogo} className="logo" alt="hackmate logo" />
+                <div>
+                    <img src={hackmateLogo} className="logo" alt="hackmate logo" />
+                </div>
+                <h2 className="hackmate-text">HackMate</h2>
             </div>
-            <h2>HackMate</h2>
-        </div>
-        <div>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <input type="email" 
-                    value={email} 
-                    placeholder = "Email"
-                    onChange={(e) => {
-                        setEmail(e.target.value);
-                    }}
-                    />
-                </div>
-                <div>
-                    <input 
-                        type="password" 
-                        value={password} 
-                        placeholder = "Password"
+            <div>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <input type="email" 
+                        value={email} 
+                        placeholder = "Email"
                         onChange={(e) => {
-                            setPassword(e.target.value);
+                            setEmail(e.target.value);
                         }}
-                    />
-                </div>
-                <div className="split-row">
-                    <button type="submit" className="submit-button">Log In</button>
-                </div>
-            </form> 
+                        />
+                    </div>
+                    <div>
+                        <input 
+                            type="password" 
+                            value={password} 
+                            placeholder = "Password"
+                            onChange={(e) => {
+                                setPassword(e.target.value);
+                            }}
+                        />
+                    </div>
+                    <div className="forgot-password">
+                        <Link to="/reset-password">Forgot Password?</Link>
+                    </div>
+                    <div className="split-row">
+                        <button type="submit" className="submit-button">Log In</button>
+                    </div>
+                </form> 
+            </div>
         </div>
-      </div>
     )
 }
 
