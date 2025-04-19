@@ -1,4 +1,5 @@
 import User from "../models/User.js";
+import Onboarding from "../models/Onboarding.js";
 import express from "express"
 import generateToken from "../utils/generateToken.js"
 import bcrypt from "bcrypt"
@@ -11,7 +12,7 @@ router.post('/register', async (req, res) => {
 
     try {
 
-        const { firstName, lastName, username, email, password } = req.body;
+        const { /*firstName, lastName,*/ username, email, password } = req.body;
 
         const existingUser = await User.findOne({ email });
 
@@ -22,8 +23,8 @@ router.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new User({
-            firstName,
-            lastName,
+            /*firstName,
+            lastName,*/
             username, 
             email,
             password: hashedPassword
@@ -73,6 +74,84 @@ router.post('/login', async (req, res) => {
     }
 
 })
+
+router.post("/onboardUser", async (req, res) => {
+
+    try {
+
+        const token = req.headers.authorization?.split(' ')[1];
+              
+        if (!token) {
+            return res.status(401).json({ message: "No token provided" });
+        }
+              
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+              
+        const user = await User.findById(decoded.userId);
+              
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        const { firstName, lastName,  preferredRole, hackathonsAttended, college, technicalSkills, desiredTeammateQualities} = req.body;
+
+        const hackathons = hackathonsAttended ? parseInt(hackathonsAttended, 10) : 0;
+
+        const onboardUser = new Onboarding({
+            userId: decoded.userId,
+            firstName,
+            lastName,
+            preferredRole,
+            hackathonsAttended: hackathons,
+            college,
+            technicalSkills,
+            desiredTeammateQualities,
+        })
+
+        await onboardUser.save();
+
+        return res.status(200).json({message: "User onboarded sucessfully"});
+
+    } catch (error) {
+        return res.status(500).json({message: "Unable to onboard user.", error: error.message});
+    }
+})
+
+router.put("/updateProfile", async (req, res) => {
+    try {
+
+      const token = req.headers.authorization?.split(' ')[1];
+      
+      if (!token) {
+        return res.status(401).json({ message: "No token provided" });
+      }
+      
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      
+      const existingProfile = await Onboarding.findOne({ userId: decoded.userId });
+      
+      if (!existingProfile) {
+        return res.status(404).json({ message: "Profile not found" });
+      }
+      
+      const { firstName, lastName, preferredRole, hackathonsAttended, college, technicalSkills, desiredTeammateQualities } = req.body;
+      
+      existingProfile.firstName = firstName;
+      existingProfile.lastName = lastName;
+      existingProfile.preferredRole = preferredRole;
+      existingProfile.hackathonsAttended = hackathonsAttended ? parseInt(hackathonsAttended, 10) : 0;
+      existingProfile.college = college;
+      existingProfile.technicalSkills = technicalSkills;
+      existingProfile.desiredTeammateQualities = desiredTeammateQualities;
+      
+      await existingProfile.save();
+      
+      return res.status(200).json({ message: "Profile updated successfully" });
+      
+    } catch (error) {
+      return res.status(500).json({ message: "Unable to update profile", error: error.message });
+    }
+  });
 
 //Naomi - getting user info to be displayed on frontend
 router.get('/userProfile', async (req, res) => {

@@ -52,26 +52,6 @@ const Register = () => {
         <form onSubmit={handleSubmit}>
             {/* form to input new user credentials and info */}
         <div className="split-row">
-        <div>
-          <input 
-            type="text" 
-            value={firstName} 
-            placeholder = "First Name"
-            onChange={(e) => {
-              setFirstName(e.target.value);
-            }}
-            />
-        </div>
-        <div>
-          <input 
-            type="text" 
-            value={lastName} 
-            placeholder = "Last Name"
-            onChange={(e) => {
-              setLastName(e.target.value);
-            }}
-            />
-        </div>
         </div>
         <div>
           <input 
