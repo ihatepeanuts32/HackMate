@@ -62,7 +62,9 @@ const Home = () => {
                     <Link to="/explore">
                         <button className="link-button">Find Fellow Hackers</button>
                     </Link>
+                    <Link to="/exploreGroup">
                     <button className="link-button">Find Groups to Join</button>
+                    </Link>
                 </div>
                 </div>
             </div>

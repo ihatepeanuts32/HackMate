@@ -17,6 +17,8 @@ import ResetPassword from './pages/ResetPassword';
 import ContactUs from './pages/ContactUs';
 import ProfileView from './pages/ProfileView';
 import Groups from './pages/Groups';
+import ExploreGroup from './pages/ExploreGroup';
+
 
 function App() {
   return (
@@ -36,6 +38,7 @@ function App() {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/profileView" element={<ProfileView />} />
+          <Route path="/exploreGroup" element={<ExploreGroup />} />
         </Route>
       </Routes>
     </Router>
