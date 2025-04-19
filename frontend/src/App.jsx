@@ -1,7 +1,5 @@
 import { useState } from 'react'
-//import hackmateLogo from "../assets/hackmateLogo.png";
-//import '../styles/App.css'
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/LogIn';
@@ -25,6 +23,9 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Add a root route that redirects to registration */}
+        <Route path="/" element={<Navigate to="/register" />} />
+        
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
