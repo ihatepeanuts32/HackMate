@@ -1,13 +1,11 @@
-// Ifrah
-// Description: Explore page to find other users
-import hackmateLogo from "../assets/hackmateLogo.png"
-import blankProfile from "../assets/profile.png"   
 import React, { useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Explore.css';
+import hackmateLogo from "../assets/hackmateLogo.png";
+import blankProfile from "../assets/profile.png";
 
-
-//test data for now, should add to our database
-//need to add image urls later, auto set to "No Image Available"
+//mock user data to show example of how explore page would work
 const mockUsers = [
   {
     id: 1,
@@ -15,7 +13,11 @@ const mockUsers = [
     bio: 'Frontend enthusiast who loves React.',
     year: 'Freshman',
     type: 'Frontend',
-    inGroup: 'Yes'
+    inGroup: 'Yes',
+    numHackathons: 2,
+    college: 'UTD',
+    skills: ['React', 'CSS', 'JavaScript'],
+    desiredQualities: ['Team Player', 'Creative'],
   },
   {
     id: 2,
@@ -23,7 +25,11 @@ const mockUsers = [
     bio: 'Backend wizard working with Node.js.',
     year: 'Sophomore',
     type: 'Backend',
-    inGroup: 'No'
+    inGroup: 'No',
+    numHackathons: 5,
+    college: 'UT Austin',
+    skills: ['Node.js', 'Express', 'MongoDB'],
+    desiredQualities: ['Communicative', 'Reliable'],
   },
   {
     id: 3,
@@ -31,7 +37,11 @@ const mockUsers = [
     bio: 'Fullstack dev passionate about UX and APIs.',
     year: 'Junior',
     type: 'Fullstack',
-    inGroup: 'No'
+    inGroup: 'No',
+    numHackathons: 3,
+    college: 'UTD',
+    skills: ['React', 'Figma', 'Postman'],
+    desiredQualities: ['Design-focused', 'Adaptable'],
   },
   {
     id: 4,
@@ -39,7 +49,11 @@ const mockUsers = [
     bio: 'Loves working on backend services and DevOps.',
     year: 'Senior',
     type: 'Backend',
-    inGroup: 'Yes'
+    inGroup: 'Yes',
+    numHackathons: 4,
+    college: 'Texas A&M',
+    skills: ['Docker', 'AWS', 'Python'],
+    desiredQualities: ['Detail-Oriented', 'Focused'],
   },
   {
     id: 5,
@@ -47,7 +61,11 @@ const mockUsers = [
     bio: 'Building responsive UI with Vue and React.',
     year: 'Sophomore',
     type: 'Frontend',
-    inGroup: 'No'
+    inGroup: 'No',
+    numHackathons: 2,
+    college: 'UTD',
+    skills: ['Vue.js', 'React', 'HTML/CSS'],
+    desiredQualities: ['Creative', 'Fast Learner'],
   },
   {
     id: 6,
@@ -55,7 +73,11 @@ const mockUsers = [
     bio: 'Enjoys building full apps solo – front to back!',
     year: 'Junior',
     type: 'Fullstack',
-    inGroup: 'No'
+    inGroup: 'No',
+    numHackathons: 6,
+    college: 'UTD',
+    skills: ['React Native', 'Node.js', 'Firebase'],
+    desiredQualities: ['Independent', 'Efficient'],
   },
   {
     id: 7,
@@ -63,7 +85,11 @@ const mockUsers = [
     bio: 'Exploring frontend performance optimization.',
     year: 'Freshman',
     type: 'Frontend',
-    inGroup: 'No'
+    inGroup: 'No',
+    numHackathons: 1,
+    college: 'UTD',
+    skills: ['JavaScript', 'Chrome DevTools'],
+    desiredQualities: ['Curious', 'Problem Solver'],
   },
   {
     id: 8,
@@ -71,7 +97,11 @@ const mockUsers = [
     bio: 'Specializes in serverless backend systems.',
     year: 'Senior',
     type: 'Backend',
-    inGroup: 'No'
+    inGroup: 'No',
+    numHackathons: 4,
+    college: 'Texas State',
+    skills: ['AWS Lambda', 'Node.js', 'MongoDB'],
+    desiredQualities: ['Organized', 'Strategic'],
   },
   {
     id: 9,
@@ -79,7 +109,11 @@ const mockUsers = [
     bio: 'Fullstack hacker & hackathon regular.',
     year: 'Sophomore',
     type: 'Fullstack',
-    inGroup: 'No'
+    inGroup: 'No',
+    numHackathons: 7,
+    college: 'UT Austin',
+    skills: ['React', 'Firebase', 'Node.js'],
+    desiredQualities: ['Energetic', 'Collaborative'],
   },
   {
     id: 10,
@@ -87,7 +121,11 @@ const mockUsers = [
     bio: 'Frontend dev who loves animations and CSS art.',
     year: 'Junior',
     type: 'Frontend',
-    inGroup: 'Yes'
+    inGroup: 'Yes',
+    numHackathons: 3,
+    college: 'UTD',
+    skills: ['CSS', 'GSAP', 'HTML'],
+    desiredQualities: ['Creative', 'Detail-Oriented'],
   },
   {
     id: 11,
@@ -95,7 +133,11 @@ const mockUsers = [
     bio: 'Backend-focused but learning frontend.',
     year: 'Senior',
     type: 'Backend',
-    inGroup: 'Yes'
+    inGroup: 'Yes',
+    numHackathons: 5,
+    college: 'UTD',
+    skills: ['Node.js', 'SQL', 'React'],
+    desiredQualities: ['Versatile', 'Quick Learner'],
   },
   {
     id: 12,
@@ -103,18 +145,22 @@ const mockUsers = [
     bio: 'Fullstack developer building portfolio projects.',
     year: 'Freshman',
     type: 'Fullstack',
-    inGroup: 'No'
+    inGroup: 'No',
+    numHackathons: 2,
+    college: 'UTD',
+    skills: ['React', 'MongoDB', 'Node.js'],
+    desiredQualities: ['Initiative', 'Collaborative'],
   },
 ];
 
 const Explore = () => {
-  //need to add more filters
-  //need to align filtering with backend data points!
+  //three filters to filter users by for now
   const [yearFilter, setYearFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [groupFilter, setGroupFilter] = useState('');
   const [page, setPage] = useState(0);
   const usersPerPage = 9;
+  const navigate = useNavigate();
 
   const filteredUsers = mockUsers.filter((user) => {
     return (
@@ -124,12 +170,19 @@ const Explore = () => {
     );
   });
 
+  //handle overflow of users via pagination
   const paginatedUsers = filteredUsers.slice(
     page * usersPerPage,
     (page + 1) * usersPerPage
   );
 
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+
+  //when clicked take to the uniquely constructed porfile view 
+  const handleUserClick = (user) => {
+    navigate(`/profile/${user.id}`, { state: {user} });
+  };
+  
 
   return (
     <div className="explore-container">
@@ -158,14 +211,13 @@ const Explore = () => {
         </select>
       </div>
 
-
       <div className="card-grid">
         {paginatedUsers.map((user) => (
-          <div className="card" key={user.id}>
+          <div className="card" key={user.id} onClick={() => handleUserClick(user)}>
             <img
-            src={user.imageUrl || blankProfile}
-            alt={user.name}
-            className="user-image"
+              src={user.imageUrl || blankProfile}
+              alt={user.name}
+              className="user-image"
             />
             <h3>{user.name}</h3>
             <p>{user.bio}</p>

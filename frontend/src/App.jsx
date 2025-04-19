@@ -39,6 +39,7 @@ function App() {
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/profileView" element={<ProfileView />} />
           <Route path="/exploreGroup" element={<ExploreGroup />} />
+          <Route path="/profile/:id" element={<ProfileView />} />
         </Route>
       </Routes>
     </Router>
