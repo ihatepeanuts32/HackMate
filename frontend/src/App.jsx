@@ -18,6 +18,8 @@ import Groups from './pages/Groups';
 import ExploreGroup from './pages/ExploreGroup';
 import CreateGroup from './pages/CreateGroup';
 import BlockedUsers from './pages/BlockedUsers';
+import AccountDetails from './pages/AccountDetails';
+import PrivacySettings from './pages/PrivacySettings';
 
 function App() {
   return (
@@ -44,6 +46,8 @@ function App() {
           <Route path="/createGroup" element={<CreateGroup />} />
           <Route path="/blockedUsers" element={<BlockedUsers />} />
           <Route path="/profile/:id" element={<ProfileView />} />
+          <Route path="/account" element={<AccountDetails />} />
+          <Route path="/privacy" element={<PrivacySettings />} />
         </Route>
       </Routes>
     </Router>
