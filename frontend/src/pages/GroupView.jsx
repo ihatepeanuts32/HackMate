@@ -1,37 +1,85 @@
 import React from 'react';
 import '../styles/GroupView.css';
+import hackmateLogo from "../assets/hackmateLogo.png"
 
 //Created by Hrishikesh Srirangam
 const GroupView = () => {
-
     return (
-        <div className="groupViewContainer">
-            <div className="headerContainer">
-                <header className="groupName">
-                    <h1 style={{ textAlign: 'left' }}>Group 1</h1>
-                </header>
-                <input type="text" className="inputs" name="message" placeholder="Message owner" />  {/*Allow the user to send a message to the group owner with their request to join*/}
-                <button className="requestButton">Request to Join</button>
+        <div className="group-view">
+            {/* Hero Section with Background Image */}
+            <div className="hero-section">
+                <div className="group-header">
+                    <div className="group-avatar">
+                        {/* Group icon/avatar */}
+                    </div>
+                    <h1>Group 1</h1>
+                    <div className="group-actions">
+                        <button className="btn-request">
+                            <span className="icon-user-plus"></span>
+                            Request to Join
+                        </button>
+                        <button className="btn-contact">
+                            <span className="icon-message"></span>
+                            Contact Us
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div className="bottomBackground" style={{ display: 'flex' }}> 
-                <div style ={{ flex: 1, padding: '1rem', backgroundColor: '#1C0049' }}>
-                    <header className="description">
-                        <h2 style={{ textAlign: 'left' }}>Description</h2>
-                    </header> {/*The description of the group is shown here*/}
-                    <h2 style={{ textAlign: 'left', color: 'white', fontSize: 40 }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi ut risus augue. Morbi consectetur dolor dignissim, convallis enim eget, suscipit mauris. Quisque massa libero, maximus eget tincidunt sed, finibus a mi. Aenean sed hendrerit lorem, sed rutrum magna. Sed a sapien ut arcu laoreet tempus.</h2>
+
+            {/* Main Content */}
+            <div className="content-section">
+                <div className="description-section">
+                    <h2>Description</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce molestie 
+                        ultricies urna, nec vehicula purus porttitor id. Nullam porta ligula 
+                        eget mi finibus, finibus mollis libero tincidunt.
+                    </p>
+                    
+                    {/* Skills/Tags */}
+                    <div className="skills-container">
+                        <span className="skill-tag engineering">Engineering</span>
+                        <span className="skill-tag ui-ux">UI/UX</span>
+                        <span className="skill-tag casual">Casual</span>
+                        <span className="skill-tag tech">React.js</span>
+                        <span className="skill-tag tech">Next.js</span>
+                    </div>
                 </div>
 
-                <div style ={{ flex: 1, padding: '1rem', backgroundColor: '#1C0049' }}>
-                    <header className="description">
-                        <h2 style={{ textAlign: 'left' }}>Members</h2> {/*List the members of the group*/}
-                    </header>
-                    <li style={{color: 'white'}}><h2 style={{ textAlign: 'left', color: 'white', fontSize: 40}}>Member 1</h2></li> 
-                    <li style={{color: 'white'}}><h2 style={{ textAlign: 'left', color: 'white', fontSize: 40 }}>Member 2</h2></li> 
-                    <li style={{color: 'white'}}><h2 style={{ textAlign: 'left', color: 'white', fontSize: 40 }}>Member 3</h2></li> 
+                <div className="members-section">
+                    <h2>Members</h2>
+                    <div className="members-list">
+                        <div className="member-card">
+                            <div className="member-avatar"></div>
+                            <div className="member-info">
+                                <h3>Rajit Goel</h3>
+                                <span className="member-role">Leader</span>
+                            </div>
+                            <button className="btn-message"></button>
+                        </div>
+
+                        <div className="member-card">
+                            <div className="member-avatar"></div>
+                            <div className="member-info">
+                                <h3>Earl Velasquez</h3>
+                                <span className="member-role">Member</span>
+                            </div>
+                            <button className="btn-message"></button>
+                        </div>
+
+                        <div className="member-card">
+                            <div className="member-avatar"></div>
+                            <div className="member-info">
+                                <h3>Ifrah Zainab</h3>
+                                <span className="member-role">Member</span>
+                            </div>
+                            <button className="btn-message"></button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
 export default GroupView;

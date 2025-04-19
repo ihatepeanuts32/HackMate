@@ -1,30 +1,165 @@
 .navbar {
-    background-color: #1C0049; 
-    padding: 2px;
+    background-color: #1C0049;
+    padding: 1rem 2rem;
     position: fixed;
-    top: 0px;
-    width: 100%;  /* Ensure the navbar takes up the full width */
+    top: 0;
     left: 0;
-  }
-  
-  .navbar ul {
-    list-style-type: none;
-    padding: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.nav-content {
     display: flex;
-    justify-content: space-around;
-  }
-  
-  .navbar li {
-    padding: 5px 10px;
-  }
-  
-  .navbar a {
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-left: 0;
+}
+
+.nav-left h1 {
+    color: white;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+.logo {
+    height: 40px;
+    width: auto;
+}
+
+/* Hamburger Button */
+.hamburger-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1002;
+}
+
+.hamburger-icon {
+    width: 24px;
+    height: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger-icon span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    transition: all 0.3s ease;
+    transform-origin: center;
+}
+
+.hamburger-icon.open span:first-child {
+    transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger-icon.open span:nth-child(2) {
+    opacity: 0;
+    transform: scale(0);
+}
+
+.hamburger-icon.open span:last-child {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* Sliding Menu */
+.slide-menu {
+    position: fixed;
+    top: 0;
+    right: -500px;
+    width: 300px;
+    height: 100vh;
+    background-color: #2A0066;
+    transition: right 0.3s ease;
+    z-index: 1001;
+    padding: 4rem 2rem 2rem 2rem;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.slide-menu.open {
+    right: 0;
+}
+
+.menu-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    padding: 1rem;
+}
+
+.menu-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     color: white;
     text-decoration: none;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-  .navbar a:hover {
-    color: purple;
-  }
-  
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.menu-item:hover {
+    background-color: rgba(255, 105, 180, 0.1);
+}
+
+.menu-item .icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem;
+    }
+
+    .nav-left h1 {
+        font-size: 1.2rem;
+    }
+
+    .logo {
+        height: 32px;
+    }
+
+    .slide-menu {
+        width: 100%;
+        right: -100%;
+    }
+}
+
+.nav-left h1 strong {
+  font-weight: 700;
+}
+.nav-left h1 .mate {
+  font-weight: 400; /* or 300 for extra contrast */
+}
