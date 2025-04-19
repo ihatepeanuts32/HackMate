@@ -114,6 +114,14 @@ const Navbar = () => {
             <span className="icon">🔍</span>
             explore
           </Link>
+          <Link to="/createGroup" className="menu-item">
+            <span className="icon">🔍</span>
+            create a group
+          </Link>
+          <Link to="/blockedUsers" className="menu-item">
+            <span className="icon">🔍</span>
+            blocked users
+          </Link>
         </div>
       </div>
     </>
