@@ -4,6 +4,8 @@ import hackmateLogo from "../assets/hackmateLogo.png"
 import CardCarousel from '../components/CardCarousel';
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from 'react-router-dom';
+
 
 const Home = () => {
     const [hackathons, setHackathons] = useState([]);
@@ -57,7 +59,9 @@ const Home = () => {
                 <h4 style={{ padding:15}}>Ready to Find your Perfect Hackathon Group?</h4>
                 <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
                 <div className="split-row">
-                    <button className="link-button">Find Fellow Hackers</button>
+                    <Link to="/explore">
+                        <button className="link-button">Find Fellow Hackers</button>
+                    </Link>
                     <button className="link-button">Find Groups to Join</button>
                 </div>
                 </div>

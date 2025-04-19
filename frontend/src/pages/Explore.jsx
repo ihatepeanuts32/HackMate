@@ -1,11 +1,12 @@
 // Ifrah
 // Description: Explore page to find other users
 import hackmateLogo from "../assets/hackmateLogo.png"
+import blankProfile from "../assets/profile.png"   
 import React, { useState } from 'react';
 import '../styles/Explore.css';
 
 
-//test data for now
+//test data for now, should add to our database
 //need to add image urls later, auto set to "No Image Available"
 const mockUsers = [
   {
@@ -14,6 +15,7 @@ const mockUsers = [
     bio: 'Frontend enthusiast who loves React.',
     year: 'Freshman',
     type: 'Frontend',
+    inGroup: 'Yes'
   },
   {
     id: 2,
@@ -21,6 +23,7 @@ const mockUsers = [
     bio: 'Backend wizard working with Node.js.',
     year: 'Sophomore',
     type: 'Backend',
+    inGroup: 'No'
   },
   {
     id: 3,
@@ -28,6 +31,7 @@ const mockUsers = [
     bio: 'Fullstack dev passionate about UX and APIs.',
     year: 'Junior',
     type: 'Fullstack',
+    inGroup: 'No'
   },
   {
     id: 4,
@@ -35,6 +39,7 @@ const mockUsers = [
     bio: 'Loves working on backend services and DevOps.',
     year: 'Senior',
     type: 'Backend',
+    inGroup: 'Yes'
   },
   {
     id: 5,
@@ -42,6 +47,7 @@ const mockUsers = [
     bio: 'Building responsive UI with Vue and React.',
     year: 'Sophomore',
     type: 'Frontend',
+    inGroup: 'No'
   },
   {
     id: 6,
@@ -49,6 +55,7 @@ const mockUsers = [
     bio: 'Enjoys building full apps solo – front to back!',
     year: 'Junior',
     type: 'Fullstack',
+    inGroup: 'No'
   },
   {
     id: 7,
@@ -56,6 +63,7 @@ const mockUsers = [
     bio: 'Exploring frontend performance optimization.',
     year: 'Freshman',
     type: 'Frontend',
+    inGroup: 'No'
   },
   {
     id: 8,
@@ -63,6 +71,7 @@ const mockUsers = [
     bio: 'Specializes in serverless backend systems.',
     year: 'Senior',
     type: 'Backend',
+    inGroup: 'No'
   },
   {
     id: 9,
@@ -70,6 +79,7 @@ const mockUsers = [
     bio: 'Fullstack hacker & hackathon regular.',
     year: 'Sophomore',
     type: 'Fullstack',
+    inGroup: 'No'
   },
   {
     id: 10,
@@ -77,6 +87,7 @@ const mockUsers = [
     bio: 'Frontend dev who loves animations and CSS art.',
     year: 'Junior',
     type: 'Frontend',
+    inGroup: 'Yes'
   },
   {
     id: 11,
@@ -84,6 +95,7 @@ const mockUsers = [
     bio: 'Backend-focused but learning frontend.',
     year: 'Senior',
     type: 'Backend',
+    inGroup: 'Yes'
   },
   {
     id: 12,
@@ -91,6 +103,7 @@ const mockUsers = [
     bio: 'Fullstack developer building portfolio projects.',
     year: 'Freshman',
     type: 'Fullstack',
+    inGroup: 'No'
   },
 ];
 
@@ -99,13 +112,15 @@ const Explore = () => {
   //need to align filtering with backend data points!
   const [yearFilter, setYearFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
+  const [groupFilter, setGroupFilter] = useState('');
   const [page, setPage] = useState(0);
   const usersPerPage = 9;
 
   const filteredUsers = mockUsers.filter((user) => {
     return (
       (!yearFilter || user.year === yearFilter) &&
-      (!typeFilter || user.type === typeFilter)
+      (!typeFilter || user.type === typeFilter) &&
+      (!groupFilter || user.inGroup === groupFilter)
     );
   });
 
@@ -118,7 +133,7 @@ const Explore = () => {
 
   return (
     <div className="explore-container">
-      <h3 style={{ paddingTop:60 }}>Explore Users</h3>
+      <h3>Explore Users</h3>
 
       <div className="filters">
         <select value={yearFilter} onChange={(e) => { setPage(0); setYearFilter(e.target.value); }}>
@@ -130,17 +145,28 @@ const Explore = () => {
         </select>
 
         <select value={typeFilter} onChange={(e) => { setPage(0); setTypeFilter(e.target.value); }}>
-          <option value="">All Types</option>
+          <option value="">All Developer Types</option>
           <option value="Frontend">Frontend</option>
           <option value="Backend">Backend</option>
           <option value="Fullstack">Fullstack</option>
         </select>
+
+        <select value={groupFilter} onChange={(e) => { setPage(0); setGroupFilter(e.target.value); }}>
+          <option value="">All Status</option>
+          <option value="Yes">In Group</option>
+          <option value="No">Not In Group</option>
+        </select>
       </div>
+
 
       <div className="card-grid">
         {paginatedUsers.map((user) => (
           <div className="card" key={user.id}>
-            <div className="no-image">No image available</div>
+            <img
+            src={user.imageUrl || blankProfile}
+            alt={user.name}
+            className="user-image"
+            />
             <h3>{user.name}</h3>
             <p>{user.bio}</p>
           </div>
