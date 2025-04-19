@@ -205,6 +205,7 @@
 
 .member-avatar {
     height: 80px;
+    width: 80px;
     border-radius: 50%;
 }
 
@@ -223,8 +224,8 @@
 }
 
 .message-btn {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     border: none;
     background-color: #FF69B4;
@@ -236,8 +237,7 @@
 }
 
 .message-btn img {
-    width: 20px;
-    height: 20px;
+    height: 30px;
 }
 
 .message-btn:hover {

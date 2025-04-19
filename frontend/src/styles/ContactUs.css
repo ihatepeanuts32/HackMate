@@ -1,0 +1,151 @@
+.contact-page {
+    min-height: 100vh;
+    background-color: #1C0049;
+    color: white;
+    padding: 2rem;
+}
+
+.contact-page h1 {
+    text-align: center;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+}
+
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.contact-form-section {
+    background-color: #2A0066;
+    padding: 2rem;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.contact-form-section h2 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-input {
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #3A0088;
+    color: white;
+    font-size: 1.1rem;
+}
+
+.contact-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.message-input {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.contact-button {
+    padding: 1rem;
+    border-radius: 8px;
+    border: none;
+    background-color: #9333EA;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 200px;
+    margin: 0 auto;
+}
+
+.contact-button:hover {
+    background-color: #A855F7;
+}
+
+.team-section {
+    padding: 2rem;
+}
+
+.team-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5rem;
+    justify-items: center;
+}
+
+@media (max-width: 1024px) {
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .team-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
+
+.team-member-card {
+    background-color: #2A0066;
+    border-radius: 15px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 350px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.team-member-card:hover {
+    transform: translateY(-5px);
+}
+
+.contact-member-avatar {
+    width: 120px;
+    height: 120px;
+    background-color: #3A0088;
+    border-radius: 50%;
+    margin: 0 auto 1.5rem;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.member-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.team-member-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0;
+}
+
+.team-member-card p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    line-height: 1.4;
+} 

@@ -94,7 +94,7 @@ const Navbar = () => {
             <span className="icon">👥</span>
             groups
           </Link>
-          <Link to="/support" className="menu-item">
+          <Link to="/contact" className="menu-item">
             <span className="icon">📞</span>
             support
           </Link>
