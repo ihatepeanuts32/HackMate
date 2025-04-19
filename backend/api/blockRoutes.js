@@ -10,21 +10,21 @@ import jwt from "jsonwebtoken";
  * Access: Private (requires authentication of user before initiating)
  * 
  */
-router.put("/:userID/unblock/:id", async(req,res) =>
+router.put("/:userId/unblock/:id", async(req,res) =>
 {
     try{
-        if(userID = verifyToken(token)) //send token for verification, errors if failed to verify
+        if(userId == verifyToken(token)) //send token for verification, errors if failed to verify
         {
             const existingUser = await User.findOne({ id });
 
             if (!existingUser) {
                 return res.status(400).json({ message: "User doesnt exist"});
             }
-            if(!isBlocked(userID, id))
-                insertUser(userID, id);
+            if(!isBlocked(userId, id))
+                insertUser(userId, id);
         }
         else    
-            return res.status(500).json({ message: "userID didnt match token" });
+            return res.status(500).json({ message: "userId didnt match token" });
     }
     catch(error)
     {
@@ -39,20 +39,20 @@ router.put("/:userID/unblock/:id", async(req,res) =>
  * 
  */
 
-router.put("/:userID/block/:id", async(req, res) => {
+router.put("/:userId/block/:id", async(req, res) => {
     try{
-        if(userID = verifyToken(token)) //send token for verification, errors if failed to verify
+        if(userId = verifyToken(token)) //send token for verification, errors if failed to verify
         {
             const existingUser = await User.findOne({ id });
 
             if (!existingUser) {
                 return res.status(400).json({ message: "User doesnt exist"});
             }
-            if(isBlocked(userID, id))
-                unblockUser(userID, id);
+            if(isBlocked(userId, id))
+                unblockUser(userId, id);
         }
         else    
-            return res.status(500).json({ message: "userID didnt match token" });
+            return res.status(500).json({ message: "userId didnt match token" });
 
     }
     catch(error)

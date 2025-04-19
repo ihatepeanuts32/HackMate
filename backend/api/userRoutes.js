@@ -1,21 +1,26 @@
 import express from "express";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
+import { verifyToken } from '../utils/verifyToken.js';
 
 const router = express.Router();
 
 /**
- * Utility function to verify JWT token from request header
+ * Earl - Debug method for testing to list all user
  */
-const verifyToken = (req) => {
-    try {
-        const token = req.headers.authorization?.split(' ')[1];
-        if (!token) return null;
-        return jwt.verify(token, process.env.JWT_SECRET);
-    } catch(error) {
-        return null;
+router.get('/getUsers', async (req,res) =>
+{
+    try{
+        const users = await User.find({});
+        res.status(200).json(users);
     }
-};
+    catch(error){
+        console.error('Error fetching products:', error); // Logs the error to the server console
+        res.status(500).json({ message: 'Server error' }); // Sends a response to the client    
+    }
+})
+
+
 
 /**
  * Rajit - Description: Search for users

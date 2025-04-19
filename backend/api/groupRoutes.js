@@ -2,6 +2,7 @@ import express from "express";
 import Group from "../models/Group.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken"; 
+import { verifyToken } from '../utils/verifyToken.js';
 
 const router = express.Router(); 
 
@@ -11,43 +12,50 @@ const router = express.Router();
  * @returns {Object | null} - Decoded token or null if invalid 
  */ 
 
-const verifyToken = (req) => {
-    try {
+/**
+ * Earl - Description: Test - Get Groups to see all of them (debug) 
+ * Access: Private (requires authetication)
+ */
 
-
-    } catch(error){
-        return null; 
+router.get('/test_get_groups', async(req,res) =>{
+    try{
+        const groups = await Group.find({});
+        res.status(200).json(groups);
     }
-}; 
+    catch(error){
+        console.error('Error fetching products:', error); // Logs the error to the server console
+        res.status(500).json({ message: 'Server error' }); // Sends a response to the client    
+    }
+})
 
 /**
- * Saivishaal - Description: Creates a new hackathon group 
+ * Saivishaal, Earl - Description: Creates a new hackathon group 
  * Access: Private (requires authetication)
  */
 
 router.post('/create', async(req, res) => {
-
     try{
         // Step 1: Verify the user's token 
-
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
+        
         // Step 2: Extract group details from request body 
-
         const {name, description, skills, isPublic} = req.body; 
 
         // Step 3: Validate required fields 
-
         if(!name || !description)
         {
             return res.status(400).json({message: "REQUIRED: Name and Description"}); 
         }
 
         // Step 4: Create new group with the authenticated user as owner 
-
         const newGroup = new Group({
-            name, 
-            description, 
-            owner: decoded.userID, // Set from decoded token
-            members: [decoded.userID], // Owner is a member 
+            name: name, 
+            description: description, 
+            owner: decoded.userId, // Set from decoded token
+            members: [decoded.userId], // Owner is a member 
             skills: skills || [], // Default is empty array 
             isPublic: isPublic !== undefined ? isPublic:true // Default is Public
         })
@@ -55,6 +63,12 @@ router.post('/create', async(req, res) => {
         // Step 5: Save the group to the database 
 
         await newGroup.save(); 
+
+        return res.status(201).json({
+            message: "Group created successfully",
+            group: newGroup
+          });
+
 
         // Step 6: Return success response with the created group 
 
@@ -69,45 +83,58 @@ router.post('/create', async(req, res) => {
 }); 
 
 /**
- * Saivishaal - Description: Updates group details 
+ * Earl - Description: Updates group details 
  * Access: Private(requires authentication and ownership)
  */
 
-router.put('/:id', async (req, res) =>{
+router.put('/:groupId/update/', async (req, res) =>{
     try {
         // Step 1: Verify the user's token 
-
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
+        
         // Step 2: Extract update fields from request body 
-
-        const {name, description, skills, isPublic} = req.body;        
+        const {name, description, skills, isPublic, groupType, maxCapacity} = req.body;        
 
         // Step 3: Find the group by ID. Else return the message(Group not found) if group not found
 
-        const group = await Group.findById(req.params.id); 
+        const group = await Group.findById(req.params.groupId); 
         if(!group)
         {
             return res.status(404).json({message: "Group not found"}); 
         }
 
         // Step 4: Check if the authticated user is the owner 
-
-        if(group.owner.toString() !== decoded.userID)
-        {
+        if(group.owner.toString() !== decoded.userId)
             return res.status(403).json({message: "Only group owner can update group details."}); 
-        }
+
 
         // Step 5: Update fields if provided(name, description, skills, visibility) and then save the updates 
-
         if(name !== undefined) group.name = name; 
         if(description !== undefined) group.description = description; 
         if(skills !== undefined) group.skills = skills; 
         if(typeof isPublic == "boolean") group.isPublic = isPublic; 
+        if(groupType !== undefined) group.groupType = groupType;
+        if(maxCapacity !== undefined)
+        {
+            if(maxCapacity < group.members.length)
+            {
+                throw new Error("Max Capacity must be greater than or equal to current number of members in the group")
+            }
+            else
+                group.maxCapacity = maxCapacity;
+        }
 
         await group.save() // Saves the updated group
 
         // Step 6: Return with success response 
+        return res.status(201).json({
+            message: "Group updated successfully",
+          });
 
-    }catch{
+    }catch(error){
         // Handle any errors that occur during updating 
         return res.status(500).json({
             message: "Failed to update group", 
@@ -116,98 +143,217 @@ router.put('/:id', async (req, res) =>{
     }
 }); 
 
+
+
 /**
- * Saivishaal - Description: Removes a member from the group 
+ * Helper Functions for all delete related items
+ */
+const removeMember = async (groupId, targetId, userId) => {
+    const group = await Group.findById(groupId); 
+    if(!group) throw new Error("Group Not Found");
+
+    const c_user = await User.findById(userId); 
+    if(!c_user) throw new Error("Current user not found");
+
+    const exists = await User.findById(targetId);
+    if(!exists) throw new Error("Target user not found");
+    
+    //Check if target member part of group
+    const member = group.members.find(m => m.toString() === targetId);
+    if(!member) throw new Error("Target user not in Group");
+    
+
+    //If user removing someone is either the current group owner, or if user is the target (ie removing themselves)
+    if((c_user._id.toString() === group.owner.toString() || userId === targetId))
+    {
+        if(member.toString() === group.owner.toString())
+        {
+            throw new Error("Transfer Leadership First");
+        }
+        else
+        {
+            group.members = group.members.filter(m => m.toString() !== targetId)
+            await group.save();
+
+            return({message: "Successfully removed member"});
+        }
+    }
+    else
+        throw new Error("User lacks permissions to remove target user");
+    throw new Error("Unknown Error");
+}
+const deleteGroup = async (groupId, userId) =>
+{
+    const c_user = await User.findById(userId); 
+    if(!c_user) throw new Error("Current user not found");
+
+    const group = await Group.findById(groupId);
+    if(!group) throw new Error("Group not found");
+    
+    if(group.owner.toString() !== userId)
+        throw new Error("Current user is not Group Owner");
+
+    await Group.findByIdAndDelete(groupId);
+
+    return { message: 'Group deleted' };
+}
+
+/**
+ * Earl - Description: Removes a member from the group 
  * Access: Private(requires authetication and either ownership or self-removal)
  */
-router.delete('/:id/members/:userId', async (req, res) => {
+router.delete('/:groupId/remove_member', async (req, res) => {
     try{
         // Step 1: Verify the user's token 
-        // Step 2: Find the group by ID. Return message if group not found
-        // Step 3: Check if the authenticated user is the owner or the member being removed 
-        // Step 4: Check if user is the owner and trying to remove themselves 
-        // Step 5: Remove user from members array and save the update
-        // Step 6: Return with success response 
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
+        const {memberId} = req.body;
+
+        await removeMember(req.params.groupId, memberId, decoded.userId);
+                
+        return res.status(201).json({
+            message: "Member removed successfully",
+          });
+
+    }catch(error){
+        // Handles any errors that occur during removal 
+        return res.status(500).json({
+            message: "Unable to remove member", 
+            error: error.message
+        }); 
+    }
+}); 
+/**
+ * Earl - Description: Delete groups
+ * Access: Private(requires authetication and either ownership or self-removal)
+ */
+router.delete('/:groupId/delete_group', async (req, res) => {
+    try{
+        // Step 1: Verify the user's token 
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
+
+        await deleteGroup(req.params.groupId, decoded.userId);
+            
+        return res.status(201).json({
+            message: "Group deleted successfully"
+            });
+
+        }catch(error){
+            // Handles any errors that occur during removal 
+            return res.status(500).json({
+                message: "Unable to delete group", 
+                error: error.message
+            }); 
+        }
+}); 
+
+/**
+ * 
+ * Earl - Clear all group members: For testing
+ */
+router.delete('/clear', async (req, res) => {
+    try{
+
+        const result = await Group.deleteMany({});
+        return res.status(200).json({
+            message: '${result.deletedCount} groups deleted successfully.'
+        });
 
     }catch{
         // Handles any errors that occur during removal 
     }
 }); 
 
+
+
 /**
- * Saivishaal - Description: Transfers group ownership to another member
+ * Earl - Description: Transfers group ownership to another member
  * Access: Private (requires authentication and ownership)
  */
-router.post('/:id/transfer-ownership', async (req, res) => {
+router.put('/:groupId/transfer_ownership', async (req, res) => {
     try {
-        // Step 1: Verify the user's token 
-        // Step 2: Extract new owner ID from request body 
-        // Step 3: Validate new owner ID 
-        // Step 4: Find the group by ID. Return message if group cannot be found 
-        // Step 5: Check if the authicated user is the current owner
-        // Step 6: Check if the new owner is a member of the group 
-        // Step 7: Update the owner 
-        // Step 8: Save the updated group
-        // Step 9: Return success response 
-
-    }catch{
-        // Handle any errors that occur during ownership transfer
-
-    }
-}); 
-
-/**
- * Saivishaal - Description: Deletes a group 
- * Access: Private(requires authetication and ownership)
- */
-router.delete('/:id', async (req, res) => {
-    try{
-        // Step 1: Verify the user's token 
-        // Step 2: Find the group by ID. Return message if group not found
-        // Step 3: Check if the authenticated user is the owner 
-        // Step 4: Delete the group
-        // Step 5: Return success response 
-    }catch{
-        // Handle any errors that occur during deletion 
-    }
-}); 
-
-/**
- * Rajit - Description: Allows a user to join a hackathon group
- * Access: Private (requires authentication)
- */
-router.post('/:id/join', async (req, res) => {
-    try {
-        // Step 1: Verify the user's token
+        const {targetId} = req.body;
+        const group = await Group.findById(req.params.groupId); 
+        if(!group) throw new Error("Group Not Found");
+    
         const decoded = verifyToken(req);
         if (!decoded) {
             return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
         }
+    
+        if(decoded.userId.toString() !== group.owner.toString())
+            throw new Error("To transfer leadership, you must be the owner");
 
-        // Step 2: Find the group by ID
-        const group = await Group.findById(req.params.id);
-        if (!group) {
-            return res.status(404).json({ message: "Group not found" });
-        }
+        if(targetId.toString() === decoded.userId.toString())
+            throw new Error("Transfer targetting the same user (could be owner)")
 
-        // Step 3: Check if user is already a member
-        if (group.members.includes(decoded.userId)) {
-            return res.status(400).json({ message: "You are already a member of this group" });
-        }
-
-        // Step 4: Add user to members array
-        group.members.push(decoded.userId);
+        const exists = await User.findById(targetId);
+        if(!exists) throw new Error("Target user not found");
+        
+        //Check if target member part of group
+        const member = group.members.find(m => m.toString() === targetId);
+        if(!member) throw new Error("Target user not in Group");
+        
+        group.owner = member._id;
         await group.save();
 
-        // Step 5: Return success response
-        res.status(200).json({ 
-            message: "Successfully joined the group",
-            group: group
-        });
-    } catch (error) {
-        res.status(500).json({ message: "Error joining group", error: error.message });
+        return res.status(201).json({
+            message: "Ownership transferred sucessfully"
+            });
+
+    }catch(error){
+        // Handle any errors that occur during ownership transfer
+        
+        return res.status(500).json({
+            message: "Ownership couldn't be transferred", 
+            error: error.message
+        }); 
     }
-});
+}); 
+
+router.put('/test_transfer_ownership/:groupId/:targetId/:userId', async (req, res) => {
+    try{
+        const group = await Group.findById(req.params.groupId); 
+        if(!group) throw new Error("Group Not Found");
+    
+        const c_user = await User.findById(req.params.userId); 
+        if(!c_user) throw new Error("Current user not found");
+    
+        if(c_user._id.toString() !== group.owner.toString())
+            throw new Error("To transfer leadership, you must be the owner");
+
+        if(req.params.targetId === req.params.userId)
+            throw new Error("Transfer targetting the same user (could be owner)")
+
+        const exists = await User.findById(req.params.targetId);
+        if(!exists) throw new Error("Target user not found");
+        
+        //Check if target member part of group
+        const member = group.members.find(m => m.toString() === req.params.targetId);
+        if(!member) throw new Error("Target user not in Group");
+
+        group.owner = member._id;
+        await group.save();
+
+        return res.status(201).json({
+            message: "Ownership transferred sucessfully"
+            });
+
+    }catch(error){
+        // Handle any errors that occur during ownership transfer
+        
+        return res.status(500).json({
+            message: "Ownership couldn't be transferred", 
+            error: error.message
+        }); 
+    }
+}); 
+
 
 /**
  * Rajit - Description: Search for groups
@@ -277,19 +423,6 @@ router.get('/search', async (req, res) => {
     }
 });
 
-/** Archive for Grouping
-router.get('/search', async (req, res) => {
-    try {
-        // Step 1: Extract query, skills, and groupType from request query params
-        // Step 2: Build MongoDB search filter
-        // Step 3: Query groups with filters, populate relevant fields
-        // Step 4: Return results or handle error
-    } catch (error) {
-        res.status(500).json({ message: "Error searching groups", error: error.message });
-    }
-});
-*/
-
 /**
  * Rajit - Description: Get group details
  * Access: Public
@@ -313,10 +446,10 @@ router.get('/:id', async (req, res) => {
 });
 
 /**
- * Rajit - Description: Request to join a group
+ * Rajit, Earl - Description: Request to join a group
  * Access: Private (requires authentication)
  */
-router.post('/:id/request-join', async (req, res) => {
+router.post('/:groupId/request_join/', async (req, res) => {
     try {
         // Step 1: Verify the user's token
         const decoded = verifyToken(req);
@@ -324,16 +457,16 @@ router.post('/:id/request-join', async (req, res) => {
             return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
         }
         // Step 2: Find the group by ID
-        const group = await Group.findById(req.params.id);
-        if (!group) {
+        const group = await Group.findById(req.params.groupId);
+        if (!group) 
             return res.status(404).json({ message: "Group not found" });
-        }
+        
         // Step 3: Check if user is already a member or has a pending request
-        if (group.members.includes(decoded.userId)) {
-            return res.status(400).json({ message: "You are already a member of this group" });
-        }
+        const c_member = await group.members.find(m => m._id.toString() === decoded.userId.toString());
+        if(c_member) throw new Error("Target user is already in group");
+
         const existingRequest = group.joinRequests.find(
-            request => request.user.toString() === decoded.userId && request.status === 'pending'
+            request => request.user.toString() === decoded.userId.toString() && request.status === 'pending'
         );
         if (existingRequest) {
             return res.status(400).json({ message: "You already have a pending request to join this group" });
@@ -346,17 +479,20 @@ router.post('/:id/request-join', async (req, res) => {
             
             group.members.push(decoded.userId);
             await group.save();
+            
             // Step 6: Save group and return response
             return res.status(200).json({ 
                 message: "Successfully joined the group",
                 group: group
             });
         }
+
         // Step 5: If invite-only, add a join request
         group.joinRequests.push({
             user: decoded.userId,
             message: req.body.message || ''
         });
+
         await group.save();
         // Step 6: Save group and return response
         res.status(200).json({ 
@@ -369,36 +505,57 @@ router.post('/:id/request-join', async (req, res) => {
 });
 
 /**
- * Rajit - Description: Handle join request (approve/reject)
+ * Rajit, Earl - Description: Handle join request (approve/reject)
  * Access: Private (requires group owner authentication)
  */
-router.post('/:id/join-requests/:requestId', async (req, res) => {
+router.put('/:groupId/request_manage/', async (req, res) => {
     try {
         // Step 1: Verify the user's token
         const decoded = verifyToken(req);
         if (!decoded) {
             return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
         }
-        // Step 2: Extract action from request body
-        const { action } = req.body;
-        if (!['approve', 'reject'].includes(action)) {
+        const { action, requestId } = req.body;
+
+        if (!['approve', 'reject', 'delete'].includes(action)) {
             return res.status(400).json({ message: "Invalid action" });
         }
+
         // Step 3: Validate group and request existence
-        const group = await Group.findById(req.params.id);
+        const group = await Group.findById(req.params.groupId);
         if (!group) {
             return res.status(404).json({ message: "Group not found" });
         }
-        // Step 4: Check group owner authorization
-        if (group.owner.toString() !== decoded.userId) {
+
+        /// Step 4: Check group owner authorization
+        if (group.owner.toString() !== decoded.userId.toString()) {
             return res.status(403).json({ message: "Only the group owner can handle join requests" });
         }
+
         // Step 5: Handle approval (check capacity, add member) or rejection
-        const request = group.joinRequests.id(req.params.requestId);
+        const request = group.joinRequests.id(requestId);
         if (!request) {
             return res.status(404).json({ message: "Join request not found" });
         }
-        // Step 6: Update request status and save group
+
+        //Step 6: Ensure If user already in group, delete the request, avoid redudnacy
+        const c_member = await group.members.find(m => m.toString() === requestId.toString());
+        if(c_member) {
+            group.joinRequests = group.joinRequests.filter(r => r._id.toString() !== requestId.toString());
+            await group.save();
+            throw new Error("Target user is already in group, deleting request");   
+        }
+
+        //Step 7: Delete takes precedence over checking if pendingh
+        if(action === 'delete')
+        {
+            group.joinRequests = group.joinRequests.filter(r => r._id.toString() !== requestId.toString());
+            await group.save();
+
+            return res.status(200).json({message: "request successfully deleted"});
+        }
+
+        // Step 8: Ensure the request is still pending to approve or reject it
         if (request.status !== 'pending') {
             return res.status(400).json({ message: "This request has already been handled" });
         }
@@ -412,7 +569,9 @@ router.post('/:id/join-requests/:requestId', async (req, res) => {
         }
 
         request.status = action === 'approve' ? 'approved' : 'rejected';
+
         await group.save();
+
         // Step 7: Return success response
         res.status(200).json({ 
             message: `Join request ${action}d successfully`,
@@ -422,6 +581,21 @@ router.post('/:id/join-requests/:requestId', async (req, res) => {
         res.status(500).json({ message: "Error handling join request", error: error.message });
     }
 });
+
+/** Archive for Grouping
+router.get('/search', async (req, res) => {
+    try {
+        // Step 1: Extract query, skills, and groupType from request query params
+        // Step 2: Build MongoDB search filter
+        // Step 3: Query groups with filters, populate relevant fields
+        // Step 4: Return results or handle error
+    } catch (error) {
+        res.status(500).json({ message: "Error searching groups", error: error.message });
+    }
+});
+*/
+
+
 
 // Export the router for use in other files
 export default router; 
