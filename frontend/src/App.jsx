@@ -10,23 +10,24 @@ import EditProfile from './pages/EditProfile';
 import BugReport from './pages/BugReport';
 import GroupView from './pages/GroupView';
 import Home from './pages/Home';
+import Layout from './Layout';
 
 
 
 function App() {
-
   return (
     <Router>
-      <Navbar/>
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard/>}/>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/register" element={<Register/>}/>
-          <Route path="/editProfile" element={<EditProfile/>}/>
-          <Route path="/bugReport" element={<BugReport/>}/>
-          <Route path="/groupViewExample" element={<GroupView/>}/>
-          <Route path="/home" element={<Home/>}/>
-        </Routes>
+      <Routes>
+        <Route element={<Layout />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/editProfile" element={<EditProfile />} />
+          <Route path="/bugReport" element={<BugReport />} />
+          <Route path="/groupViewExample" element={<GroupView />} />
+          <Route path="/home" element={<Home />} />
+        </Route>
+      </Routes>
     </Router>
   )
 }
