@@ -54,7 +54,7 @@ const Home = () => {
                 <div style={{ paddingBottom: '30px' }}>
                     <CardCarousel data={hackathons} />
                 </div>
-                <h4>Ready to Find your Perfect Hackathon Group?</h4>
+                <h4 style={{ padding:15}}>Ready to Find your Perfect Hackathon Group?</h4>
                 <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
                 <div className="split-row">
                     <button className="link-button">Find Fellow Hackers</button>
