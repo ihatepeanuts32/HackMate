@@ -11,7 +11,7 @@ import BugReport from './pages/BugReport';
 import GroupView from './pages/GroupView';
 import Home from './pages/Home';
 import Layout from './Layout';
-
+import Explore from './pages/Explore';
 
 
 function App() {
@@ -26,6 +26,7 @@ function App() {
           <Route path="/bugReport" element={<BugReport />} />
           <Route path="/groupViewExample" element={<GroupView />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
         </Route>
       </Routes>
     </Router>
