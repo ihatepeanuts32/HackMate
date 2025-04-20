@@ -79,7 +79,7 @@ button {
 {
   flex: 0 0 auto;
   width: auto;
-  min-width: 400px;         /* ← this keeps the buttons from getting too small */
+  min-width: 400px;         
   padding: 5px 20px;
   background-color: #1C0049;
   color: white;
@@ -197,6 +197,13 @@ input{
   margin-bottom: 10px;
 }
 
+.login-link {
+  padding: 20px;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  line-height: normal;
+}
 
 ::placeholder {
   color: white;
