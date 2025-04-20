@@ -34,7 +34,6 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/editProfile" element={<EditProfile />} />
           <Route path="/bugReport" element={<BugReport />} />
-          <Route path="/groupViewExample/:id" element={<GroupView />} />
           <Route path="/groups" element={<Groups />} />
           <Route path="/home" element={<Home />} />
           <Route path="/settings" element={<Settings />} />
@@ -49,6 +48,7 @@ function App() {
           <Route path="/updateProfile" element={<UpdateProfile />} />
           <Route path="/account" element={<AccountDetails />} />
           <Route path="/privacy" element={<PrivacySettings />} />
+          <Route path="/group/:id" element={<GroupView />} />
         </Route>
       </Routes>
     </Router>

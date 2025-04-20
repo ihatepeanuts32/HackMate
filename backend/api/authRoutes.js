@@ -4,6 +4,7 @@ import express from "express"
 import generateToken from "../utils/generateToken.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
+import { verifyToken } from '../utils/verifyToken.js';
 
 const router = express.Router();
 
@@ -82,6 +83,7 @@ router.post("/onboardUser", async (req, res) => {
 
         const decoded = verifyToken(req);
         if (!decoded) {
+          console.error('Token verification failed. Token:', req.headers.authorization); // Log the token or request header for debugging
             return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
         }
               

@@ -20,8 +20,8 @@ const Home = () => {
                 console.log("Token retrieved:", token ? "Token exists" : "No token found");
                 
                 if (token) {
-                    console.log("Making request to:", "http://localhost:3000/api/auth/userProfile");
-                    const response = await axios.get("http://localhost:3000/api/auth/userProfile", {
+                    console.log("Making request to:", "/api/auth/userProfile");
+                    const response = await axios.get("/api/auth/userProfile", {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
@@ -35,7 +35,7 @@ const Home = () => {
 
         const fetchHackathons = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/api/eventBriteHackathons");
+                const response = await axios.get("/api/eventBriteHackathons");
                 console.log("Response data:", response.data);
                 setHackathons(response.data[0]?.hackathons || []);
               } catch (error) {
