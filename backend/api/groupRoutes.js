@@ -147,7 +147,82 @@ router.put('/:groupId/update/', async (req, res) =>{
     }
 }); 
 
+router.post('/:groupId/message/', async (req, res) =>{
+    try {
+        // Step 1: Verify the user's token 
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
+        
+        // Step 2: Extract update fields from request body 
+        const {message} = req.body;        
 
+        // Step 3: Find the group by ID. Else return the message(Group not found) if group not found
+        const group = await Group.findById(req.params.groupId); 
+        if(!group)
+        {
+            return res.status(404).json({message: "Group not found"}); 
+        }
+
+        // Step 4: Add message to the list
+        group.messages.push(message);
+
+        await group.save() // Saves the updated group
+
+        // Step 5: Return with success response 
+        return res.status(200).json({
+            message: "Message sent successfully",
+          });
+
+    }catch(error){
+        // Handle any errors that occur during updating 
+        return res.status(500).json({
+            message: "Failed to message group", 
+            error: error.message
+        }); 
+    }
+}); 
+router.delete('/:groupId/clear_messages/', async (req, res) =>{
+    try {
+        // Step 1: Verify the user's token 
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
+        
+        // Step 2: Extract update fields from request body 
+        const {message} = req.body;        
+
+        // Step 3: Find the group by ID. Else return the message(Group not found) if group not found
+        const group = await Group.findById(req.params.groupId); 
+        if(!group)
+        {
+            return res.status(404).json({message: "Group not found"}); 
+        }
+
+        // Step 4: Check if the authticated user is the owner 
+        if(group.owner.toString() !== decoded.userId)
+            return res.status(403).json({message: "Only group owner can clear messages."}); 
+
+
+        // Step 5: Add message to the list
+        group.messages = [];
+        await group.save() // Saves the updated group
+
+        // Step 6: Return with success response 
+        return res.status(200).json({
+            message: "Messages cleared successfully",
+          });
+
+    }catch(error){
+        // Handle any errors that occur during updating 
+        return res.status(500).json({
+            message: "Failed to update group", 
+            error: error.message
+        }); 
+    }
+}); 
 
 /**
  * Helper Functions for all delete related items
@@ -486,6 +561,7 @@ router.post('/:groupId/request_join/', async (req, res) => {
             group: group
         });
     } catch (error) {
+        console.error("JOIN REQUEST ERROR:", error); // this will show the real problem
         res.status(500).json({ message: "Error processing join request", error: error.message });
     }
 });

@@ -61,6 +61,9 @@ const GroupSchema = new mongoose.Schema({
             default: Date.now
         }
     }],
+    messages:[{
+        type:String
+    }],
     // Creation timestamp - automatically set when document is created
     createdAt: {
         type: Date,

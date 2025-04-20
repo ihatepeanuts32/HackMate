@@ -23,9 +23,7 @@ const GroupView = () => {
         const fetchGroup = async () => {
             const token = localStorage.getItem('token');
             try {
-                const res = await axios.get(`/api/groups/${id}/group_details`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                const res = await axios.get(`/api/groups/${id}/group_details`, null, {headers: { Authorization: `Bearer ${token}` }});
                 setGroup(res.data);
             } catch (err) {
                 console.error('Failed to fetch group:', err);
@@ -36,6 +34,20 @@ const GroupView = () => {
 
         fetchGroup();
     }, [id]);
+    
+
+    const handleJoinRequest = async () => {
+        try {
+            const token = localStorage.getItem('token'); 
+            console.log('Token:', token);
+            const res = await axios.post(`/api/groups/${id}/request_join`, null, {headers: { Authorization: `Bearer ${token}`}});
+            console.log('Join request made successfully', res.data);
+            setShowJoinConfirmation(true);
+
+        } catch (err) {
+            console.error('Error joining the group:', err);
+        }
+    };
 
     if (loading) return <div className="groups-page"><p>Loading group page...</p></div>;
 
@@ -123,7 +135,8 @@ const GroupView = () => {
             <ContactGroup 
                 isOpen={isContactModalOpen}
                 onClose={() => setIsContactModalOpen(false)}
-                groupName="Group 1"
+                groupName={group.name}
+                groupId={id}
             />
 
             <JoinRequestModal 
@@ -132,8 +145,8 @@ const GroupView = () => {
                     setIsJoinModalOpen(false);
                     setShowJoinConfirmation(false);
                 }}
-
-                groupName="Group 1"
+                onConfirm={handleJoinRequest}
+                groupName={group.name}
                 showConfirmation={showJoinConfirmation}
             />
         </div>
