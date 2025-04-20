@@ -31,7 +31,7 @@ const GroupSchema = new mongoose.Schema({
     // Visibility setting - determines if the group appears in public searches
     isPublic: {
         type: Boolean,
-        default: true
+        default: false
     },
     // Group type - 'open' or 'invite-only'
     groupType: {
