@@ -28,7 +28,6 @@ const ContactGroup = ({ isOpen, onClose, groupName, groupId }) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
         
-        // Handle message submission here
         const res = await axios.post(`/api/groups/${groupId}/message`, {message}, {headers: { Authorization: `Bearer ${token}`}});
         
         console.log('Message sent:', message);

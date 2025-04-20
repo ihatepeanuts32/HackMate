@@ -23,8 +23,8 @@ router.get('/test_get_groups', async(req,res) =>{
         res.status(200).json(groups);
     }
     catch(error){
-        console.error('Error fetching products:', error); // Logs the error to the server console
-        res.status(500).json({ message: 'Server error' }); // Sends a response to the client    
+        console.error('Error fetching products:', error); 
+        res.status(500).json({ message: 'Server error' });    
     }
 })
 
@@ -78,7 +78,6 @@ router.post('/create', async(req, res) => {
           console.error("Server responded with:", error.response.data);
         }
 
-        // Handle any errors that occur during group creation 
         return res.status(500).json({
             message: "Unable to create group", 
             error: error.message
@@ -176,7 +175,6 @@ router.post('/:groupId/message/', async (req, res) =>{
           });
 
     }catch(error){
-        // Handle any errors that occur during updating 
         return res.status(500).json({
             message: "Failed to message group", 
             error: error.message
@@ -216,7 +214,6 @@ router.delete('/:groupId/clear_messages/', async (req, res) =>{
           });
 
     }catch(error){
-        // Handle any errors that occur during updating 
         return res.status(500).json({
             message: "Failed to update group", 
             error: error.message
@@ -297,7 +294,7 @@ router.delete('/:groupId/remove_member', async (req, res) => {
           });
 
     }catch(error){
-        // Handles any errors that occur during removal 
+
         return res.status(500).json({
             message: "Unable to remove member", 
             error: error.message
@@ -323,7 +320,6 @@ router.delete('/:groupId/delete_group', async (req, res) => {
             });
 
         }catch(error){
-            // Handles any errors that occur during removal 
             return res.status(500).json({
                 message: "Unable to delete group", 
                 error: error.message
@@ -344,7 +340,10 @@ router.delete('/clear', async (req, res) => {
         });
 
     }catch{
-        // Handles any errors that occur during removal 
+        return res.status(500).json({
+            message: "Groups could not be cleared successfully", 
+            error: error.message
+        }); 
     }
 }); 
 
@@ -386,7 +385,6 @@ router.put('/:groupId/transfer_ownership', async (req, res) => {
             });
 
     }catch(error){
-        // Handle any errors that occur during ownership transfer
         
         return res.status(500).json({
             message: "Ownership couldn't be transferred", 
@@ -658,8 +656,6 @@ router.get('/search', async (req, res) => {
 */
 
 
-
-// Export the router for use in other files
 export default router; 
 
 
