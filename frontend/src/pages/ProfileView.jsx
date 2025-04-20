@@ -1,9 +1,10 @@
-import React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import '../styles/GroupView.css';
 import exampleBanner from '../assets/examplebanner.jpg';
 import planeIcon from '../assets/planeIcon.png';
+import blockIcon from '../assets/blockIcon.png';
 import blankProfile from '../assets/profile.png';
+import BlockButton from '../components/Block';
 
 const ProfileView = () => {
     //use location state to pass a user's details so that their page view can be uniquely constructed
@@ -33,12 +34,16 @@ const ProfileView = () => {
                         <img src={user.profilePicture || blankProfile} alt="profile" className="group-logo" />
                         <h1>{user.name}</h1>
                     </div>
-                    <div>
+                    <div className='split-row'>
                         <button className="btn-chat">
                             <img src={planeIcon} alt="message" />
                             Chat
                         </button>
+                        <BlockButton className='btn-chat' user={user}>
+                            <img src={blockIcon} alt="block"/>
+                        </BlockButton>
                     </div>
+                    
                 </div>
             </div>
 

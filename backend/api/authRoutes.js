@@ -4,6 +4,7 @@ import express from "express"
 import generateToken from "../utils/generateToken.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
+import { verifyToken } from '../utils/verifyToken.js';
 
 const router = express.Router();
 
@@ -80,13 +81,11 @@ router.post("/onboardUser", async (req, res) => {
 
     try {
 
-        const token = req.headers.authorization?.split(' ')[1];
-              
-        if (!token) {
-            return res.status(401).json({ message: "No token provided" });
+        const decoded = verifyToken(req);
+        if (!decoded) {
+          console.error('Token verification failed. Token:', req.headers.authorization); // Log the token or request header for debugging
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
         }
-              
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
               
         const user = await User.findById(decoded.userId);
               
@@ -121,13 +120,11 @@ router.post("/onboardUser", async (req, res) => {
 //Naomi - for updating user profile information
 router.put("/updateProfile", async (req, res) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
-    
-    if (!token) {
-      return res.status(401).json({ message: "No token provided" });
+    const decoded = verifyToken(req);
+    if (!decoded) {
+        return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
     }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      
     const existingProfile = await Onboarding.findOne({ userId: decoded.userId });
 
     if (!existingProfile) {
@@ -166,13 +163,10 @@ router.put("/updateProfile", async (req, res) => {
 //Naomi - getting user info to be displayed on frontend
 router.get('/userProfile', async (req, res) => {
   try {
-    const token = req.headers.authorization?.split(' ')[1];
-    
-    if (!token) {
-      return res.status(401).json({ message: "No token provided" });
+    const decoded = verifyToken(req);
+    if (!decoded) {
+        return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
     }
-    
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
     const user = await Onboarding.findOne({ userId: decoded.userId });
     

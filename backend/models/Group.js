@@ -31,7 +31,7 @@ const GroupSchema = new mongoose.Schema({
     // Visibility setting - determines if the group appears in public searches
     isPublic: {
         type: Boolean,
-        default: true
+        default: false
     },
     // Group type - 'open' or 'invite-only'
     groupType: {
@@ -60,6 +60,9 @@ const GroupSchema = new mongoose.Schema({
             type: Date,
             default: Date.now
         }
+    }],
+    messages:[{
+        type:String
     }],
     // Creation timestamp - automatically set when document is created
     createdAt: {

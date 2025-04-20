@@ -1,5 +1,7 @@
 import { useState } from "react";
 import axios from "axios"
+import { Link } from 'react-router-dom';
+
 
 const Register = () => {
   const [firstName, setFirstName] = useState('');
@@ -19,7 +21,7 @@ const Register = () => {
     }
 
     try {
-      const res = await axios.post('http://localhost:3000/api/auth/register', {
+      const res = await axios.post('/api/auth/register', {
         firstName,
         lastName,
         username,
@@ -75,7 +77,8 @@ const Register = () => {
             }}
           />
         </div>
-        <button type="submit" className="submit-button">Sign Up</button>
+            <button type="submit" className="login-button">Sign Up</button>
+            <Link to="/logIn" className="login-link">Log In</Link>
       </form>
       {message && <p className={message.includes("successful") ? "success-message" : "error-message"}>{message}</p>}
     </div>

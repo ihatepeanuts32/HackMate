@@ -30,7 +30,7 @@ const EditProfile = () => {
                 }
 
                 const response = await axios.get(
-                    'http://localhost:3000/api/auth/userProfile',
+                    '/api/auth/userProfile',
                     {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -101,7 +101,7 @@ const EditProfile = () => {
             }
     
             const response = await axios.put(
-                'http://localhost:3000/api/auth/updateProfile',
+                '/api/auth/updateProfile',
                 updateData,
                 {
                     headers: {

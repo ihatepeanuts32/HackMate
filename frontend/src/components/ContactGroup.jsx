@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../styles/ContactGroup.css';
+import axios from 'axios';
 
-const ContactGroup = ({ isOpen, onClose, groupName }) => {
+const ContactGroup = ({ isOpen, onClose, groupName, groupId }) => {
     const [message, setMessage] = useState('');
     const modalRef = useRef();
 
@@ -23,9 +24,12 @@ const ContactGroup = ({ isOpen, onClose, groupName }) => {
 
     if (!isOpen) return null;
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Handle message submission here
+        const token = localStorage.getItem('token');
+        
+        const res = await axios.post(`/api/groups/${groupId}/message`, {message}, {headers: { Authorization: `Bearer ${token}`}});
+        
         console.log('Message sent:', message);
         setMessage('');
         onClose();

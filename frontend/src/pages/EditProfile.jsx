@@ -55,7 +55,7 @@ const EditProfile = () => {
             }
 
             const response = await axios.post(
-                'http://localhost:3000/api/auth/onboardUser',
+                '/api/auth/onboardUser',
                 submitData,
                 {
                     headers: {

@@ -3,6 +3,7 @@ import '../styles/ContactUs.css';
 import earlImg from '../assets/earl.png';
 import dhakshinImg from '../assets/dhakshin.png';
 import rajitImg from '../assets/rajit.png';
+import blankProfile from '../assets/profile.png';
 
 const ContactUs = () => {
     const [email, setEmail] = useState('');
@@ -10,19 +11,44 @@ const ContactUs = () => {
 
     const teamMembers = [
         {
-            name: "Earl Velasquez",
+            name: "Earl",
             role: "Sophomore in Software Engineering at UT Dallas",
             imageUrl: earlImg
         },
         {
-            name: "Dhakshin Parimalakumar",
+            name: "Dhakshin",
             role: "Sophomore in Computer Science at UT Dallas",
             imageUrl: dhakshinImg
         },
         {
-            name: "Rajit Goel",
+            name: "Rajit",
             role: "Junior in Computer Science at UT Dallas",
             imageUrl: rajitImg
+        },
+        {
+            name: "Ifrah",
+            role: "Sophomore in Computer Science at UT Dallas",
+            imageUrl: blankProfile
+        },
+        {
+            name: "Naomi",
+            role: "Sophomore in Computer Science at UT Dallas",
+            imageUrl: blankProfile
+        },
+        {
+            name: "Saivishaal",
+            role: "Sophomore in Computer Science at UT Dallas",
+            imageUrl: blankProfile
+        },
+        {
+            name: "Hrishikesh",
+            role: "Sophomore in Computer Science at UT Dallas",
+            imageUrl: blankProfile
+        },
+        {
+            name: "Vaishali",
+            role: "Sophomore in Software Engineering at UT Dallas",
+            imageUrl: blankProfile
         }
         // Add more team members as needed
     ];
