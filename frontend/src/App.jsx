@@ -18,12 +18,12 @@ import Groups from './pages/Groups';
 import ExploreGroup from './pages/ExploreGroup';
 import CreateGroup from './pages/CreateGroup';
 import BlockedUsers from './pages/BlockedUsers';
+import UpdateProfile from './pages/UpdateProfile';
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* Add a root route that redirects to registration */}
         <Route path="/" element={<Navigate to="/register" />} />
         
         <Route element={<Layout />}>
@@ -44,6 +44,7 @@ function App() {
           <Route path="/createGroup" element={<CreateGroup />} />
           <Route path="/blockedUsers" element={<BlockedUsers />} />
           <Route path="/profile/:id" element={<ProfileView />} />
+          <Route path="/updateProfile" element={<UpdateProfile />} />
         </Route>
       </Routes>
     </Router>

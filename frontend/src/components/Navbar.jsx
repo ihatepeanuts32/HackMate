@@ -1,20 +1,10 @@
-// import '../styles/Navbar.css'; 
-
-// const Navbar = () => {
-//     return (
-//         <div>Navbar</div>
-//     )
-// }
-
-// export default Navbar;
-
-// Navbar.jsx
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Navbar.css';
 import hackmateLogo from "../assets/hackmateLogo.png";
 import hamburgerIcon from "../assets/hamburger.png";
 import clearIcon from "../assets/clear.png";
+import UpdateProfile from '../pages/UpdateProfile';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -51,8 +41,10 @@ const Navbar = () => {
       <nav className="navbar">
         <div className="nav-content">
           <div className="nav-left">
-            <img src={hackmateLogo} className="logo" alt="hackmate logo" />
-            <h1><strong>Hack</strong><span className="mate">Mate</span></h1>
+            <Link to="/home" className="logo-link">
+              <img src={hackmateLogo} className="logo" alt="hackmate logo" />
+              <h1><strong>Hack</strong><span className="mate">Mate</span></h1>
+            </Link>
           </div>
         </div>
       </nav>
@@ -78,7 +70,7 @@ const Navbar = () => {
             <span className="icon">🏠</span>
             home
           </Link>
-          <Link to="/editProfile" className="menu-item">
+          <Link to="/UpdateProfile" className="menu-item">
             <span className="icon">👤</span>
             profile
           </Link>

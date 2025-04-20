@@ -75,6 +75,7 @@ router.post('/login', async (req, res) => {
 
 })
 
+//Naomi - getting user onboarding information
 router.post("/onboardUser", async (req, res) => {
 
     try {
@@ -117,67 +118,82 @@ router.post("/onboardUser", async (req, res) => {
     }
 })
 
+//Naomi - for updating user profile information
 router.put("/updateProfile", async (req, res) => {
-    try {
-
-      const token = req.headers.authorization?.split(' ')[1];
-      
-      if (!token) {
-        return res.status(401).json({ message: "No token provided" });
-      }
-      
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      
-      const existingProfile = await Onboarding.findOne({ userId: decoded.userId });
-      
-      if (!existingProfile) {
-        return res.status(404).json({ message: "Profile not found" });
-      }
-      
-      const { firstName, lastName, preferredRole, hackathonsAttended, college, technicalSkills, desiredTeammateQualities } = req.body;
-      
-      existingProfile.firstName = firstName;
-      existingProfile.lastName = lastName;
-      existingProfile.preferredRole = preferredRole;
-      existingProfile.hackathonsAttended = hackathonsAttended ? parseInt(hackathonsAttended, 10) : 0;
-      existingProfile.college = college;
-      existingProfile.technicalSkills = technicalSkills;
-      existingProfile.desiredTeammateQualities = desiredTeammateQualities;
-      
-      await existingProfile.save();
-      
-      return res.status(200).json({ message: "Profile updated successfully" });
-      
-    } catch (error) {
-      return res.status(500).json({ message: "Unable to update profile", error: error.message });
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
     }
-  });
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const existingProfile = await Onboarding.findOne({ userId: decoded.userId });
+
+    if (!existingProfile) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+    const fieldsToUpdate = [
+      "firstName",
+      "lastName",
+      "preferredRole",
+      "hackathonsAttended",
+      "college",
+      "technicalSkills",
+      "desiredTeammateQualities"
+    ];
+
+    fieldsToUpdate.forEach(field => {
+      if (req.body.hasOwnProperty(field)) {
+        if (field === "hackathonsAttended") {
+          existingProfile[field] = parseInt(req.body[field], 10) || 0;
+        } else {
+          existingProfile[field] = req.body[field];
+        }
+      }
+    });
+
+    await existingProfile.save();
+
+    return res.status(200).json({ message: "Profile updated successfully" });
+  } catch (error) {
+    return res.status(500).json({ message: "Unable to update profile", error: error.message });
+  }
+});
+
 
 //Naomi - getting user info to be displayed on frontend
 router.get('/userProfile', async (req, res) => {
-    try {
-      const token = req.headers.authorization?.split(' ')[1];
-      
-      if (!token) {
-        return res.status(401).json({ message: "No token provided" });
-      }
-      
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      
-      const user = await Onboarding.findOne({ userId: decoded.userId });
-      
-      if (!user) {
-        return res.status(404).json({ message: "User not found" });
-      }
-      
-      res.json({
-        firstName: user.firstName,
-        lastName: user.lastName,
-      });
-      
-    } catch (error) {
-      return res.status(500).json({ message: "Unable to fetch user profile", error: error.message });
+  try {
+    const token = req.headers.authorization?.split(' ')[1];
+    
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
     }
-  })
+    
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
+    const user = await Onboarding.findOne({ userId: decoded.userId });
+    
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    res.json({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      preferredRole: user.preferredRole,
+      hackathonsAttended: user.hackathonsAttended,
+      college: user.college,
+      technicalSkills: user.technicalSkills,
+      desiredTeammateQualities: user.desiredTeammateQualities
+      //add profile photo
+    });
+    
+  } catch (error) {
+    return res.status(500).json({ message: "Unable to fetch user profile", error: error.message });
+  }
+})
 
 export default router;
