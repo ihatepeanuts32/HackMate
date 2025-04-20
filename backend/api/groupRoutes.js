@@ -495,7 +495,9 @@ router.get('/my_groups', async (req, res) => {
             return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
         }
 
-        const groups = await Group.find({ members: decoded.userId }).select('name _id');
+        const groups = await Group.find({ members: decoded.userId })
+            .select('name _id owner')
+            .populate('owner', '_id username');
 
         res.status(200).json(groups);
     } catch (error) {
