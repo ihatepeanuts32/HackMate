@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '../styles/PrivacySettings.css';
 
-
+//Hrishikesh Srirangam
 const PrivacySettings = () => {
     const [profilePublic, setProfilePublic] = useState(true);
     const [recieveMessages, setRecieveMessages] = useState(true);
