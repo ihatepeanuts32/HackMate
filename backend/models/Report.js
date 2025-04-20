@@ -2,28 +2,21 @@ import mongoose from "mongoose";
 
 //Earl - this following is the schema for creating a report for the system
 const ReportSchema = new mongoose.Schema({
-    ReportType: {
+    fullName: {
         type: String,
         required: true
     },
-    ReportOption: {
+    email: {
         type: String,
         required: true
     },
-    TargetUser: {
+    subject: {
         type: String,
-        required: false,
-        unique: true
+        required: true
     },
-    ReporterUsername: {
+    description: {
         type: String,
-        required: true,
-        unique: true
-    },
-    ReporterMessage: {
-        type: String,
-        required: false,
-        unique: true
+        required: true
     }
 }, { timestamps: true })
 
