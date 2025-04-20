@@ -1,0 +1,39 @@
+.row-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+.vertical-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: white;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.split-row {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  position: relative;
+  z-index: 1; /* So text sits above the line */
+}
+
+.left-side,
+.right-side {
+  width: 50%;
+  padding: 0 10px;
+}
+
+.left-side {
+  text-align: right;
+}
+
+.right-side {
+  text-align: left;
+}
