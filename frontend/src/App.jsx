@@ -20,38 +20,41 @@ import UpdateProfile from './pages/UpdateProfile';
 import AccountDetails from './pages/AccountDetails';
 import PrivacySettings from './pages/PrivacySettings';
 import ChatInbox from './pages/ChatInbox';
+import { BlockedUsersProvider } from './context/BlockedUsersContext';
 
 function App() {
   document.documentElement.setAttribute('data-theme', 'light');
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/register" />} />
-        
-        <Route element={<Layout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/editProfile" element={<EditProfile />} />
-          <Route path="/bugReport" element={<BugReport />} />
-          <Route path="/groupViewExample/:id" element={<GroupView />} />
-          <Route path="/groups" element={<Groups />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/profileView" element={<ProfileView />} />
-          <Route path="/exploreGroup" element={<ExploreGroup />} />
-          <Route path="/createGroup" element={<CreateGroup />} />
-          <Route path="/blockedUsers" element={<BlockedUsers />} />
-          <Route path="/profile/:id" element={<ProfileView />} />
-          <Route path="/updateProfile" element={<UpdateProfile />} />
-          <Route path="/account" element={<AccountDetails />} />
-          <Route path="/privacy" element={<PrivacySettings />} />
-          <Route path="/messages" element={<ChatInbox />} />
-        </Route>
-      </Routes>
+      <BlockedUsersProvider>
+        <Routes>
+          <Route path="/" element={<Navigate to="/register" />} />
+          
+          <Route element={<Layout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/editProfile" element={<EditProfile />} />
+            <Route path="/bugReport" element={<BugReport />} />
+            <Route path="/groupViewExample/:id" element={<GroupView />} />
+            <Route path="/groups" element={<Groups />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/profileView" element={<ProfileView />} />
+            <Route path="/exploreGroup" element={<ExploreGroup />} />
+            <Route path="/createGroup" element={<CreateGroup />} />
+            <Route path="/blockedUsers" element={<BlockedUsers />} />
+            <Route path="/profile/:id" element={<ProfileView />} />
+            <Route path="/updateProfile" element={<UpdateProfile />} />
+            <Route path="/account" element={<AccountDetails />} />
+            <Route path="/privacy" element={<PrivacySettings />} />
+            <Route path="/messages" element={<ChatInbox />} />
+          </Route>
+        </Routes>
+      </BlockedUsersProvider>
     </Router>
   )
 }
