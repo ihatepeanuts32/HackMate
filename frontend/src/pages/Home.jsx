@@ -16,10 +16,11 @@ const Home = () => {
 
         const fetchUserProfile = async () => {
             try {
-                // Get the token from localStorage or wherever you store it
                 const token = localStorage.getItem('token');
+                console.log("Token retrieved:", token ? "Token exists" : "No token found");
                 
                 if (token) {
+                    console.log("Making request to:", "http://localhost:3000/api/auth/userProfile");
                     const response = await axios.get("http://localhost:3000/api/auth/userProfile", {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -28,7 +29,7 @@ const Home = () => {
                     setUser(response.data);
                 }
             } catch (error) {
-                console.error("Error fetching user profile:", error);
+                console.error("Error fetching user profile:", error.response ? error.response.data : error.message);
             }
         }
 
