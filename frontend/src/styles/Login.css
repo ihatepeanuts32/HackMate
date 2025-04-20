@@ -51,8 +51,8 @@
 }
 
 .forgot-password {
-    text-align: right;
-    margin: 1rem 0 2rem 0;
+    text-align: center;
+    margin: 1rem 0 1rem 0;
 }
 
 .forgot-password a {
@@ -65,21 +65,21 @@
     text-decoration: underline;
 }
 
-.submit-button {
+.login-button {
     width: 100%;
     padding: 12px;
-    background-color: #FF69B4;
+    background-color: #9333EA;
     color: white;
     border: none;
     border-radius: 100px;
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-}
+} 
 
 .submit-button:hover {
     background-color: #bb4a82;
-}
+} 
 
 .error-message {
     color: #dc3545;
@@ -89,7 +89,8 @@
 
 .login-page .logo {
     height: 100px;
-    margin-bottom: 1rem;
+    padding-top: 10px;
+    margin-bottom: .2rem;
 }
 
 .login-page .hackmate-text {

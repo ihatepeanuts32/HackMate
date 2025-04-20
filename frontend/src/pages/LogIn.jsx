@@ -71,7 +71,7 @@ const Login = () => {
                         <Link to="/reset-password">Forgot Password?</Link>
                     </div>
                     <div className="split-row">
-                        <button type="submit" className="submit-button">Log In</button>
+                        <button type="submit" className="login-button">Log In</button>
                     </div>
                 </form> 
             </div>
