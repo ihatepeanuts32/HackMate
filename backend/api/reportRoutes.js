@@ -1,8 +1,11 @@
-import express from "express"; 
+import express from "express";
 import Group from "../models/Group.js";
 import User from "../models/User.js";
-import jwt from "jsonwebtoken"; 
+import jwt from "jsonwebtoken";
+import Report from "../models/Report.js";
+import auth from "../middleware/auth.js";
 
+const router = express.Router();
 
 /**
  * 
@@ -78,3 +81,79 @@ const reportUser = async(req,res) =>
         return res.status(500).json({ message: "error.message" });
     }
 }
+
+/**
+ * Route: GET /api/reports/test
+ * Description: Get all submitted reports (test route)
+ * Access: Public
+ */
+router.get("/test", async (req, res) => {
+    try {
+        const reports = await Report.find().sort({ createdAt: -1 });
+        res.json(reports);
+    } catch (error) {
+        console.error('Error fetching reports:', error);
+        res.status(500).json({ 
+            message: "Error fetching reports",
+            error: error.message 
+        });
+    }
+});
+
+/**
+ * Route: POST /api/reports/bug
+ * Description: Submit a bug report
+ * Access: Public
+ */
+router.post("/bug", async (req, res) => {
+    try {
+        const { fullName, email, subject, description } = req.body;
+
+        // Validate input
+        if (!fullName || !email || !subject || !description) {
+            return res.status(400).json({ message: "All fields are required" });
+        }
+
+        // Create new report
+        const newReport = new Report({
+            fullName,
+            email,
+            subject,
+            description
+        });
+
+        // Save report
+        await newReport.save();
+
+        res.status(201).json({ 
+            message: "Bug report submitted successfully",
+            report: newReport
+        });
+    } catch (error) {
+        console.error('Error submitting bug report:', error);
+        res.status(500).json({ 
+            message: "Error submitting bug report",
+            error: error.message 
+        });
+    }
+});
+
+/**
+ * Route: GET /api/reports
+ * Description: Get all reports (admin only)
+ * Access: Private/Admin
+ */
+router.get("/", auth, async (req, res) => {
+    try {
+        const reports = await Report.find().sort({ createdAt: -1 });
+        res.json(reports);
+    } catch (error) {
+        console.error('Error fetching reports:', error);
+        res.status(500).json({ 
+            message: "Error fetching reports",
+            error: error.message 
+        });
+    }
+});
+
+export default router;

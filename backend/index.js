@@ -8,6 +8,7 @@ import groupRoutes from "./api/groupRoutes.js"
 import userRoutes from "./api/userRoutes.js"
 import hackathonRoutes from "./api/hackathonRoutes.js"
 import eventBrite from "./api/eventBrite.js"
+import reportRoutes from "./api/reportRoutes.js"
 import { Server } from "socket.io"
 import connectSoket from "./socket.js"
 import { createServer } from 'http'
@@ -33,6 +34,7 @@ app.use("/api/groups", groupRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/hackathons", hackathonRoutes);
 app.use("/api", eventBrite);
+app.use("/api/reports", reportRoutes);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`))
