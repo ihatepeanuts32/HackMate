@@ -42,29 +42,29 @@ router.post('/create', async(req, res) => {
         }
         
         // Step 2: Extract group details from request body 
-        const {name, description, skills, isPublic} = req.body; 
+        const {groupName, description} = req.body; 
 
         // Step 3: Validate required fields 
-        if(!name || !description)
+        if(!groupName || !description)
         {
-            return res.status(400).json({message: "REQUIRED: Name and Description"}); 
+            return res.status(403).json({message: "REQUIRED: Name and Description"}); 
         }
 
         // Step 4: Create new group with the authenticated user as owner 
         const newGroup = new Group({
-            name: name, 
+            name: groupName, 
             description: description, 
             owner: decoded.userId, // Set from decoded token
             members: [decoded.userId], // Owner is a member 
-            skills: skills || [], // Default is empty array 
-            isPublic: isPublic !== undefined ? isPublic:true // Default is Public
+            skills: [], // Default is empty array 
+            isPublic: false // Default is not public
         })
 
         // Step 5: Save the group to the database 
 
         await newGroup.save(); 
 
-        return res.status(201).json({
+        return res.status(200).json({
             message: "Group created successfully",
             group: newGroup
           });
@@ -73,6 +73,10 @@ router.post('/create', async(req, res) => {
         // Step 6: Return success response with the created group 
 
     }catch(error){
+        console.error("Error creating group:", error); 
+        if (error.response) {
+          console.error("Server responded with:", error.response.data);
+        }
 
         // Handle any errors that occur during group creation 
         return res.status(500).json({
@@ -130,7 +134,7 @@ router.put('/:groupId/update/', async (req, res) =>{
         await group.save() // Saves the updated group
 
         // Step 6: Return with success response 
-        return res.status(201).json({
+        return res.status(200).json({
             message: "Group updated successfully",
           });
 
@@ -213,7 +217,7 @@ router.delete('/:groupId/remove_member', async (req, res) => {
 
         await removeMember(req.params.groupId, memberId, decoded.userId);
                 
-        return res.status(201).json({
+        return res.status(200).json({
             message: "Member removed successfully",
           });
 
@@ -239,7 +243,7 @@ router.delete('/:groupId/delete_group', async (req, res) => {
 
         await deleteGroup(req.params.groupId, decoded.userId);
             
-        return res.status(201).json({
+        return res.status(200).json({
             message: "Group deleted successfully"
             });
 
@@ -302,7 +306,7 @@ router.put('/:groupId/transfer_ownership', async (req, res) => {
         group.owner = member._id;
         await group.save();
 
-        return res.status(201).json({
+        return res.status(200).json({
             message: "Ownership transferred sucessfully"
             });
 
@@ -340,7 +344,7 @@ router.put('/test_transfer_ownership/:groupId/:targetId/:userId', async (req, re
         group.owner = member._id;
         await group.save();
 
-        return res.status(201).json({
+        return res.status(200).json({
             message: "Ownership transferred sucessfully"
             });
 

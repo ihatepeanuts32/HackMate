@@ -1,25 +1,33 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import {useEffect} from 'react';
 import '../styles/Explore.css';
 
-const mockGroups = [
-  { id: 1, name: 'React Wizards', status: 'Open' },
-  { id: 2, name: 'Node Ninjas', status: 'Closed' },
-  { id: 3, name: 'Fullstack Fusion', status: 'Open' },
-  { id: 4, name: 'Design Gurus', status: 'Closed' },
-  { id: 5, name: 'AI Explorers', status: 'Open' },
-  { id: 6, name: 'Cloud Hackers', status: 'Open' },
-  { id: 7, name: 'Data Divas', status: 'Closed' },
-  { id: 8, name: 'Security Squad', status: 'Open' },
-  { id: 9, name: 'Mobile Mavericks', status: 'Closed' },
-];
-
 const ExploreGroup = () => {
+  const [groups, setGroups] = useState([]);
   const [statusFilter, setStatusFilter] = useState('');
   const [page, setPage] = useState(0);
   const groupsPerPage = 6;
+  //Grab the groups
+  useEffect(() => {
+    const fetchGroups = async () => {
+      try {
+        const res = await axios.get('/api/groups/search');
+        setGroups(Array.isArray(res.data)? res.data :[]);
+      } catch (err) {
+        console.error('Failed to fetch groups:', err);
+        setGroups([]);
+      }
+    };
+    fetchGroups();
+  }, []);
 
-  const filteredGroups = mockGroups.filter((group) => {
-    return !statusFilter || group.status === statusFilter;
+  if (groups.length === 0) {
+    return <div style={{ color: 'white', padding: '1rem' }}>Loading groups...</div>;
+  }
+  
+  const filteredGroups = groups.filter((group) => {
+    return !statusFilter || group.groupType === statusFilter.toLowerCase();
   });
 
   const paginatedGroups = filteredGroups.slice(
@@ -28,7 +36,7 @@ const ExploreGroup = () => {
   );
 
   const totalPages = Math.ceil(filteredGroups.length / groupsPerPage);
-
+ 
   return (
     <div className="explore-container">
       <h3>Explore Groups</h3>
@@ -40,12 +48,11 @@ const ExploreGroup = () => {
           <option value="Closed">Closed</option>
         </select>
       </div>
-
       <div className="card-grid">
         {paginatedGroups.map((group) => (
-          <div className="card" key={group.id}>
+          <div className="card" key={group._id}>
             <h3>{group.name}</h3>
-            <p>Status: {group.status}</p>
+            <p>Status: {group.groupType}</p>
           </div>
         ))}
       </div>
