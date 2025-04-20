@@ -21,6 +21,7 @@ import BlockedUsers from './pages/BlockedUsers';
 import UpdateProfile from './pages/UpdateProfile';
 import AccountDetails from './pages/AccountDetails';
 import PrivacySettings from './pages/PrivacySettings';
+import ChatInbox from './pages/ChatInbox';
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path="/updateProfile" element={<UpdateProfile />} />
           <Route path="/account" element={<AccountDetails />} />
           <Route path="/privacy" element={<PrivacySettings />} />
+          <Route path="/messages" element={<ChatInbox />} />
         </Route>
       </Routes>
     </Router>
