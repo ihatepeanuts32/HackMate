@@ -46,6 +46,9 @@ function App() {
           <Route path="/createGroup" element={<CreateGroup />} />
           <Route path="/blockedUsers" element={<BlockedUsers />} />
           <Route path="/profile/:id" element={<ProfileView />} />
+          <Route path="/updateProfile" element={<UpdateProfile />} />
+          <Route path="/account" element={<AccountDetails />} />
+          <Route path="/privacy" element={<PrivacySettings />} />
         </Route>
       </Routes>
     </Router>
