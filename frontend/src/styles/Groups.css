@@ -49,7 +49,7 @@
     margin-left: auto;
 }
 
-.view-button, .leave-button {
+.view-button, .leave-button, .manage-button {
     border-radius: 15px;
     border: none;
     font-size: 1.2rem;
@@ -69,6 +69,13 @@
     padding: 0.5rem 1.5rem;
 }
 
+.manage-button {
+    background-color: #4C1D95;
+    color: white;
+    min-width: 100px;
+    padding: 0.5rem 1.5rem;
+}
+
 .leave-button {
     background-color: #3A0088;
     color: white;
@@ -78,6 +85,11 @@
 
 .view-button:hover {
     background-color: #A855F7;
+    transform: translateY(-2px);
+}
+
+.manage-button:hover {
+    background-color: #6D28D9;
     transform: translateY(-2px);
 }
 
@@ -108,7 +120,7 @@
         margin-left: 0;
     }
 
-    .view-button, .leave-button {
+    .view-button, .leave-button, .manage-button {
         padding: 0.75rem 2rem;
     }
 } 

@@ -19,6 +19,7 @@ import BlockedUsers from './pages/BlockedUsers';
 import UpdateProfile from './pages/UpdateProfile';
 import AccountDetails from './pages/AccountDetails';
 import PrivacySettings from './pages/PrivacySettings';
+import ManageGroup from './pages/ManageGroup';
 import { BlockedUsersProvider } from './context/BlockedUsersContext';
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
             <Route path="/account" element={<AccountDetails />} />
             <Route path="/privacy" element={<PrivacySettings />} />
             <Route path="/group/:id" element={<GroupView />} />
+            <Route path="/manage-group/:id" element={<ManageGroup />} />
           </Route>
         </Routes>
       </Router>

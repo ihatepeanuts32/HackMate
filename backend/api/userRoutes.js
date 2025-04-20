@@ -20,7 +20,27 @@ router.get('/getUsers', async (req,res) =>
     }
 })
 
+/**
+ * Rajit Get current user's information
+ */
+router.get('/me', async (req, res) => {
+    try {
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
 
+        const user = await User.findById(decoded.userId).select('-password');
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json(user);
+    } catch (error) {
+        console.error('Error fetching current user:', error);
+        res.status(401).json({ message: "Authentication failed", error: error.message });
+    }
+});
 
 /**
  * Rajit - Description: Search for users
