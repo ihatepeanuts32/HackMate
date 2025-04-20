@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 import '../styles/GroupView.css';
 import exampleBanner from '../assets/examplebanner.jpg';
@@ -40,7 +39,7 @@ const ProfileView = () => {
                             <img src={planeIcon} alt="message" />
                             Chat
                         </button>
-                        <BlockButton className = 'btn-chat'>
+                        <BlockButton className='btn-chat' user={user}>
                             <img src={blockIcon} alt="block"/>
                         </BlockButton>
                     </div>

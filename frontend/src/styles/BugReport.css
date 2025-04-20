@@ -80,3 +80,20 @@ label {
         padding: 1rem;
     }
 }
+
+.status-message {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.status-message.success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.status-message.error {
+    background-color: #f44336;
+    color: white;
+}

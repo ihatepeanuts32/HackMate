@@ -23,8 +23,8 @@ router.get('/test_get_groups', async(req,res) =>{
         res.status(200).json(groups);
     }
     catch(error){
-        console.error('Error fetching products:', error); // Logs the error to the server console
-        res.status(500).json({ message: 'Server error' }); // Sends a response to the client    
+        console.error('Error fetching products:', error); 
+        res.status(500).json({ message: 'Server error' });    
     }
 })
 
@@ -78,7 +78,6 @@ router.post('/create', async(req, res) => {
           console.error("Server responded with:", error.response.data);
         }
 
-        // Handle any errors that occur during group creation 
         return res.status(500).json({
             message: "Unable to create group", 
             error: error.message
@@ -147,7 +146,80 @@ router.put('/:groupId/update/', async (req, res) =>{
     }
 }); 
 
+router.post('/:groupId/message/', async (req, res) =>{
+    try {
+        // Step 1: Verify the user's token 
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
+        
+        // Step 2: Extract update fields from request body 
+        const {message} = req.body;        
 
+        // Step 3: Find the group by ID. Else return the message(Group not found) if group not found
+        const group = await Group.findById(req.params.groupId); 
+        if(!group)
+        {
+            return res.status(404).json({message: "Group not found"}); 
+        }
+
+        // Step 4: Add message to the list
+        group.messages.push(message);
+
+        await group.save() // Saves the updated group
+
+        // Step 5: Return with success response 
+        return res.status(200).json({
+            message: "Message sent successfully",
+          });
+
+    }catch(error){
+        return res.status(500).json({
+            message: "Failed to message group", 
+            error: error.message
+        }); 
+    }
+}); 
+router.delete('/:groupId/clear_messages/', async (req, res) =>{
+    try {
+        // Step 1: Verify the user's token 
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
+        
+        // Step 2: Extract update fields from request body 
+        const {message} = req.body;        
+
+        // Step 3: Find the group by ID. Else return the message(Group not found) if group not found
+        const group = await Group.findById(req.params.groupId); 
+        if(!group)
+        {
+            return res.status(404).json({message: "Group not found"}); 
+        }
+
+        // Step 4: Check if the authticated user is the owner 
+        if(group.owner.toString() !== decoded.userId)
+            return res.status(403).json({message: "Only group owner can clear messages."}); 
+
+
+        // Step 5: Add message to the list
+        group.messages = [];
+        await group.save() // Saves the updated group
+
+        // Step 6: Return with success response 
+        return res.status(200).json({
+            message: "Messages cleared successfully",
+          });
+
+    }catch(error){
+        return res.status(500).json({
+            message: "Failed to update group", 
+            error: error.message
+        }); 
+    }
+}); 
 
 /**
  * Helper Functions for all delete related items
@@ -222,7 +294,7 @@ router.delete('/:groupId/remove_member', async (req, res) => {
           });
 
     }catch(error){
-        // Handles any errors that occur during removal 
+
         return res.status(500).json({
             message: "Unable to remove member", 
             error: error.message
@@ -248,7 +320,6 @@ router.delete('/:groupId/delete_group', async (req, res) => {
             });
 
         }catch(error){
-            // Handles any errors that occur during removal 
             return res.status(500).json({
                 message: "Unable to delete group", 
                 error: error.message
@@ -269,7 +340,10 @@ router.delete('/clear', async (req, res) => {
         });
 
     }catch{
-        // Handles any errors that occur during removal 
+        return res.status(500).json({
+            message: "Groups could not be cleared successfully", 
+            error: error.message
+        }); 
     }
 }); 
 
@@ -311,45 +385,6 @@ router.put('/:groupId/transfer_ownership', async (req, res) => {
             });
 
     }catch(error){
-        // Handle any errors that occur during ownership transfer
-        
-        return res.status(500).json({
-            message: "Ownership couldn't be transferred", 
-            error: error.message
-        }); 
-    }
-}); 
-
-router.put('/test_transfer_ownership/:groupId/:targetId/:userId', async (req, res) => {
-    try{
-        const group = await Group.findById(req.params.groupId); 
-        if(!group) throw new Error("Group Not Found");
-    
-        const c_user = await User.findById(req.params.userId); 
-        if(!c_user) throw new Error("Current user not found");
-    
-        if(c_user._id.toString() !== group.owner.toString())
-            throw new Error("To transfer leadership, you must be the owner");
-
-        if(req.params.targetId === req.params.userId)
-            throw new Error("Transfer targetting the same user (could be owner)")
-
-        const exists = await User.findById(req.params.targetId);
-        if(!exists) throw new Error("Target user not found");
-        
-        //Check if target member part of group
-        const member = group.members.find(m => m.toString() === req.params.targetId);
-        if(!member) throw new Error("Target user not in Group");
-
-        group.owner = member._id;
-        await group.save();
-
-        return res.status(200).json({
-            message: "Ownership transferred sucessfully"
-            });
-
-    }catch(error){
-        // Handle any errors that occur during ownership transfer
         
         return res.status(500).json({
             message: "Ownership couldn't be transferred", 
@@ -431,12 +466,12 @@ router.get('/search', async (req, res) => {
  * Rajit - Description: Get group details
  * Access: Public
  */
-router.get('/:id', async (req, res) => {
+router.get('/:id/group_details', async (req, res) => {
     try {
         // Step 1: Find group by ID and populate owner and members
         const group = await Group.findById(req.params.id)
-            .populate('owner', 'firstName lastName username')
-            .populate('members', 'firstName lastName username');
+            .populate('owner')
+            .populate('members');
 
         // Step 2: Return group details or error if not found
         if (!group) {
@@ -446,6 +481,28 @@ router.get('/:id', async (req, res) => {
         res.status(200).json(group);
     } catch (error) {
         res.status(500).json({ message: "Error fetching group details", error: error.message });
+    }
+});
+
+/**
+ * Earl - Grab all groups the user is a member of
+ * 
+ */
+router.get('/my_groups', async (req, res) => {
+    try {
+        const decoded = verifyToken(req); 
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
+
+        const groups = await Group.find({ members: decoded.userId })
+            .select('name _id owner')
+            .populate('owner', '_id username');
+
+        res.status(200).json(groups);
+    } catch (error) {
+        console.error("Error fetching user's groups:", error);
+        res.status(500).json({ message: "Failed to fetch groups", error: error.message });
     }
 });
 
@@ -504,6 +561,7 @@ router.post('/:groupId/request_join/', async (req, res) => {
             group: group
         });
     } catch (error) {
+        console.error("JOIN REQUEST ERROR:", error); // this will show the real problem
         res.status(500).json({ message: "Error processing join request", error: error.message });
     }
 });
@@ -600,8 +658,6 @@ router.get('/search', async (req, res) => {
 */
 
 
-
-// Export the router for use in other files
 export default router; 
 
 
