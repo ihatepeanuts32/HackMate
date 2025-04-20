@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import '../styles/AccountDetails.css';
 
-
+//Hrishikesh Srirangam
 const AccountSettings = () => {
     return (
         <div>
