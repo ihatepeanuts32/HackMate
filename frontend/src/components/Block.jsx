@@ -1,15 +1,28 @@
 // Vaishali - Block Function 
 // Description: this code implements a block button
 
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import '../styles/GroupView.css';
+import { useBlockedUsers } from '../context/BlockedUsersContext';
 
 // set as blocked or not
-const BlockButton = ({ children, className = '' })=> {
+const BlockButton = ({ children, className = '', user }) => {
   const [isBlocked, setIsBlocked] = useState(false);
+  const { blockUser, unblockUser, blockedUsers } = useBlockedUsers();
+
+  // Check if user is already blocked when component mounts
+  useEffect(() => {
+    setIsBlocked(blockedUsers.some(u => u.id === user.id));
+  }, [blockedUsers, user.id]);
 
   const handleBlock = () => {
-    setIsBlocked(prev => !prev);
+    if (isBlocked) {
+      unblockUser(user.id);
+    } else {
+      blockUser(user);
+    }
+    setIsBlocked(!isBlocked);
   };
 
   // button details
@@ -24,6 +37,14 @@ const BlockButton = ({ children, className = '' })=> {
       <span>{isBlocked ? 'Blocked' : 'Block'}</span>
     </button>
   );
+};
+
+BlockButton.propTypes = {
+  children: PropTypes.node,
+  className: PropTypes.string,
+  user: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  }).isRequired,
 };
 
 export default BlockButton;

@@ -1,6 +1,4 @@
-import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
-import Navbar from './components/Navbar';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/LogIn';
 import Register from './pages/Register';
@@ -21,37 +19,40 @@ import BlockedUsers from './pages/BlockedUsers';
 import UpdateProfile from './pages/UpdateProfile';
 import AccountDetails from './pages/AccountDetails';
 import PrivacySettings from './pages/PrivacySettings';
+import { BlockedUsersProvider } from './context/BlockedUsersContext';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Navigate to="/register" />} />
-        
-        <Route element={<Layout />}>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/editProfile" element={<EditProfile />} />
-          <Route path="/bugReport" element={<BugReport />} />
-          <Route path="/groups" element={<Groups />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/profileView" element={<ProfileView />} />
-          <Route path="/exploreGroup" element={<ExploreGroup />} />
-          <Route path="/createGroup" element={<CreateGroup />} />
-          <Route path="/blockedUsers" element={<BlockedUsers />} />
-          <Route path="/profile/:id" element={<ProfileView />} />
-          <Route path="/updateProfile" element={<UpdateProfile />} />
-          <Route path="/account" element={<AccountDetails />} />
-          <Route path="/privacy" element={<PrivacySettings />} />
-          <Route path="/group/:id" element={<GroupView />} />
-        </Route>
-      </Routes>
-    </Router>
+    <BlockedUsersProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/register" />} />
+          
+          <Route element={<Layout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/editProfile" element={<EditProfile />} />
+            <Route path="/bugReport" element={<BugReport />} />
+            <Route path="/groups" element={<Groups />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/explore" element={<Explore />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/profileView" element={<ProfileView />} />
+            <Route path="/exploreGroup" element={<ExploreGroup />} />
+            <Route path="/createGroup" element={<CreateGroup />} />
+            <Route path="/blockedUsers" element={<BlockedUsers />} />
+            <Route path="/profile/:id" element={<ProfileView />} />
+            <Route path="/updateProfile" element={<UpdateProfile />} />
+            <Route path="/account" element={<AccountDetails />} />
+            <Route path="/privacy" element={<PrivacySettings />} />
+            <Route path="/group/:id" element={<GroupView />} />
+          </Route>
+        </Routes>
+      </Router>
+    </BlockedUsersProvider>
   )
 }
 
