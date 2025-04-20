@@ -22,6 +22,7 @@ import PrivacySettings from './pages/PrivacySettings';
 import ChatInbox from './pages/ChatInbox';
 
 function App() {
+  document.documentElement.setAttribute('data-theme', 'light');
   return (
     <Router>
       <Routes>

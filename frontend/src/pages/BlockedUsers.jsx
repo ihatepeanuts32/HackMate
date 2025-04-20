@@ -7,7 +7,7 @@ function BlockedUsers() {
 
     return (
         <div>
-            <h1 style={{ color: "white" }}>Blocked Users</h1>
+            <h1>Blocked Users</h1>
             {blockedUsers.map((user) => (
                 <div
                     key={user.id}
@@ -22,8 +22,6 @@ function BlockedUsers() {
                         fontSize: 20,
                         borderRadius: 25,
                         borderColor: '#1C0049',
-                        backgroundColor: '#1C0049',
-                        color: 'white',
                         padding: '5px 10px',
                     }}>{user.name}</span>
 
@@ -31,16 +29,12 @@ function BlockedUsers() {
                         fontSize: 20,
                         borderRadius: 25,
                         borderColor: '#1C0049',
-                        backgroundColor: '#1C0049',
-                        color: 'white',
                         padding: '5px 10px',
                     }}>{user.date}</span>
 
                     <button style={{
                             fontSize: 20,
                             borderColor: '#1C0049',
-                            backgroundColor: '#1C0049',
-                            color: 'white',
                             padding: '5px 10px',
                         }}
                         onClick={() => unblockUser(user.id)}

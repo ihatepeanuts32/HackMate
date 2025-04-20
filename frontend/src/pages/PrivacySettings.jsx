@@ -8,7 +8,7 @@ const PrivacySettings = () => {
     const [picVisible, setPicVisible] = useState(true);
 
     return (
-        <div style={{borderRadius:25, background:"#1C0049"}}>
+        <div style={{borderRadius:25, background:"#9157ee"}}>
             <h1 style={{ color: "white" }}>Privacy</h1>
             <div className="split-row">
                 <h3 style={{color:"white"}}>Profile is Public</h3>
