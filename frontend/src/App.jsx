@@ -20,6 +20,7 @@ import UpdateProfile from './pages/UpdateProfile';
 import AccountDetails from './pages/AccountDetails';
 import PrivacySettings from './pages/PrivacySettings';
 import ManageGroup from './pages/ManageGroup';
+import ChatInbox from './pages/ChatInbox';
 import { BlockedUsersProvider } from './context/BlockedUsersContext';
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
             <Route path="/privacy" element={<PrivacySettings />} />
             <Route path="/group/:id" element={<GroupView />} />
             <Route path="/manage-group/:id" element={<ManageGroup />} />
+            <Route path='/chatInbox' element={<ChatInbox/>}/>
           </Route>
         </Routes>
       </Router>
