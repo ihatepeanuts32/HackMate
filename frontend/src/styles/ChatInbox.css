@@ -1,0 +1,134 @@
+/* Full screen layout */
+.chat-inbox {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;  
+}
+
+/* Sidebar (Left) */
+.sidebar {
+    width: 20%;
+    background-color: #28025d;
+    padding: 0 1rem 1rem 1rem; /* no top padding */
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding-top: 0;
+    padding-left: 0;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+}
+
+.logo-icon {
+    color: #ff2cdf;
+    margin-right: 0.5rem;
+}
+
+.logo-text span {
+    color: white;
+}
+
+.chat-user-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.chat-user {
+    padding: 0.5rem 1rem;
+    background-color: #3e0a7a;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+.chat-user:hover,
+.chat-user.active {
+    background-color: #6325b7;
+}
+
+/* Chat Window (Middle) */
+.chat-window {
+    width: 60%;
+    background-color: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    font-size: 1.2rem;
+    font-weight: 500;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+/* Profile Sidebar (Right) */
+.profile-sidebar {
+    width: 20%;
+    background-color: #37036d;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.profile-icon {
+    font-size: 3rem;
+    background-color: #6a0dad;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-label {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.profile-placeholder,
+.profile-detail {
+    font-size: 0.95rem;
+}
+
+/* Scrollbar for chat list */
+.chat-user-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-user-list::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 3px;
+}
+
+.chat-user-list::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+}
+
+.chat-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
