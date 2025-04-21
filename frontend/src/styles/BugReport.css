@@ -97,3 +97,52 @@ label {
     background-color: #f44336;
     color: white;
 }
+
+.bug-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #9333EA;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    z-index: 999;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    transition: background-color 0.3s ease;
+  }
+  
+  .bug-button:hover {
+    background-color: #A855F7;
+  }
+  
+
+  .bug-popup {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background-color: #2D0075;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0px 4px 20px rgba(0,0,0,0.3);
+    z-index: 1000;
+    width: 90vw;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    cursor: pointer;
+  }
+  
