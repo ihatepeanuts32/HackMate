@@ -26,13 +26,12 @@ const GroupMessagesModal = ({ isOpen, onClose, groupId }) => {
         }
     }, [isOpen, groupId]);
 
-    const handleDeleteMessage = async (messageId) => {
+    const handleDeleteMessage = async () => {
         if (window.confirm('Are you sure you want to delete this message?')) {
             try {
-                await axios.delete(`/api/groups/${groupId}/messages/${messageId}`, {
+                await axios.delete(`/api/groups/${groupId}/clear_messages`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                setMessages(messages.filter(msg => msg._id !== messageId));
             } catch (err) {
                 console.error('Failed to delete message:', err);
             }
@@ -56,29 +55,20 @@ const GroupMessagesModal = ({ isOpen, onClose, groupId }) => {
                         <p>No messages yet</p>
                     ) : (
                         <div className="messages-list">
-                            {messages.map(message => (
-                                <div key={message._id} className="message-item">
+                            {messages.map((message,index) => (
+                                <div key={index} className="message-item">
                                     <div className="message-header">
                                         <div className="message-info">
                                             <p className="sender-name">{message.senderName}</p>
-                                            <p className="message-date">
-                                                {new Date(message.createdAt).toLocaleString()}
-                                            </p>
                                         </div>
-                                        <button
-                                            className="delete-button"
-                                            onClick={() => handleDeleteMessage(message._id)}
-                                        >
-                                            Delete
-                                        </button>
                                     </div>
                                     <div className="message-content">
-                                        <p className="subject">{message.subject}</p>
-                                        <p className="description">{message.description}</p>
+                                        <p className="description">{message}</p>
                                     </div>
                                 </div>
                             ))}
                         </div>
+                        
                     )}
                 </div>
             </div>

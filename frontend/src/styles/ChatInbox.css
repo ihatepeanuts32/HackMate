@@ -3,7 +3,7 @@
     display: flex;
     width: 100vw;
     height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     color: white;
     overflow: hidden;
     padding: 0;
@@ -47,6 +47,7 @@
     gap: 0.5rem;
 }
 
+
 .chat-user {
     padding: 0.5rem 1rem;
     background-color: #3e0a7a;
@@ -56,6 +57,9 @@
     align-items: center;
     gap: 0.5rem;
     transition: background-color 0.3s;
+    justify-content: space-between;
+    padding: 10px;
+    position: relative; 
 }
 
 .chat-user:hover,
@@ -131,4 +135,36 @@
     font-weight: bold;
     display: flex;
     align-items: center;
+}
+
+.user-icon {
+    margin-right: 1px;
+    cursor: pointer;
+}
+
+.user-name {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.delete-chat-container {
+    margin-left: auto; /* Pushes the button to the far right */
+    display: flex;
+    align-items: center; /* Vertically centers the button */
+}
+
+.delete-chat {
+    background: none;
+    border: none;
+    color: grey;
+    font-size: 0.8em; /* Reduce the font size */
+    padding: 2px 5px; /* Add smaller padding */
+    width: auto; /* Ensure the button size adjusts to its content */
+    height: auto; /* Ensure the height is minimal */
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+}
+
+.delete-chat:hover {
+    color: darkgrey;
 }

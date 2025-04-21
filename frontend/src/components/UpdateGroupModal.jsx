@@ -104,30 +104,31 @@ const UpdateGroupModal = ({ isOpen, onClose, group, onUpdate }) => {
                     </div>
                     <div className="form-group checkbox-group">
                         <label>
-                            <input
+                            Public Group
+                        </label>
+                        <input
                                 type="checkbox"
                                 name="isPublic"
                                 checked={formData.isPublic}
                                 onChange={handleCheckboxChange}
                             />
-                            Public Group
-                        </label>
                     </div>
 
                     <div className="form-group checkbox-group">
                         <label>
-                        Group Type:
-                            <select value={formData.groupType} onChange={(e) => setFormData(prev => ({ ...prev, groupType: e.target.value }))}>
+                            Group Type:
+                        </label>
+
+                        <select value={formData.groupType} onChange={(e) => setFormData(prev => ({ ...prev, groupType: e.target.value }))}>
                                 <option value="open">Open to Anyone</option>
                                 <option value="invite-only">Invite Only</option>
                             </select>
-                        </label>
                     </div>
 
                     <div className="form-group">
                         <label htmlFor="skills">Skills/Tags:</label>
                         <div className="skills-input-container">
-                            <input
+                            <input style={{minWidth:350}}
                                 type="text"
                                 id="skills"
                                 value={skillInput}

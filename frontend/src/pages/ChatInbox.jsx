@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/ChatInbox.css';
 
-const chatUsers = [
+const chatUsersData = [
     { id: 1, name: "Vaishali Sathiya", year: "Sophomore", major: "Software Engineering", school: "UT Dallas" },
     { id: 2, name: "Ifrah Zainab", year: "Sophomore", major: "Computer Science", school: "UT Dallas" },
     { id: 3, name: "Rajit Goel", year: "Junior", major: "Computer Science", school: "UT Dallas" },
@@ -14,7 +14,15 @@ const chatUsers = [
 ];
 
 const ChatInbox = () => {
+    const [chatUsers, setChatUsers] = useState(chatUsersData);
     const [selectedUser, setSelectedUser] = useState(null);
+
+    const deleteChat = (id) => {
+        setChatUsers(chatUsers.filter(user => user.id !== id));
+        if (selectedUser?.id === id) {
+            setSelectedUser(null); // Deselect the user if they are deleted
+        }
+    };
 
     return (
         <div className="chat-inbox">
@@ -25,13 +33,20 @@ const ChatInbox = () => {
                 <div className="chat-user-list">
                     {chatUsers.map(user => (
                         <div
-                            key={user.id}
-                            className={`chat-user ${selectedUser?.id === user.id ? 'active' : ''}`}
-                            onClick={() => setSelectedUser(user)}
-                        >
-                            <span className="user-icon">👤</span>
-                            {user.name}
+                        key={user.id}
+                        className={`chat-user ${selectedUser?.id === user.id ? 'active' : ''}`}
+                    >
+                        <span className="user-icon" onClick={() => setSelectedUser(user)}>👤</span>
+                        <span className="user-name">{user.name}</span>
+                        <div className="delete-chat-container">
+                            <button
+                                className="delete-chat"
+                                onClick={() => deleteChat(user.id)}
+                            >
+                                X
+                            </button>
                         </div>
+                    </div>
                     ))}
                 </div>
             </div>

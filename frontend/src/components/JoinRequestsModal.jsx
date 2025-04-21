@@ -28,11 +28,12 @@ const JoinRequestsModal = ({ isOpen, onClose, groupId }) => {
 
     const handleRequest = async (requestId, action) => {
         try {
-            await axios.post(`/api/groups/${groupId}/requests/${requestId}/${action}`, {}, {
+            await axios.put(`/api/groups/${groupId}/request_manage`, {
+                action,
+                requestId
+            }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            // Remove the request from the list
-            setRequests(requests.filter(req => req._id !== requestId));
         } catch (err) {
             console.error(`Failed to ${action} request:`, err);
         }
@@ -58,25 +59,25 @@ const JoinRequestsModal = ({ isOpen, onClose, groupId }) => {
                             {requests.map(request => (
                                 <div key={request._id} className="request-item">
                                     <div className="request-info">
-                                        <p className="user-name">{request.user.name}</p>
-                                        <p className="request-date">
-                                            {new Date(request.createdAt).toLocaleDateString()}
-                                        </p>
+                                        <p className="user-name">{request.user?.name || 'Unknown User'}</p>
+                                        <p className="request-status">Status: {request.status}</p>
+                                        <p className="request-message">Message: {request.message || 'No message'}</p>
                                     </div>
-                                    <div className="request-actions">
-                                        <button
-                                            className="accept-button"
-                                            onClick={() => handleRequest(request._id, 'accept')}
-                                        >
-                                            Accept
-                                        </button>
-                                        <button
-                                            className="reject-button"
-                                            onClick={() => handleRequest(request._id, 'reject')}
-                                        >
-                                            Reject
-                                        </button>
-                                    </div>
+                                    {request.status === 'pending' && (
+                                        <div className="request-actions">
+                                            <button className="approve-button" onClick={() => handleRequest(request._id, 'approve')}>
+                                                Accept
+                                            </button>
+                                            <button className="reject-button" onClick={() => handleRequest(request._id, 'reject')}>
+                                                Reject
+                                            </button>
+                                        </div>
+                                    )}
+                                        <div className="request-actions">
+                                            <button className="delete-button" onClick={() => handleRequest(request._id, 'delete')}>
+                                                Delete
+                                            </button>
+                                        </div>
                                 </div>
                             ))}
                         </div>

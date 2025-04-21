@@ -181,6 +181,27 @@ router.post('/:groupId/message/', async (req, res) =>{
         }); 
     }
 }); 
+
+router.get('/:groupId/messages', async (req, res) => {
+    const { groupId } = req.params;
+    try {
+        // Step 1: Verify the user's token 
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+        }
+                
+        const group = await Group.findById(groupId).populate('messages');
+        if (!group) {
+            return res.status(404).json({ message: 'Group not found' });
+        }
+        res.json(group.messages);
+    } catch (err) {
+        console.error('Error fetching messages:', err);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 router.delete('/:groupId/clear_messages/', async (req, res) =>{
     try {
         // Step 1: Verify the user's token 
@@ -273,6 +294,37 @@ const deleteGroup = async (groupId, userId) =>
 
     return { message: 'Group deleted' };
 }
+
+/**
+ * Earl: Pull all join requests, whether pending or not
+ */
+router.get('/:groupId/requests', async (req, res) => {
+    try {
+        const decoded = verifyToken(req);
+        if (!decoded) {
+            return res.status(401).json({ message: 'Unauthorized - Invalid or missing token' });
+        }
+
+        const group = await Group.findById(req.params.groupId)
+            .populate('joinRequests.user', 'name email');
+
+        if (!group) {
+            return res.status(404).json({ message: 'Group not found' });
+        }
+
+        if (group.owner.toString() !== decoded.userId) {
+            return res.status(403).json({ message: 'Only the group owner can view join requests' });
+        }
+
+        return res.status(200).json(group.joinRequests);
+    } catch (error) {
+        return res.status(500).json({
+            message: 'Failed to fetch join requests',
+            error: error.message
+        });
+    }
+});
+
 
 /**
  * Earl - Description: Removes a member from the group 
@@ -588,6 +640,9 @@ router.put('/:groupId/request_manage/', async (req, res) => {
         if (!group) {
             return res.status(404).json({ message: "Group not found" });
         }
+        
+        console.log('Decoded User ID:', decoded.userId);
+        console.log('Group Owner:', group.owner.toString());
 
         /// Step 4: Check group owner authorization
         if (group.owner.toString() !== decoded.userId.toString()) {
