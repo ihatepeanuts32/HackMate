@@ -60,8 +60,11 @@ const Groups = () => {
 
     const handleLeaveGroup = async (groupId) => {
         try {
-            await axios.post(`/api/groups/${groupId}/leave`, {}, {
-                headers: { Authorization: `Bearer ${token}`}
+            const memberId = userId;
+            const token = localStorage.getItem('token');
+            await axios.delete(`/api/groups/${groupId}/remove_member`, {
+                headers: { Authorization: `Bearer ${token}`},
+                data: {memberId}
             });
             setGroups(groups.filter(g => g._id !== groupId));
         } catch (err) {

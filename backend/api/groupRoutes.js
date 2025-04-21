@@ -306,7 +306,7 @@ router.get('/:groupId/requests', async (req, res) => {
         }
 
         const group = await Group.findById(req.params.groupId)
-            .populate('joinRequests.user', 'name email');
+            .populate('joinRequests.user', 'username');
 
         if (!group) {
             return res.status(404).json({ message: 'Group not found' });

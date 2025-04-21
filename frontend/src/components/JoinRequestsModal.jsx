@@ -59,13 +59,13 @@ const JoinRequestsModal = ({ isOpen, onClose, groupId }) => {
                             {requests.map(request => (
                                 <div key={request._id} className="request-item">
                                     <div className="request-info">
-                                        <p className="user-name">{request.user?.name || 'Unknown User'}</p>
+                                        <p className="user-name">{request.user.username || 'Unknown User'}</p>
                                         <p className="request-status">Status: {request.status}</p>
                                         <p className="request-message">Message: {request.message || 'No message'}</p>
                                     </div>
                                     {request.status === 'pending' && (
                                         <div className="request-actions">
-                                            <button className="approve-button" onClick={() => handleRequest(request._id, 'approve')}>
+                                            <button className="accept-button" onClick={() => handleRequest(request._id, 'approve')}>
                                                 Accept
                                             </button>
                                             <button className="reject-button" onClick={() => handleRequest(request._id, 'reject')}>
