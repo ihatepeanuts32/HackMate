@@ -3,7 +3,7 @@
     display: flex;
     width: 100vw;
     height: 100vh;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Poppins', sans-serif;
     color: white;
     overflow: hidden;
     padding: 0;
@@ -162,7 +162,7 @@
     width: auto; /* Ensure the button size adjusts to its content */
     height: auto; /* Ensure the height is minimal */
     cursor: pointer;
-    font-family: 'Segoe UI', monospace;
+    font-family: 'Poppins', sans-serif;
 }
 
 .delete-chat:hover {
