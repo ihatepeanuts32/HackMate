@@ -99,7 +99,7 @@ const Groups = () => {
                                         </Link>
                                         {isOwner && (
                                             <Link 
-                                                to={`/manage-group/${group._id}`}
+                                                to={`/manage_group/${group._id}`}
                                                 className="manage-button"
                                             >
                                                 Manage

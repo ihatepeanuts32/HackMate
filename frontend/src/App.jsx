@@ -38,7 +38,7 @@ function App() {
             <Route path="/editProfile" element={<EditProfile />} />
             <Route path="/bugReport" element={<BugReport />} />
             <Route path="/group/:id" element={<GroupView />} />
-            <Route path="/manage-group/:id" element={<ManageGroup />} />
+            <Route path="/manage_group/:id" element={<ManageGroup />} />
             <Route path="/groups" element={<Groups />} />
             <Route path="/home" element={<Home />} />
             <Route path="/settings" element={<Settings />} />

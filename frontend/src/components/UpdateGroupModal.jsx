@@ -4,9 +4,12 @@ import '../styles/Modal.css';
 
 const UpdateGroupModal = ({ isOpen, onClose, group, onUpdate }) => {
     const [formData, setFormData] = useState({
-        name: '',
-        description: '',
-        skills: []
+        name: group?.name || '',
+        description: group?.description || '',
+        skills: group?.skills || [],
+        isPublic: group?.isPublic || false,
+        groupType: group?.groupType || 'open',
+        maxCapacity: group?.maxCapacity || 5
     });
     const [skillInput, setSkillInput] = useState('');
 
@@ -15,7 +18,9 @@ const UpdateGroupModal = ({ isOpen, onClose, group, onUpdate }) => {
             setFormData({
                 name: group.name || '',
                 description: group.description || '',
-                skills: group.skills || []
+                skills: group.skills || [],
+                isPublic: group.isPublic ?? false,
+                isOpen: group.isOpen ?? false
             });
         }
     }, [group]);
@@ -27,6 +32,14 @@ const UpdateGroupModal = ({ isOpen, onClose, group, onUpdate }) => {
         setFormData(prev => ({
             ...prev,
             [name]: value
+        }));
+    };
+    
+    const handleCheckboxChange = (e) => {
+        const { name, checked } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: checked
         }));
     };
 
@@ -88,6 +101,27 @@ const UpdateGroupModal = ({ isOpen, onClose, group, onUpdate }) => {
                             required
                             rows="4"
                         />
+                    </div>
+                    <div className="form-group checkbox-group">
+                        <label>
+                            <input
+                                type="checkbox"
+                                name="isPublic"
+                                checked={formData.isPublic}
+                                onChange={handleCheckboxChange}
+                            />
+                            Public Group
+                        </label>
+                    </div>
+
+                    <div className="form-group checkbox-group">
+                        <label>
+                        Group Type:
+                            <select value={formData.groupType} onChange={(e) => setFormData(prev => ({ ...prev, groupType: e.target.value }))}>
+                                <option value="open">Open to Anyone</option>
+                                <option value="invite-only">Invite Only</option>
+                            </select>
+                        </label>
                     </div>
 
                     <div className="form-group">
