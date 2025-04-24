@@ -217,4 +217,65 @@ router.post('/resetPassword', async (req, res) => {
   }
 });
 
+
+router.get('/allUsers', async (req, res) => {
+  try {
+
+    const allUsers = await Onboarding.find({})
+      .populate('userId', 'username'); 
+      
+    const formattedUsers = allUsers.map(user => ({
+      id: user.userId,
+      name: `${user.firstName} ${user.lastName}`,
+      bio: user.bio || `${user.preferredRole} developer`,
+      year: user.year || 'Not specified',
+      type: user.preferredRole,
+      inGroup: user.inGroup || 'No',
+      numHackathons: user.hackathonsAttended,
+      college: user.college,
+      skills: user.technicalSkills || [],
+      desiredQualities: user.desiredTeammateQualities || [],
+      imageUrl: user.profileImage || null
+    }));
+
+    res.status(200).json(formattedUsers);
+  } catch (error) {
+    return res.status(500).json({ message: "Unable to fetch users", error: error.message });
+  }
+});
+
+router.get('/user/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const decoded = verifyToken(req);
+    if (!decoded) {
+      return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
+    }
+    
+    const userData = await Onboarding.findOne({ userId: id });
+    
+    if (!userData) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    
+    const formattedUser = {
+      id: userData.userId,
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+      preferredRole: userData.preferredRole,
+      hackathonsAttended: userData.hackathonsAttended,
+      college: userData.college,
+      technicalSkills: userData.technicalSkills || [],
+      desiredTeammateQualities: userData.desiredTeammateQualities || [],
+      profileImage: userData.profileImage || null,
+      bio: userData.bio || null
+    };
+    
+    res.status(200).json(formattedUser);
+  } catch (error) {
+    return res.status(500).json({ message: "Unable to fetch user profile", error: error.message });
+  }
+});
+
 export default router;

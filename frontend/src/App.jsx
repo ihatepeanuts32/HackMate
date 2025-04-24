@@ -19,8 +19,8 @@ import BlockedUsers from './pages/BlockedUsers';
 import UpdateProfile from './pages/UpdateProfile';
 import AccountDetails from './pages/AccountDetails';
 import PrivacySettings from './pages/PrivacySettings';
-import ChatInbox from './pages/ChatInbox';
 import { BlockedUsersProvider } from './context/BlockedUsersContext';
+import ChatInbox from "./pages/ChatInbox";
 
 function App() {
   return (

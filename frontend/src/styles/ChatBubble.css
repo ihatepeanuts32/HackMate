@@ -1,0 +1,24 @@
+.chat-bubble {
+    max-width: 80%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 18px;
+    line-height: 1.4;
+    word-break: break-word;
+    font-size: 0.95rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.chat-bubble.sent {
+    align-self: flex-end;
+    background-color: #d8b4fe;
+    color: #240046;
+}
+
+.chat-bubble.received {
+    align-self: flex-start;
+    background-color: #f3e8ff;
+    color: #3c096c;
+}

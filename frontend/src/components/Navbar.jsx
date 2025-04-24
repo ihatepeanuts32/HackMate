@@ -78,7 +78,7 @@ const Navbar = () => {
             <span className="icon">⚙️</span>
             settings
           </Link>
-          <Link to="/messages" className="menu-item">
+          <Link to="/chatInbox" className="menu-item">
             <span className="icon">💬</span>
             messages
           </Link>

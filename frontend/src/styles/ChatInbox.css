@@ -1,42 +1,36 @@
-/* Full screen layout */
+* {
+    box-sizing: border-box;
+}
+
 .chat-inbox {
     display: flex;
-    width: 100vw;
     height: 100vh;
+    width: 100vw;
     font-family: 'Segoe UI', sans-serif;
-    color: white;
     overflow: hidden;
-    padding: 0;
-    margin: 0;  
+    background-color: #f3f3f3;
+    max-width: 100vw;
+    overflow-x: hidden;
 }
 
-/* Sidebar (Left) */
 .sidebar {
-    width: 20%;
+    width: 22%;
     background-color: #28025d;
-    padding: 0 1rem 1rem 1rem; /* no top padding */
     display: flex;
     flex-direction: column;
-    box-sizing: border-box;
-    padding-top: 0;
-    padding-left: 0;
+    padding: 1.5rem 1rem;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
 }
 
-.logo {
-    font-size: 1.5rem;
+.chat-title {
+    font-size: 1.8rem;
     font-weight: bold;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-}
-
-.logo-icon {
-    color: #ff2cdf;
-    margin-right: 0.5rem;
-}
-
-.logo-text span {
     color: white;
+    margin-bottom: 2rem;
+}
+
+.chat-title span {
+    color: #ff2cdf;
 }
 
 .chat-user-list {
@@ -44,18 +38,18 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.8rem;
 }
 
 .chat-user {
-    padding: 0.5rem 1rem;
     background-color: #3e0a7a;
-    border-radius: 6px;
-    cursor: pointer;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    color: white;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    transition: background-color 0.3s;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .chat-user:hover,
@@ -63,72 +57,86 @@
     background-color: #6325b7;
 }
 
-/* Chat Window (Middle) */
-.chat-window {
-    width: 60%;
-    background-color: #e8e8e8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
+.user-icon {
+    margin-right: 10px;
     font-size: 1.2rem;
-    font-weight: 500;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
 }
 
-/* Profile Sidebar (Right) */
-.profile-sidebar {
-    width: 20%;
-    background-color: #37036d;
-    padding: 2rem 1rem;
+.chat-window {
+    flex: 1;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    padding: 2rem;
+    color: #333;
+    border-left: 1px solid #ddd;
+}
+
+.chat-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    box-sizing: border-box;
-    text-align: center;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    position: relative;
+    overflow-x: hidden;
 }
 
-.profile-icon {
-    font-size: 3rem;
-    background-color: #6a0dad;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
+.messages {
+    flex: 1;
+    overflow-y: auto;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
+    padding: 1rem;
+    margin-bottom: 70px; 
 }
 
-.profile-label {
-    font-weight: 600;
-    font-size: 1.1rem;
+.message-input-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    padding: 1rem;
+    background-color: white;
+    border-top: 1px solid #eaeaea;
 }
 
-.profile-placeholder,
-.profile-detail {
+.message-input-field {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d1d1;
+    border-radius: 20px;
     font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s ease;
 }
 
-/* Scrollbar for chat list */
-.chat-user-list::-webkit-scrollbar {
-    width: 6px;
+.message-input-field:focus {
+    border-color: #9147ff;
 }
 
-.chat-user-list::-webkit-scrollbar-thumb {
-    background-color: #888;
-    border-radius: 3px;
+.send-button {
+    background-color: #9147ff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0.75rem 1.5rem;
+    margin-left: 0.75rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
 }
 
-.chat-user-list::-webkit-scrollbar-thumb:hover {
-    background-color: #aaa;
+.send-button:hover {
+    background-color: #7d33d7;
 }
 
-.chat-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
+.chat-placeholder {
+    text-align: center;
+    color: #888;
+    font-size: 1.2rem;
+    opacity: 0.8;
 }
