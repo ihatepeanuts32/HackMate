@@ -22,7 +22,6 @@ import PrivacySettings from './pages/PrivacySettings';
 import ChatInbox from './pages/ChatInbox';
 import ManageGroup from './pages/ManageGroup';
 import { BlockedUsersProvider } from './context/BlockedUsersContext';
-import ChatInbox from "./pages/ChatInbox";
 
 function App() {
   document.documentElement.setAttribute('data-theme', 'light');
@@ -54,7 +53,7 @@ function App() {
             <Route path="/updateProfile" element={<UpdateProfile />} />
             <Route path="/account" element={<AccountDetails />} />
             <Route path="/privacy" element={<PrivacySettings />} />
-            <Route path="/messages" element={<ChatInbox />} />
+            <Route path="/chatInbox" element={<ChatInbox />} />
           </Route>
         </Routes>
       </BlockedUsersProvider>

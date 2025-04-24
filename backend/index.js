@@ -32,9 +32,10 @@ app.use("/api/users", userRoutes);
 app.use("/api/hackathons", hackathonRoutes);
 app.use("/api", eventBrite);
 app.use("/api/chat", chatRoutes);
+app.use("/api/reports", reportRoutes);
+
 
 setupSocket(server); 
-app.use("/api/reports", reportRoutes);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`)); 
