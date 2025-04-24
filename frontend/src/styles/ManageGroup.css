@@ -1,0 +1,87 @@
+.manage-group-page {
+    min-height: 100vh;
+    background-color: #1C0049;
+    color: white;
+    padding: 4rem 2rem;
+}
+
+.manage-group-page h1 {
+    text-align: left;
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    font-weight: bold;
+}
+
+.management-options {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    padding: 0 1rem;
+}
+
+.option-section {
+    background-color: #2A0066;
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.option-section h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #E9D5FF;
+    white-space: nowrap;
+}
+
+.manage-button {
+    background-color: #4C1D95;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 1rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.manage-button:hover {
+    background-color: #6D28D9;
+    transform: translateY(-2px);
+}
+
+.manage-button.delete {
+    background-color: #991B1B;
+}
+
+.manage-button.delete:hover {
+    background-color: #B91C1C;
+}
+
+.manage-button.warning {
+    background-color: #92400E;
+}
+
+.manage-button.warning:hover {
+    background-color: #B45309;
+}
+
+@media (max-width: 768px) {
+    .manage-group-page {
+        padding: 2rem 1rem;
+    }
+
+    .manage-group-page h1 {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .management-options {
+        grid-template-columns: 1fr;
+    }
+} 
