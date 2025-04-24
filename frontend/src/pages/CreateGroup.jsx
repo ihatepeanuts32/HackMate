@@ -42,25 +42,25 @@ const CreateGroup = () => {
 
     return(
     <div>
-        <h1 style={{color:"white"}}>Create a Group</h1>
+        <h1>Create a Group</h1>
         {error && <p style={{ color: "red" }}>{error}</p>}
         {success && <p style={{ color: "green" }}>Group created successfully!</p>}
         <form onSubmit={handleSubmit}>
             <div className="split-row">
-                <h3 style={{width:500, color:"white"}}>Group Name</h3>
+                <h3 style={{width:500}}>Group Name</h3>
                 <input width={50} style={{fontSize: 18}}
                     value={groupName}
                     onChange={(e) => setGroupName(e.target.value)}
                 />
             </div>
             <div className="split-row">
-                <h3 style={{width:500, color:"white"}}>Description</h3>
-                <textarea rows={6} cols={50} style={{fontSize: 18, borderRadius: 15, borderColor:'#1C0049', backgroundColor:'#1C0049'}}
+                <h3 style={{width:500}}>Description</h3>
+                <textarea rows={6} cols={50} style={{fontSize: 18, borderRadius: 15, borderColor:'#1C0049'}}
                     value={description}
                     onChange={(e)=> setDescription(e.target.value)}
                 />
             </div>
-            <button type="submit" style={{fontSize: 24, borderColor:'#1C0049', backgroundColor:'#1C0049'}}>Submit</button>
+            <button type="submit" style={{fontSize: 24, borderColor:'#1C0049'}}>Submit</button>
         </form>
     </div>
     )

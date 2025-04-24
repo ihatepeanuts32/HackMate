@@ -5,8 +5,8 @@ import '../styles/AccountDetails.css';
 const AccountSettings = () => {
     return (
         <div>
-            <h2 style={{ color: "white" }}>Your Account</h2>
-            <div className="row-wrapper" style={{ color: 'white', borderRadius:25, background:"#1C0049", minWidth: 800}}>
+            <h2>Your Account</h2>
+            <div className="row-wrapper" style={{ color: 'white', borderRadius:25, background:"#9157ee", minWidth: 800}}>
                 <div className="vertical-line" />
 
                 <div className="split-row">

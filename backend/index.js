@@ -7,6 +7,7 @@ import groupRoutes from "./api/groupRoutes.js";
 import userRoutes from "./api/userRoutes.js";
 import hackathonRoutes from "./api/hackathonRoutes.js";
 import eventBrite from "./api/eventBrite.js";
+import reportRoutes from "./api/reportRoutes.js"
 import { createServer } from 'http';
 import setupSocket from './socket.js';
 import chatRoutes from "./api/chatRoutes.js"
@@ -33,6 +34,7 @@ app.use("/api", eventBrite);
 app.use("/api/chat", chatRoutes);
 
 setupSocket(server); 
+app.use("/api/reports", reportRoutes);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`)); 

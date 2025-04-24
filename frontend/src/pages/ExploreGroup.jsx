@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useLocation, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {useEffect} from 'react';
 import '../styles/Explore.css';
 
@@ -8,6 +10,8 @@ const ExploreGroup = () => {
   const [statusFilter, setStatusFilter] = useState('');
   const [page, setPage] = useState(0);
   const groupsPerPage = 6;
+  const navigate = useNavigate();
+  
   //Grab the groups
   useEffect(() => {
     const fetchGroups = async () => {
@@ -37,6 +41,11 @@ const ExploreGroup = () => {
 
   const totalPages = Math.ceil(filteredGroups.length / groupsPerPage);
  
+  //when clicked take to the uniquely constructed group view 
+  const handleGroupClick = (group) => {
+    navigate(`/group/${group._id}`, { state: {group} });
+  };
+  
   return (
     <div className="explore-container">
       <h3>Explore Groups</h3>
@@ -50,7 +59,7 @@ const ExploreGroup = () => {
       </div>
       <div className="card-grid">
         {paginatedGroups.map((group) => (
-          <div className="card" key={group._id}>
+          <div className="card" key={group._id} onClick={() => handleGroupClick(group)}>
             <h3>{group.name}</h3>
             <p>Status: {group.groupType}</p>
           </div>

@@ -19,13 +19,16 @@ import BlockedUsers from './pages/BlockedUsers';
 import UpdateProfile from './pages/UpdateProfile';
 import AccountDetails from './pages/AccountDetails';
 import PrivacySettings from './pages/PrivacySettings';
+import ChatInbox from './pages/ChatInbox';
+import ManageGroup from './pages/ManageGroup';
 import { BlockedUsersProvider } from './context/BlockedUsersContext';
 import ChatInbox from "./pages/ChatInbox";
 
 function App() {
+  document.documentElement.setAttribute('data-theme', 'light');
   return (
-    <BlockedUsersProvider>
-      <Router>
+    <Router>
+      <BlockedUsersProvider>
         <Routes>
           <Route path="/" element={<Navigate to="/register" />} />
           
@@ -35,6 +38,8 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/editProfile" element={<EditProfile />} />
             <Route path="/bugReport" element={<BugReport />} />
+            <Route path="/group/:id" element={<GroupView />} />
+            <Route path="/manage_group/:id" element={<ManageGroup />} />
             <Route path="/groups" element={<Groups />} />
             <Route path="/home" element={<Home />} />
             <Route path="/settings" element={<Settings />} />
@@ -49,12 +54,11 @@ function App() {
             <Route path="/updateProfile" element={<UpdateProfile />} />
             <Route path="/account" element={<AccountDetails />} />
             <Route path="/privacy" element={<PrivacySettings />} />
-            <Route path="/group/:id" element={<GroupView />} />
-            <Route path='/chatInbox' element={<ChatInbox/>}/>
-        </Route>
+            <Route path="/messages" element={<ChatInbox />} />
+          </Route>
         </Routes>
-      </Router>
-    </BlockedUsersProvider>
+      </BlockedUsersProvider>
+    </Router>
   )
 }
 

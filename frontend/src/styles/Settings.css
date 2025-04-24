@@ -1,7 +1,19 @@
+:root{
+    --text-color: black;
+    --settings-container-bg: #8c53e8;
+    --settings-section-bg: #b181ff;
+}
+
+[data-theme="dark"] {
+    --text-color: #ffffff;
+    --settings-container-bg: #5a25b0;
+    --settings-section-bg: #1C0049;
+  }
+
 .settings-container {
     min-height: 100vh;
-    background-color: #1C0049;
-    color: white;
+    background-color: var(--settings-container-bg);
+    color: var(--text-color);
     padding: 2rem;
     width: 100%;
     display: flex;
@@ -29,7 +41,7 @@
 }
 
 .settings-section {
-    background-color: #2A0066;
+    background-color: var(--settings-section-bg);
     border-radius: 1rem;
     overflow: hidden;
     width: 100%;
@@ -38,7 +50,7 @@
 
 .settings-link {
     text-decoration: none;
-    color: white;
+    color: var(--text-color);
 }
 
 .settings-item {

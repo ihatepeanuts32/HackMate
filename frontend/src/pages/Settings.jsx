@@ -34,7 +34,7 @@ const Settings = () => {
 
                 <div className="settings-item">
                     <h2>Enable Notifications</h2>
-                    <img 
+                    <img
                         src={notifications ? toggleOn : toggleOff}
                         alt="toggle"
                         className="toggle-icon"
@@ -44,11 +44,18 @@ const Settings = () => {
 
                 <div className="settings-item">
                     <h2>Dark Mode</h2>
-                    <img 
+                    <img
                         src={darkMode ? toggleOn : toggleOff}
                         alt="toggle"
                         className="toggle-icon"
-                        onClick={() => setDarkMode(!darkMode)}
+                        onClick={() => {
+                            const newMode = !darkMode;
+                            setDarkMode(newMode);
+
+                            const theme = newMode ? 'dark' : 'light';
+                            document.documentElement.setAttribute('data-theme', theme);
+                            localStorage.setItem('theme', theme);
+                        }}
                     />
                 </div>
 
