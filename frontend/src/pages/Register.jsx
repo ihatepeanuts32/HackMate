@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios"
 import { Link } from 'react-router-dom';
-
+import hackmateLogo from '../assets/hackmateLogo.png';
 
 const Register = () => {
   const [firstName, setFirstName] = useState('');
@@ -43,6 +43,9 @@ const Register = () => {
 
   return (
     <div>
+      <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+        <img src={hackmateLogo} alt="HackMate Logo" style={{ maxWidth: '200px' }} />
+      </div>
       <h3>Register with HackMate</h3>
       <form onSubmit={handleSubmit}>
         <div className="split-row">

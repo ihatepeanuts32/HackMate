@@ -24,7 +24,7 @@ import ManageGroup from './pages/ManageGroup';
 import { BlockedUsersProvider } from './context/BlockedUsersContext';
 
 function App() {
-  document.documentElement.setAttribute('data-theme', 'light');
+  document.documentElement.setAttribute('data-theme', 'dark');
   return (
     <Router>
       <BlockedUsersProvider>
