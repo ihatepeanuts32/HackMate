@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Settings.css';
 import settingsIcon from '../assets/settings_icon.png';
@@ -8,7 +8,12 @@ import chevronRight from '../assets/chevron_right.png';
 
 const Settings = () => {
     const [notifications, setNotifications] = useState(true);
-    const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(true);
+
+    useEffect(() => {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    }, []);
 
     return (
         <div className="settings-container">
