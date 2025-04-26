@@ -27,14 +27,14 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    gap: -1rem;
+    gap: 0.5rem;
     padding: 4px 0;
 }
 
 .logo {
     height: 36px;
     width: auto;
-    margin-top: 28px;
+    margin-top: 0;
 }
 
 .nav-left h1 {
