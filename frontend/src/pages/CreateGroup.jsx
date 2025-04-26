@@ -42,7 +42,7 @@ const CreateGroup = () => {
 
     return(
     <div>
-        <h1>Create a Group</h1>
+        <h5>Create a Group</h5>
         {error && <p style={{ color: "red" }}>{error}</p>}
         {success && <p style={{ color: "green" }}>Group created successfully!</p>}
         <form onSubmit={handleSubmit}>

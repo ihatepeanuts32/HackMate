@@ -76,7 +76,7 @@ const Groups = () => {
 
     return (
         <div className="groups-page">
-            <h1>Your Groups</h1>
+            <h5>Your Groups</h5>
             <div className="groups-container">
                 {groups.length === 0 ? (
                     <p>You're not in any groups yet.</p>
