@@ -1,85 +1,189 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../styles/ChatInbox.css';
-
-const chatUsersData = [
-    { id: 1, name: "Vaishali Sathiya", year: "Sophomore", major: "Software Engineering", school: "UT Dallas" },
-    { id: 2, name: "Ifrah Zainab", year: "Sophomore", major: "Computer Science", school: "UT Dallas" },
-    { id: 3, name: "Rajit Goel", year: "Junior", major: "Computer Science", school: "UT Dallas" },
-    { id: 4, name: "Hrishikesh Srirangam", year: "Sophomore", major: "Computer Science", school: "UT Dallas" },
-    { id: 5, name: "Sai Sureshkannan", year: "Sophomore", major: "Computer Science", school: "UT Dallas" },
-    { id: 6, name: "Earl Velasquez", year: "Sophomore", major: "Software Engineering", school: "UT Dallas" },
-    { id: 7, name: "Naomi Ntuli", year: "Junior", major: "Computer Science", school: "UT Dallas" },
-    { id: 8, name: "Dhakshin Parimalakumar", year: "Sophomore", major: "Computer Science", school: "UT Dallas" },
-    { id: 9, name: "John Doe", year: "Senior", major: "Computer Science", school: "UT Dallas" }
-];
+import ChatBubble from '../components/chatBubble';
+import axios from 'axios';
+import { io } from 'socket.io-client';
 
 const ChatInbox = () => {
-    const [chatUsers, setChatUsers] = useState(chatUsersData);
-    const [selectedUser, setSelectedUser] = useState(null);
+    const location = useLocation();
+    const initialSelectedUser = location.state?.selectedUser || null;
+    
+    const [chatUsers, setChatUsers] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(initialSelectedUser);
+    const [messages, setMessages] = useState([]);
+    const [newMessage, setNewMessage] = useState('');
+    const [loading, setLoading] = useState(true);
+    
+    const socketRef = useRef();
+    const messagesEndRef = useRef(null);
+    
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        
+        socketRef.current = io('http://localhost:3000'); 
+        
+        const userId = JSON.parse(atob(token.split('.')[1])).userId;
+        
+        socketRef.current.emit('user-connected', userId);
 
-    const deleteChat = (id) => {
-        setChatUsers(chatUsers.filter(user => user.id !== id));
-        if (selectedUser?.id === id) {
-            setSelectedUser(null); // Deselect the user if they are deleted
+        fetchChatUsers(token);
+        
+
+        if (initialSelectedUser) {
+            fetchMessages(initialSelectedUser.id);
+        }
+        
+        socketRef.current.on('receive-message', (message) => {
+
+            if (selectedUser && message.sender === selectedUser.id) {
+                setMessages(prev => [...prev, {
+                    _id: message._id,
+                    text: message.content,
+                    fromSelf: false
+                }]);
+            } 
+            else {
+                fetchChatUsers(token);
+            }
+        });
+        
+        return () => {
+            socketRef.current.disconnect();
+        };
+    }, [initialSelectedUser, selectedUser]);
+    
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
+    
+    const fetchChatUsers = async (token) => {
+        try {
+            setLoading(true);
+            const response = await axios.get('/api/chat/chats', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            
+            setChatUsers(response.data);
+            setLoading(false);
+        } catch (error) {
+            console.error('Error fetching chat users:', error);
+            setLoading(false);
         }
     };
+    
+    const fetchMessages = async (userId) => {
+        try {
+            const token = localStorage.getItem('token');
+            const response = await axios.get(`/api/chat/messages/${userId}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            
+            setMessages(response.data.map(msg => ({
+                _id: msg._id,
+                text: msg.content,
+                fromSelf: msg.sender === JSON.parse(atob(token.split('.')[1])).userId
+            })));
+        } catch (error) {
+            console.error('Error fetching messages:', error);
+        }
+    };
+    
+    const handleSendMessage = async () => {
+        if (!newMessage.trim() || !selectedUser) return;
+        
+        try {
+            const token = localStorage.getItem('token');
+            const userId = JSON.parse(atob(token.split('.')[1])).userId;
+            
+            setMessages(prev => [...prev, { 
+                _id: Date.now().toString(), 
+                text: newMessage, 
+                fromSelf: true 
+            }]);
+            
+            setNewMessage('');
+            
+            const response = await axios.post('/api/chat/messages', {
+                recipient: selectedUser.id,
+                content: newMessage
+            }, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            
+            socketRef.current.emit('private-message', {
+                sender: userId,
+                recipient: selectedUser.id,
+                content: newMessage
+            });
 
+            //fetchChatUsers(token);
+        } catch (error) {
+            console.error('Error sending message:', error);
+        }
+    };
+    
     return (
         <div className="chat-inbox">
-            <div className="sidebar">
-                <div className="chat-title">
-                    <span className="chat-title">Cha<span>ts:</span></span>
-                </div>
+            <aside className="sidebar">
+                <h2 className="chat-title">Chats</h2>
                 <div className="chat-user-list">
-                    {chatUsers.map(user => (
-                        <div
-                        key={user.id}
-                        className={`chat-user ${selectedUser?.id === user.id ? 'active' : ''}`}
-                    >
-                        <span className="user-icon" onClick={() => setSelectedUser(user)}>👤</span>
-                        <span className="user-name">{user.name}</span>
-                        <div className="delete-chat-container">
-                            <button
-                                className="delete-chat"
-                                onClick={() => deleteChat(user.id)}
+                    {loading ? (
+                        <div className="loading">Loading...</div>
+                    ) : chatUsers.length > 0 ? (
+                        chatUsers.map(user => (
+                            <div
+                                key={user._id}
+                                className={`chat-user ${selectedUser?.id === user._id ? 'active' : ''}`}
+                                onClick={() => {
+                                    const chatUser = {
+                                        id: user._id,
+                                        name: user.username
+                                    };
+                                    setSelectedUser(chatUser);
+                                    fetchMessages(user._id);
+                                }}
                             >
-                                X
-                            </button>
+                                <span className="user-icon">👤</span>
+                                {user.username}
+                            </div>
+                        ))
+                    ) : (
+                        <div className="no-chats">No chats yet</div>
+                    )}
+                </div>
+            </aside>
+
+            <main className="chat-window">
+                {selectedUser ? (
+                    <div className="chat-container">
+                        <div className="chat-header">
+                            <h3>{selectedUser.name}</h3>
+                        </div>
+                        <div className="messages">
+                            {messages.map((msg, index) => (
+                                <ChatBubble key={msg._id || index} message={msg.text} isSender={msg.fromSelf} />
+                            ))}
+                            <div ref={messagesEndRef} />
+                        </div>
+                        <div className="message-input-container">
+                            <input
+                                type="text"
+                                value={newMessage}
+                                onChange={(e) => setNewMessage(e.target.value)}
+                                placeholder="Type a message..."
+                                className="message-input-field"
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') handleSendMessage();
+                                }}
+                            />
+                            <button className="send-button" onClick={handleSendMessage}>Send</button>
                         </div>
                     </div>
-                    ))}
-                </div>
-            </div>
-
-            <div className="chat-window">
-                {selectedUser ? (
-                    <div className="chat-placeholder">Chat with {selectedUser.name}</div>
                 ) : (
-                    <div className="chat-placeholder">no chat selected</div>
+                    <div className="chat-placeholder">Select a user to start chatting</div>
                 )}
-            </div>
-
-            <div className="profile-sidebar">
-                {selectedUser ? (
-                    <>
-                        <div className="profile-icon">👤</div>
-                        <div className="profile-label">User Info:</div>
-                        <div className="profile-detail"><strong>{selectedUser.name}</strong></div>
-                        <div className="profile-detail">Year: {selectedUser.year}</div>
-                        <div className="profile-detail">Major: {selectedUser.major}</div>
-                        <div className="profile-detail">School: {selectedUser.school}</div>
-                    </>
-                ) : (
-                    <>
-                        <div className="profile-icon">👤</div>
-                        <div className="profile-label">If User Selected, user info appears here:</div>
-                        <div className="profile-placeholder"><strong>Name</strong></div>
-                        <div className="profile-detail">Year: Sophomore</div>
-                        <div className="profile-detail">Major: Software Engineering</div>
-                        <div className="profile-detail">School: UT Dallas</div>
-                    </>
-                )}
-            </div>
+            </main>
         </div>
     );
 };

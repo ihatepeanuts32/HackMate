@@ -74,44 +74,48 @@ const Navbar = () => {
             <span className="icon">👤</span>
             profile
           </Link>
-          <Link to="/settings" className="menu-item">
-            <span className="icon">⚙️</span>
-            settings
+          <Link to="/explore" className="menu-item">
+            <span className="icon">🌐</span>
+            explore users
           </Link>
-          <Link to="/messages" className="menu-item">
-            <span className="icon">💬</span>
-            messages
+          <Link to="/exploreGroup" className="menu-item">
+            <span className="icon">🔍</span>
+            explore groups
+          </Link>
+          <Link to="/createGroup" className="menu-item">
+            <span className="icon">🧑‍🤝‍🧑</span>
+            create a group
           </Link>
           <Link to="/groups" className="menu-item">
             <span className="icon">👥</span>
-            groups
+            my groups
+          </Link>
+          <Link to="/chatInbox" className="menu-item">
+            <span className="icon">💬</span>
+            messages
+          </Link>
+          <Link to="/settings" className="menu-item">
+            <span className="icon">⚙️</span>
+            settings
           </Link>
           <Link to="/contact" className="menu-item">
             <span className="icon">📞</span>
             support
           </Link>
-          <Link to="/login" className="menu-item">
+          {/* <Link to="/login" className="menu-item">
             <span className="icon">↵</span>
             login
           </Link>
           <Link to="/register" className="menu-item">
             <span className="icon">📝</span>
             register
-          </Link>
+          </Link> */}
           <Link to="/bugReport" className="menu-item">
             <span className="icon">🪲</span>
             report a bug
           </Link>
-          <Link to="/explore" className="menu-item">
-            <span className="icon">🔍</span>
-            explore
-          </Link>
-          <Link to="/createGroup" className="menu-item">
-            <span className="icon">🔍</span>
-            create a group
-          </Link>
           <Link to="/blockedUsers" className="menu-item">
-            <span className="icon">🔍</span>
+            <span className="icon">🚫</span>
             blocked users
           </Link>
         </div>

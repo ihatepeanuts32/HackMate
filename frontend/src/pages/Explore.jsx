@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Explore.css';
-import hackmateLogo from "../assets/hackmateLogo.png";
 import blankProfile from "../assets/profile.png";
+import axios from 'axios';
 
 //mock user data to show example of how explore page would work
-const mockUsers = [
+/*const mockUsers = [
   {
     id: 1,
     name: 'Alice Johnson',
@@ -151,10 +150,13 @@ const mockUsers = [
     skills: ['React', 'MongoDB', 'Node.js'],
     desiredQualities: ['Initiative', 'Collaborative'],
   },
-];
+];*/
 
 const Explore = () => {
-  //three filters to filter users by for now
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
   const [yearFilter, setYearFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [groupFilter, setGroupFilter] = useState('');
@@ -162,7 +164,31 @@ const Explore = () => {
   const usersPerPage = 9;
   const navigate = useNavigate();
 
-  const filteredUsers = mockUsers.filter((user) => {
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem('token'); 
+        
+        const response = await axios.get('/api/auth/allUsers', {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        
+        setUsers(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching users:', err);
+        setError('Failed to load users. Please try again later.');
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  const filteredUsers = users.filter((user) => {
     return (
       (!yearFilter || user.year === yearFilter) &&
       (!typeFilter || user.type === typeFilter) &&
@@ -170,7 +196,6 @@ const Explore = () => {
     );
   });
 
-  //handle overflow of users via pagination
   const paginatedUsers = filteredUsers.slice(
     page * usersPerPage,
     (page + 1) * usersPerPage
@@ -178,11 +203,17 @@ const Explore = () => {
 
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
-  //when clicked take to the uniquely constructed porfile view 
   const handleUserClick = (user) => {
-    navigate(`/profile/${user.id}`, { state: {user} });
+    navigate(`/profile/${user.id}`, { state: { user } });
   };
-  
+
+  if (loading) {
+    return <div className="loading">Loading users...</div>;
+  }
+
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
 
   return (
     <div className="explore-container">
@@ -211,19 +242,27 @@ const Explore = () => {
         </select>
       </div>
 
-      <div className="card-grid">
-        {paginatedUsers.map((user) => (
-          <div className="card" key={user.id} onClick={() => handleUserClick(user)}>
-            <img
-              src={user.imageUrl || blankProfile}
-              alt={user.name}
-              className="user-image"
-            />
-            <h3>{user.name}</h3>
-            <p>{user.bio}</p>
+      {paginatedUsers.length === 0 ? (
+        <div className="no-results">No users match your filters. Try adjusting your search criteria.</div>
+      ) : (
+        <div className="card-grid">
+            {paginatedUsers.map((user) => (
+              <div 
+                className="card" 
+                key={typeof user.id === 'object' ? `user-${Math.random().toString(36).substring(2, 9)}` : user.id} 
+                onClick={() => handleUserClick(user)}
+              >
+                <img
+                  src={user.imageUrl || blankProfile}
+                  alt={user.name}
+                  className="user-image"
+                />
+                <h3>{user.name}</h3>
+                <p>{user.bio}</p>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+      )}
 
       <div className="pagination">
         <button onClick={() => setPage((p) => p - 1)} disabled={page === 0}>
