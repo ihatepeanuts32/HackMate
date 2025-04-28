@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../styles/ChatInbox.css';
-import ChatBubble from '../components/chatBubble';
+import ChatBubble from '../components/ChatBubble';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 
