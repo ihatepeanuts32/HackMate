@@ -1,0 +1,80 @@
+.create-group-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.create-group-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+.create-group-error {
+    color: red;
+    text-align: center;
+}
+
+.create-group-success {
+    color: green;
+    text-align: center;
+}
+
+.create-group-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.create-group-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.create-group-label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.create-group-input {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #28025d);
+    background-color: #1C0049;
+    color: white;
+}
+
+.create-group-textarea {
+    padding: 0.75rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #28025d);
+    background-color: #1C0049;
+    color: white;
+    resize: vertical;
+}
+
+.create-group-button {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    background-color: #1C0049;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: center;
+    margin-top: 1rem;
+    width: 200px;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.create-group-button:hover {
+    background-color: #2A0066;
+} 

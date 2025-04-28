@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../styles/CreateGroup.css';
 //Hrishikesh Srirangam
 
 const CreateGroup = () => {
@@ -41,99 +42,38 @@ const CreateGroup = () => {
     };
 
     return(
-        <div style={{ 
-            maxWidth: '800px', 
-            margin: '0 auto', 
-            padding: '2rem',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '1.5rem'
-        }}>
-            <h2 style={{ 
-                textAlign: 'center', 
-                marginBottom: '2rem',
-                color: 'var(--text-primary)'
-            }}>Create a Group</h2>
+        <div className="create-group-container">
+            <h2 className="create-group-title">Create a Group</h2>
             
-            {error && <p style={{ color: "red", textAlign: 'center' }}>{error}</p>}
-            {success && <p style={{ color: "green", textAlign: 'center' }}>Group created successfully!</p>}
+            {error && <p className="create-group-error">{error}</p>}
+            {success && <p className="create-group-success">Group created successfully!</p>}
             
-            <form onSubmit={handleSubmit} style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1.5rem'
-            }}>
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0.5rem'
-                }}>
-                    <label style={{
-                        fontSize: '1.1rem',
-                        fontWeight: '500',
-                        color: 'var(--text-primary)'
-                    }}>Group Name</label>
+            <form onSubmit={handleSubmit} className="create-group-form">
+                <div className="create-group-field">
+                    <label className="create-group-label">Group Name</label>
                     <input 
                         type="text"
                         value={groupName}
                         onChange={(e) => setGroupName(e.target.value)}
-                        style={{
-                            padding: '0.75rem',
-                            fontSize: '1rem',
-                            borderRadius: '8px',
-                            border: '1px solid var(--border-color)',
-                            backgroundColor: '#1C0049',
-                            color: 'white'
-                        }}
+                        className="create-group-input"
                         placeholder="Enter group name"
                     />
                 </div>
 
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0.5rem'
-                }}>
-                    <label style={{
-                        fontSize: '1.1rem',
-                        fontWeight: '500',
-                        color: 'var(--text-primary)'
-                    }}>Description</label>
+                <div className="create-group-field">
+                    <label className="create-group-label">Description</label>
                     <textarea 
                         rows={6}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        style={{
-                            padding: '0.75rem',
-                            fontSize: '1rem',
-                            borderRadius: '8px',
-                            border: '1px solid var(--border-color)',
-                            backgroundColor: '#1C0049',
-                            color: 'white',
-                            resize: 'vertical'
-                        }}
+                        className="create-group-textarea"
                         placeholder="Enter group description"
                     />
                 </div>
 
                 <button 
                     type="submit"
-                    style={{
-                        padding: '0.75rem 1.5rem',
-                        fontSize: '1.1rem',
-                        backgroundColor: '#1C0049',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '8px',
-                        cursor: 'pointer',
-                        alignSelf: 'center',
-                        marginTop: '1rem',
-                        width: '200px',
-                        fontWeight: 'bold',
-                        transition: 'background-color 0.2s ease'
-                    }}
-                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#2A0066'}
-                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = '#1C0049'}
+                    className="create-group-button"
                 >
                     Create Group
                 </button>
