@@ -1,4 +1,4 @@
-* {
+.chat-inbox img {
     box-sizing: border-box;
     max-width: 100%;
 }
@@ -151,25 +151,9 @@
     font-size: 1.2rem;
 }
 
-/* Remove any horizontal scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-}
 
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
 
-::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-
-@media (max-width: 1300px) {
+/* @media (max-width: 1300px) {
     .chat-inbox {
         max-width: 100vw;
         border-radius: 0;
@@ -199,4 +183,4 @@
         min-width: 0;
         width: 100%;
     }
-}
+} */
