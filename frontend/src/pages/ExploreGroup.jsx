@@ -54,6 +54,7 @@ const ExploreGroup = () => {
         <select value={statusFilter} onChange={(e) => { setPage(0); setStatusFilter(e.target.value); }}>
           <option value="">All Statuses</option>
           <option value="Open">Open</option>
+          <option value="Invite-Only">Invite-Only</option>
           <option value="Closed">Closed</option>
         </select>
       </div>
