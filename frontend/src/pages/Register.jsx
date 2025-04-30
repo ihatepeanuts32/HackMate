@@ -46,7 +46,7 @@ const Register = () => {
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
         <img src={hackmateLogo} alt="HackMate Logo" style={{ maxWidth: '200px' }} />
       </div>
-      <h3>Register with HackMate</h3>
+      <h3 style={{padding: 0}}>Register with HackMate</h3>
       <form onSubmit={handleSubmit}>
         <div className="split-row">
         </div>
