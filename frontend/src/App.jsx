@@ -21,6 +21,7 @@ import AccountDetails from './pages/AccountDetails';
 import PrivacySettings from './pages/PrivacySettings';
 import ChatInbox from './pages/ChatInbox';
 import ManageGroup from './pages/ManageGroup';
+import LogOut from './pages/LogOut';
 import { BlockedUsersProvider } from './context/BlockedUsersContext';
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
             <Route path="/account" element={<AccountDetails />} />
             <Route path="/privacy" element={<PrivacySettings />} />
             <Route path="/chatInbox" element={<ChatInbox />} />
+            <Route path="/logout" element={<LogOut />} />
           </Route>
         </Routes>
       </BlockedUsersProvider>
