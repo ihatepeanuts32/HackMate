@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
+import axios from "axios";
+import { Link } from 'react-router-dom';
 import '../styles/AccountDetails.css';
 
 //Hrishikesh Srirangam
@@ -14,7 +17,7 @@ const AccountSettings = () => {
                         <h3>Email Address</h3>
                     </div>
                     <div className="right-side">
-                        <h3>user@example.com</h3>
+                        <h3>Guest</h3>
                     </div>
                 </div>
 
@@ -23,18 +26,18 @@ const AccountSettings = () => {
                         <h3>Username</h3>
                     </div>
                     <div className="right-side">
-                        <h3>User123</h3>
+                        <h3>Guest</h3>
                     </div>
                 </div>
 
-                <div className="split-row">
+                {/* <div className="split-row">
                     <div className="left-side">
                         <h3>Account Created</h3>
                     </div>
                     <div className="right-side">
                         <h3>3/31/2025</h3>
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     )
