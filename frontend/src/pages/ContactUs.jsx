@@ -3,7 +3,11 @@ import '../styles/ContactUs.css';
 import earlImg from '../assets/earl.png';
 import dhakshinImg from '../assets/dhakshin.png';
 import rajitImg from '../assets/rajit.png';
-import blankProfile from '../assets/profile.png';
+import hriImg from '../assets/hri.png';
+import irfImg from '../assets/irf.png';
+import naoImg from '../assets/nao.png';
+import saiImg from '../assets/sai.png';
+import vaiImg from  '../assets/vai.png';
 
 const ContactUs = () => {
     const [email, setEmail] = useState('');
@@ -28,27 +32,27 @@ const ContactUs = () => {
         {
             name: "Ifrah",
             role: "Sophomore in Computer Science at UT Dallas",
-            imageUrl: blankProfile
+            imageUrl: irfImg
         },
         {
             name: "Naomi",
             role: "Sophomore in Computer Science at UT Dallas",
-            imageUrl: blankProfile
+            imageUrl: naoImg
         },
         {
             name: "Saivishaal",
             role: "Sophomore in Computer Science at UT Dallas",
-            imageUrl: blankProfile
+            imageUrl: saiImg
         },
         {
             name: "Hrishikesh",
             role: "Sophomore in Computer Science at UT Dallas",
-            imageUrl: blankProfile
+            imageUrl: hriImg
         },
         {
             name: "Vaishali",
             role: "Sophomore in Software Engineering at UT Dallas",
-            imageUrl: blankProfile
+            imageUrl: vaiImg
         }
         // Add more team members as needed
     ];
