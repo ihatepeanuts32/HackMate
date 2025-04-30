@@ -34,7 +34,7 @@ const Login = () => {
             window.location.href = "/home";
 
         } catch (error) {
-            setMessage('Login failed');
+            setMessage('Your username or password is incorrect.');
             console.error(error)
         }
     }
@@ -52,6 +52,7 @@ const Login = () => {
                         <input type="email" 
                         value={email} 
                         placeholder = "Email"
+                        style={{width: "250px"}}
                         onChange={(e) => {
                             setEmail(e.target.value);
                         }}
@@ -62,11 +63,13 @@ const Login = () => {
                             type="password" 
                             value={password} 
                             placeholder = "Password"
+                            style={{width: "250px"}}
                             onChange={(e) => {
                                 setPassword(e.target.value);
                             }}
                         />
                     </div>
+                    {message && <div className="login-failed">{message}</div>}
                     <div className="forgot-password">
                         <Link to="/reset-password">Forgot Password?</Link>
                     </div>
