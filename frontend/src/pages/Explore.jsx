@@ -40,11 +40,28 @@ const Explore = () => {
     fetchUsers();
   }, []);
 
-  const filteredUsers = users.filter((user) => {
+//   const filteredUsers = users.filter((user) => {
+//     return (
+//     //   (!yearFilter || user.year === yearFilter) &&
+//       (!typeFilter || user.type === typeFilter) &&
+//       (!collegeFilter || user.college === collegeFilter)
+//     );
+//   });
+
+
+const filteredUsers = users.filter((user) => {
+    // Handle UTD variations
+    const matchesCollege = !collegeFilter || 
+      (collegeFilter === "University of Texas at Dallas" ? 
+        (user.college === "University of Texas at Dallas" ||
+         user.college === "UTD" ||
+         user.college?.includes("UT Dallas") ||
+         user.college?.toLowerCase().includes("utd")) :
+        user.college === collegeFilter);
+  
     return (
-    //   (!yearFilter || user.year === yearFilter) &&
       (!typeFilter || user.type === typeFilter) &&
-      (!collegeFilter || user.college === collegeFilter)
+      matchesCollege
     );
   });
 
@@ -89,7 +106,7 @@ const Explore = () => {
 
         <select value={collegeFilter} onChange={(e) => { setPage(0); setCollegeFilter(e.target.value); }}>
           <option value="">All Colleges</option>
-          <option value="UTD">UTD</option>
+          <option value="University of Texas at Dallas">UTD</option>
         </select>
       </div>
 
