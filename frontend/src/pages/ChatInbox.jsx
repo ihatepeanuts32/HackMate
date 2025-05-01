@@ -43,7 +43,6 @@ const ChatInbox = () => {
             }
         };
         
-        // Add handler for message-sent confirmation
         const handleMessageSent = (response) => {
             if (response.success) {
                 const message = response.message;
@@ -56,11 +55,11 @@ const ChatInbox = () => {
         };
 
         socketRef.current.on('receive-message', handleReceiveMessage);
-        socketRef.current.on('message-sent', handleMessageSent); // Add this line
+        socketRef.current.on('message-sent', handleMessageSent); 
 
         return () => {
             socketRef.current.off('receive-message', handleReceiveMessage);
-            socketRef.current.off('message-sent', handleMessageSent); // Clean up
+            socketRef.current.off('message-sent', handleMessageSent); 
             socketRef.current.disconnect();
         };
     }, [initialSelectedUser, selectedUser]);
@@ -108,11 +107,8 @@ const ChatInbox = () => {
             const token = localStorage.getItem('token');
             const userId = JSON.parse(atob(token.split('.')[1])).userId;
             
-            // Don't add to messages state here anymore
-            // Instead, wait for the 'message-sent' event
-            
             const messageToSend = newMessage;
-            setNewMessage(''); // Clear input, but don't update state yet
+            setNewMessage(''); 
             
             socketRef.current.emit('private-message', {
                 sender: userId,
@@ -120,9 +116,7 @@ const ChatInbox = () => {
                 content: messageToSend
             });
             
-            // You can remove this HTTP request if you're only using sockets
-            // If you want belt-and-suspenders redundancy, you can keep it
-            // But don't update UI state here anymore
+            
             /*
             const response = await axios.post('/api/chat/messages', {
                 recipient: selectedUser.id,
