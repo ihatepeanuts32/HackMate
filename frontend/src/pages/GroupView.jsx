@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/GroupView.css';
 import hackmateLogo from '../assets/hackmateLogo2.png';
@@ -12,6 +12,8 @@ import ContactGroup from '../components/ContactGroup';
 import JoinRequestModal from '../components/JoinRequestModal';
 
 const GroupView = () => {
+    const navigate = useNavigate();
+
     const [isContactModalOpen, setIsContactModalOpen] = useState(false);
     const [isJoinModalOpen, setIsJoinModalOpen] = useState(false);
     const [showJoinConfirmation, setShowJoinConfirmation] = useState(false);
@@ -35,6 +37,13 @@ const GroupView = () => {
         fetchGroup();
     }, [id]);
     
+    const handleMessageUser = (user) => {
+        const chatUser = {
+            id: user._id,
+            name: user.username
+        };
+        navigate('/chatInbox', { state: { selectedUser: chatUser } });
+    };
 
     const handleJoinRequest = async () => {
         try {
@@ -109,8 +118,8 @@ const GroupView = () => {
                                 <span className="member-role">Leader</span>
                             </div>
                             </div>
-                            <button className="message-btn">
-                            <img src={messageIcon} alt="message" />
+                            <button className="message-btn" onClick={() => handleMessageUser(group.owner)}>
+                                <img src={messageIcon} alt="message" />
                             </button>
                         </div>
                     )}
@@ -123,8 +132,8 @@ const GroupView = () => {
                             <span className="member-role">Member</span>
                         </div>
                         </div>
-                        <button className="message-btn">
-                        <img src={messageIcon} alt="message" />
+                        <button className="message-btn" onClick={() => handleMessageUser(member)}>
+                            <img src={messageIcon} alt="message" />
                         </button>
                     </div>
                     ))}                   
