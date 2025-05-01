@@ -118,6 +118,10 @@ const Navbar = () => {
             <span className="icon">🚫</span>
             blocked users
           </Link>
+          <Link to="/logout" className="menu-item">
+            <span className="icon">🚪</span>
+            logout
+          </Link>
         </div>
       </div>
     </>

@@ -81,7 +81,11 @@ const Register = () => {
           />
         </div>
             <button type="submit" className="login-button">Sign Up</button>
-            <Link to="/logIn" className="login-link">Log In</Link>
+            <div>
+              <p style={{marginBottom: '0', fontSize: '0.9rem'}}>Already have an account?</p>
+              <Link style={{padding: '0'}} to="/logIn" className="login-link">Log In</Link>
+            </div>
+            
       </form>
       {message && <p className={message.includes("successful") ? "success-message" : "error-message"}>{message}</p>}
     </div>
