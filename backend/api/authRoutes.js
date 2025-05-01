@@ -67,6 +67,8 @@ router.post('/login', async (req, res) => {
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
             expiresIn: '1h'
         })
+        
+        console.log(token); 
 
         res.json({message: "User logged in successfully", token});
 
@@ -83,7 +85,7 @@ router.post("/onboardUser", async (req, res) => {
 
         const decoded = verifyToken(req);
         if (!decoded) {
-          console.error('Token verification failed. Token:', req.headers.authorization); // Log the token or request header for debugging
+          console.error('Token verification failed. Token:', req.headers.authorization); 
             return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
         }
               
@@ -93,7 +95,7 @@ router.post("/onboardUser", async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-        const { firstName, lastName,  preferredRole, hackathonsAttended, college, technicalSkills, desiredTeammateQualities} = req.body;
+        const { firstName, lastName,  preferredRole, hackathonsAttended, college, technicalSkills, desiredTeammateQualities, year, isPublic} = req.body;
 
         const hackathons = hackathonsAttended ? parseInt(hackathonsAttended, 10) : 0;
 
@@ -106,6 +108,8 @@ router.post("/onboardUser", async (req, res) => {
             college,
             technicalSkills,
             desiredTeammateQualities,
+            year,
+            isPublic
         })
 
         await onboardUser.save();
@@ -138,7 +142,9 @@ router.put("/updateProfile", async (req, res) => {
       "hackathonsAttended",
       "college",
       "technicalSkills",
-      "desiredTeammateQualities"
+      "desiredTeammateQualities",
+      "year",
+      "isPublic"
     ];
 
     fieldsToUpdate.forEach(field => {
@@ -181,7 +187,9 @@ router.get('/userProfile', async (req, res) => {
       hackathonsAttended: user.hackathonsAttended,
       college: user.college,
       technicalSkills: user.technicalSkills,
-      desiredTeammateQualities: user.desiredTeammateQualities
+      desiredTeammateQualities: user.desiredTeammateQualities,
+      year: user.year,
+      isPublic: user.isPublic
       //add profile photo
     });
     
