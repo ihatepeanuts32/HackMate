@@ -1,6 +1,7 @@
 import { Server } from 'socket.io';
 import Message from './models/Message.js';
 import jwt from 'jsonwebtoken';
+import BlockedUsers from './models/BlockedUsers.js';
 
 export default function setupSocket(server) {
   const io = new Server(server, {
@@ -37,6 +38,19 @@ export default function setupSocket(server) {
 
     socket.on('private-message', async ({ sender, recipient, content }) => {
       try {
+        const isBlocked = await BlockedUsers.findOne({
+          blockerId: recipient,  
+          blockedId: sender      
+        });
+
+        if (isBlocked) {
+          console.log('Message blocked - sender is blocked by recipient:', { sender, recipient });
+          socket.emit('message-blocked', {
+            success: false,
+            message: "Your message could not be delivered as you have been blocked by this user."
+          });
+          return;
+        }
 
         const newMessage = new Message({ 
           sender, 

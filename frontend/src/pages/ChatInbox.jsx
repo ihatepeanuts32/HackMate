@@ -14,13 +14,18 @@ const ChatInbox = () => {
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
     const [loading, setLoading] = useState(true);
+    const [blockError, setBlockError] = useState('');
     
     const socketRef = useRef();
     const messagesEndRef = useRef(null);
     
     useEffect(() => {
         const token = localStorage.getItem('token');
-        socketRef.current = io('http://localhost:3000'); 
+        socketRef.current = io('http://localhost:3000', {
+            auth: {
+                token: token
+            }
+        }); 
 
         const userId = JSON.parse(atob(token.split('.')[1])).userId;
         socketRef.current.emit('user-connected', userId);
@@ -53,13 +58,20 @@ const ChatInbox = () => {
                 }]);
             }
         };
+        
+        const handleMessageBlocked = (response) => {
+            setBlockError(response.message || "Your message could not be delivered.");
+            setTimeout(() => setBlockError(''), 5000);
+        };
 
         socketRef.current.on('receive-message', handleReceiveMessage);
-        socketRef.current.on('message-sent', handleMessageSent); 
+        socketRef.current.on('message-sent', handleMessageSent);
+        socketRef.current.on('message-blocked', handleMessageBlocked);
 
         return () => {
             socketRef.current.off('receive-message', handleReceiveMessage);
-            socketRef.current.off('message-sent', handleMessageSent); 
+            socketRef.current.off('message-sent', handleMessageSent);
+            socketRef.current.off('message-blocked', handleMessageBlocked);
             socketRef.current.disconnect();
         };
     }, [initialSelectedUser, selectedUser]);
@@ -115,16 +127,6 @@ const ChatInbox = () => {
                 recipient: selectedUser.id,
                 content: messageToSend
             });
-            
-            
-            /*
-            const response = await axios.post('/api/chat/messages', {
-                recipient: selectedUser.id,
-                content: newMessage
-            }, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            */
         } catch (error) {
             console.error('Error sending message:', error);
         }
@@ -149,6 +151,7 @@ const ChatInbox = () => {
                                     };
                                     setSelectedUser(chatUser);
                                     fetchMessages(user._id);
+                                    setBlockError('');
                                 }}
                             >
                                 <span className="user-icon">👤</span>
@@ -173,6 +176,11 @@ const ChatInbox = () => {
                             ))}
                             <div ref={messagesEndRef} />
                         </div>
+                        {blockError && (
+                            <div className="block-error-message">
+                                {blockError}
+                            </div>
+                        )}
                         <div className="message-input-container">
                             <input
                                 type="text"
