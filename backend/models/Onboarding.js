@@ -34,6 +34,15 @@ const OnboardingSchema = new mongoose.Schema({
   profilePhoto: {
     type: String, 
     default: '/default-profile.png'
+  },
+  isPublic:{
+    type:Boolean,
+    default: false
+  },
+  year: {
+    type: String,
+    enum: ['freshman', 'sophomore', 'junior', 'senior', 'other'],
+    default: 'other'
   }
 },  { timestamps: true })
 
