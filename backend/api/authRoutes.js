@@ -83,7 +83,7 @@ router.post("/onboardUser", async (req, res) => {
 
         const decoded = verifyToken(req);
         if (!decoded) {
-          console.error('Token verification failed. Token:', req.headers.authorization); // Log the token or request header for debugging
+          console.error('Token verification failed. Token:', req.headers.authorization); 
             return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
         }
               
