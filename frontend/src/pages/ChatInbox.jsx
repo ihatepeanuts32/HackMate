@@ -20,35 +20,47 @@ const ChatInbox = () => {
     
     useEffect(() => {
         const token = localStorage.getItem('token');
-        
         socketRef.current = io('http://localhost:3000'); 
-        
+
         const userId = JSON.parse(atob(token.split('.')[1])).userId;
-        
         socketRef.current.emit('user-connected', userId);
 
         fetchChatUsers(token);
-        
 
         if (initialSelectedUser) {
             fetchMessages(initialSelectedUser.id);
         }
-        
-        socketRef.current.on('receive-message', (message) => {
 
+        const handleReceiveMessage = (message) => {
             if (selectedUser && message.sender === selectedUser.id) {
                 setMessages(prev => [...prev, {
                     _id: message._id,
                     text: message.content,
                     fromSelf: false
                 }]);
-            } 
-            else {
+            } else {
                 fetchChatUsers(token);
             }
-        });
+        };
         
+        // Add handler for message-sent confirmation
+        const handleMessageSent = (response) => {
+            if (response.success) {
+                const message = response.message;
+                setMessages(prev => [...prev, {
+                    _id: message._id,
+                    text: message.content,
+                    fromSelf: true
+                }]);
+            }
+        };
+
+        socketRef.current.on('receive-message', handleReceiveMessage);
+        socketRef.current.on('message-sent', handleMessageSent); // Add this line
+
         return () => {
+            socketRef.current.off('receive-message', handleReceiveMessage);
+            socketRef.current.off('message-sent', handleMessageSent); // Clean up
             socketRef.current.disconnect();
         };
     }, [initialSelectedUser, selectedUser]);
@@ -96,28 +108,29 @@ const ChatInbox = () => {
             const token = localStorage.getItem('token');
             const userId = JSON.parse(atob(token.split('.')[1])).userId;
             
-            setMessages(prev => [...prev, { 
-                _id: Date.now().toString(), 
-                text: newMessage, 
-                fromSelf: true 
-            }]);
+            // Don't add to messages state here anymore
+            // Instead, wait for the 'message-sent' event
             
-            setNewMessage('');
+            const messageToSend = newMessage;
+            setNewMessage(''); // Clear input, but don't update state yet
             
+            socketRef.current.emit('private-message', {
+                sender: userId,
+                recipient: selectedUser.id,
+                content: messageToSend
+            });
+            
+            // You can remove this HTTP request if you're only using sockets
+            // If you want belt-and-suspenders redundancy, you can keep it
+            // But don't update UI state here anymore
+            /*
             const response = await axios.post('/api/chat/messages', {
                 recipient: selectedUser.id,
                 content: newMessage
             }, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            
-            socketRef.current.emit('private-message', {
-                sender: userId,
-                recipient: selectedUser.id,
-                content: newMessage
-            });
-
-            //fetchChatUsers(token);
+            */
         } catch (error) {
             console.error('Error sending message:', error);
         }
