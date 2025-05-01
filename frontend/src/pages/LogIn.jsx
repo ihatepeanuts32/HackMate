@@ -28,7 +28,7 @@ const Login = () => {
             });
 
             setToken(res.data.token);
-            setMessage('Sign up successful.')
+            // setMessage('Sign up successful.')
 
             localStorage.setItem('token', res.data.token);
             window.location.href = "/home";
