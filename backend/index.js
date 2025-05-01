@@ -8,6 +8,7 @@ import userRoutes from "./api/userRoutes.js";
 import hackathonRoutes from "./api/hackathonRoutes.js";
 import eventBrite from "./api/eventBrite.js";
 import reportRoutes from "./api/reportRoutes.js"
+import blockRoutes from "./api/blockRoutes.js";
 import { createServer } from 'http';
 import setupSocket from './socket.js';
 import chatRoutes from "./api/chatRoutes.js"
@@ -33,6 +34,7 @@ app.use("/api/hackathons", hackathonRoutes);
 app.use("/api", eventBrite);
 app.use("/api/chat", chatRoutes);
 app.use("/api/reports", reportRoutes);
+app.use("/api/block", blockRoutes);
 
 
 setupSocket(server); 

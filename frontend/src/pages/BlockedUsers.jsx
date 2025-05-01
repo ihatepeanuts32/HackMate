@@ -7,7 +7,20 @@ function BlockedUsers() {
     const { blockedUsers, unblockUser } = useBlockedUsers();
 
     useEffect(() => {
-        console.log('Current blocked users:', blockedUsers);
+        console.log('Raw blocked users data:', blockedUsers);
+        if (blockedUsers?.length > 0) {
+            blockedUsers.forEach((user, index) => {
+                console.log(`Blocked user ${index} details:`, {
+                    id: user._id,
+                    blockedId: user.blockedId,
+                    blockedIdType: typeof user.blockedId,
+                    username: user.blockedId?.username,
+                    firstName: user.blockedId?.firstName,
+                    email: user.blockedId?.email,
+                    fullObject: user
+                });
+            });
+        }
     }, [blockedUsers]);
 
     const containerStyle = {
@@ -51,6 +64,27 @@ function BlockedUsers() {
         fontSize: '1rem'
     };
 
+    const handleUnblock = async (blockedUser) => {
+        try {
+            const userId = blockedUser.blockedId._id || blockedUser.blockedId;
+            await unblockUser(userId);
+        } catch (error) {
+            console.error('Error unblocking user:', error);
+            alert('Failed to unblock user. Please try again.');
+        }
+    };
+
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        return date.toLocaleString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
+
     if (!blockedUsers || blockedUsers.length === 0) {
         return (
             <div style={containerStyle}>
@@ -65,15 +99,22 @@ function BlockedUsers() {
     return (
         <div style={containerStyle}>
             <h1 style={headingStyle}>Blocked Users</h1>
-            {blockedUsers.map((user) => (
-                <div key={user.id} style={userCardStyle}>
+            {blockedUsers.map((blockedUser) => (
+                <div key={blockedUser._id || blockedUser.blockedId._id} style={userCardStyle}>
                     <div style={userInfoStyle}>
-                        <span style={{ fontSize: '1.2rem' }}>{user.name}</span>
-                        <span style={{ opacity: 0.7 }}>Blocked on: {user.date}</span>
+                        <span style={{ fontSize: '1.2rem' }}>
+                            {blockedUser.blockedId?.fullName || 
+                             (blockedUser.blockedId?.firstName && blockedUser.blockedId?.lastName ? 
+                                `${blockedUser.blockedId.firstName} ${blockedUser.blockedId.lastName}`.trim() : 
+                                blockedUser.blockedId?.username || 'Unknown User')}
+                        </span>
+                        <span style={{ opacity: 0.7 }}>
+                            Blocked on: {formatDate(blockedUser.createdAt)}
+                        </span>
                     </div>
                     <button
                         style={buttonStyle}
-                        onClick={() => unblockUser(user.id)}
+                        onClick={() => handleUnblock(blockedUser)}
                     >
                         Unblock
                     </button>

@@ -66,11 +66,27 @@ router.post('/login', async (req, res) => {
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
             expiresIn: '1h'
-        })
-        
-        console.log(token); 
+        });
 
-        res.json({message: "User logged in successfully", token});
+        // gEt user profile data
+        const userProfile = await Onboarding.findOne({ userId: user._id });
+        const userData = {
+            id: user._id,
+            email: user.email,
+            username: user.username,
+            ...(userProfile ? {
+                firstName: userProfile.firstName,
+                lastName: userProfile.lastName,
+                preferredRole: userProfile.preferredRole,
+                college: userProfile.college
+            } : {})
+        };
+
+        res.json({
+            message: "User logged in successfully", 
+            token,
+            user: userData
+        });
 
     } catch(error) {
         return res.status(500).json({message: "Unable to login user.", error: error.message});
@@ -268,7 +284,8 @@ router.get('/user/:id', async (req, res) => {
     }
     
     const formattedUser = {
-      id: userData.userId,
+      _id: userData.userId,
+      userId: userData.userId,
       firstName: userData.firstName,
       lastName: userData.lastName,
       preferredRole: userData.preferredRole,

@@ -117,7 +117,10 @@ const ProfileView = () => {
                             <img src={planeIcon} alt="message" />
                             Chat
                         </button>
-                        <BlockButton className='btn-chat' user={userData}>
+                        <BlockButton className='btn-chat' user={{
+                            id: userData._id || userData.id,
+                            ...userData
+                        }}>
                             <img src={blockIcon} alt="block"/>
                         </BlockButton>
                     </div>
