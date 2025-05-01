@@ -31,6 +31,7 @@ const Login = () => {
             setMessage('Sign up successful.')
 
             localStorage.setItem('token', res.data.token);
+            localStorage.setItem('user', JSON.stringify(res.data.user));
             window.location.href = "/home";
 
         } catch (error) {
