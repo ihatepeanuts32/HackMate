@@ -106,6 +106,34 @@ button {
   color: white; */
 }
 
+/* .select-dropdown {
+  width: 100%;
+  padding: 4px;
+  margin: 6px 0;
+  box-sizing: border-box;
+  border: 2px solid #1C0049;
+  border-radius: 20px;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-color);
+  background-color: var(--button-color);
+ 
+} */
+
+.select-dropdown {
+  width: 100%;
+  padding: 10px;
+  margin: 7px 0;
+  box-sizing: border-box;
+  border: 2px solid #1C0049;
+  border-radius: 20px;
+  background-color: var(--input-color);
+  color: var(--text-color);
+  font-family: 'Poppins', sans-serif;
+
+}
+
+
+
 .link-button
 {
   flex: 0 0 auto;
@@ -213,6 +241,7 @@ input{
   border-radius: 20px;
   background-color: var(--input-color);
   color: var(--text-color);
+  font-family: 'Poppins', sans-serif;
 }
 
 textarea{
@@ -259,8 +288,10 @@ textarea{
   color: var(--text-color);
   font-size: .8em;
   border-radius: 8px;
-  resize: vertical; /* Allows the user to resize it vertically */
+  resize: none; 
   box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+
 }
 
 input.photo-selector
