@@ -6,70 +6,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 
-const Home = () => {
-    const [hackathons, setHackathons] = useState([]);
-    const [username, setUsername] = useState("");
 
-    //Naomi - Mounting hackathon data being fetched from backend
-    useEffect(() => {
-        const token = localStorage.getItem("token");
-
-        const fetchUsername = async () => {
-            try {
-                const res = await axios.get("/api/users/me", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                setUsername(res.data.username);
-            } catch (error) {
-                console.error("Error fetching username:", error);
-            }
-        };
-
-        const fetchHackathons = async () => {
-            try {
-                const response = await axios.get("/api/eventBriteHackathons");
-                setHackathons(response.data[0]?.hackathons || []);
-            } catch (error) {
-                console.error("Error fetching hackathons:", error);
-            }
-        };
-
-        fetchUsername();
-        fetchHackathons();
-    }, []);
-
-    return (
-        // Username slow popup fixed
-        <div>
-            <div>
-                <h3>Welcome {username || "Guest"}!</h3> 
-            </div>
-            <div>
-                <h4>Upcoming Hackathons Near You</h4>
-                <div style={{ paddingBottom: "30px" }}>
-                    <CardCarousel data={hackathons} />
-                </div>
-                <h4 style={{ padding: 15 }}>Ready to Find your Perfect Hackathon Group?</h4>
-                <div style={{ maxWidth: "1000px", margin: "0 auto" }}>
-                    <div className="split-row">
-                        <Link to="/explore">
-                            <button className="link-button">Find Fellow Hackers</button>
-                        </Link>
-                        <Link to="/exploreGroup">
-                            <button className="link-button">Find Groups to Join</button>
-                        </Link>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-export default Home;
-
-/*
 const Home = () => {
     const [hackathons, setHackathons] = useState([]);
     const [user, setUser] = useState('');
@@ -113,7 +50,7 @@ const Home = () => {
     return (
         <div>
             <div>
-                <h3>Welcome {user?.firstName || user?.username || "Guest"}!</h3>
+                <h3>Welcome {user.firstName || "Guest"}!</h3>
             </div>
             <div>
                 <h4>Upcoming Hackathons Near You</h4>
@@ -137,4 +74,3 @@ const Home = () => {
 }
 
 export default Home;
-*/

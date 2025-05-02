@@ -45,7 +45,8 @@ const EditProfile = () => {
                     hackathonsAttended: response.data.hackathonsAttended || "",
                     college: response.data.college || "",
                     technicalSkills: response.data.technicalSkills || "",
-                    desiredTeammateQualities: response.data.desiredTeammateQualities || ""
+                    desiredTeammateQualities: response.data.desiredTeammateQualities || "",
+                    year: response.data.year || ""
                 });
 
                 if (response.data.profilePhoto) {
