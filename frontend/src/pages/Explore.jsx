@@ -90,10 +90,10 @@ const filteredUsers = users.filter((user) => {
       <div className="filters">
         <select value={yearFilter} onChange={(e) => { setPage(0); setYearFilter(e.target.value); }}>
           <option value="">All Years</option>
-          <option value="freshman">Freshman</option>
-          <option value="sophomore">Sophomore</option>
-          <option value="junior">Junior</option>
-          <option value="senior">Senior</option>
+          <option value="Freshman">Freshman</option>
+          <option value="Sophomore">Sophomore</option>
+          <option value="Junior">Junior</option>
+          <option value="Senior">Senior</option>
         </select>
 
         <select value={typeFilter} onChange={(e) => { setPage(0); setTypeFilter(e.target.value); }}>

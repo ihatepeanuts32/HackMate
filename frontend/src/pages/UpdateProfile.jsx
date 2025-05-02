@@ -12,6 +12,7 @@ const EditProfile = () => {
         preferredRole: "",
         hackathonsAttended: "",
         college: "",
+        year: "",
         technicalSkills: "",
         desiredTeammateQualities: ""
     });
@@ -168,7 +169,7 @@ const EditProfile = () => {
                     </div>
                     
                     <div className="split-row">
-                        <div>
+                        {/* <div>
                             <input 
                                 type="text" 
                                 name="preferredRole" 
@@ -176,6 +177,18 @@ const EditProfile = () => {
                                 value={formData.preferredRole}
                                 onChange={handleInputChange}
                             />
+                        </div> */}
+                         <div>
+                          <select
+                            name="preferredRole"
+                            value={formData.preferredRole}
+                            onChange={handleInputChange}
+                          >
+                            <option value="">Select Role</option>
+                            <option value="Frontend">Frontend</option>
+                            <option value="Backend">Backend</option>
+                            <option value="Fullstack">Fullstack</option>
+                          </select>
                         </div>
                         <div>
                             <input 
@@ -187,7 +200,9 @@ const EditProfile = () => {
                                 min="0"
                             />
                         </div>
-                        <div>
+                    </div>
+                    <div className="split-row">
+                    <div>
                             <input 
                                 type="text" 
                                 name="college" 
@@ -196,8 +211,29 @@ const EditProfile = () => {
                                 onChange={handleInputChange}
                             />
                         </div>
+                        {/* <div>
+                            <input 
+                                type="text" 
+                                name="year" 
+                                placeholder="Year"
+                                value={formData.year}
+                                onChange={handleInputChange}
+                            />
+                        </div> */}
+                        <div>
+                          <select
+                            name="year"
+                            value={formData.year}
+                            onChange={handleInputChange}
+                          >
+                            <option value="">Select Year</option>
+                            <option value="Freshman">Freshman</option>
+                            <option value="Sophomore">Sophomore</option>
+                            <option value="Junior">Junior</option>
+                            <option value="Senior">Senior</option>
+                          </select>
+                        </div>
                     </div>
-                    
                     <div className="split-row">
                         <div>
                             <textarea 
