@@ -41,8 +41,8 @@ const OnboardingSchema = new mongoose.Schema({
   },
   year: {
     type: String,
-    enum: ['freshman', 'sophomore', 'junior', 'senior', 'other'],
-    default: 'other'
+    // enum: ['freshman', 'sophomore', 'junior', 'senior', 'other'],
+    // default: 'other'
   }
 },  { timestamps: true })
 
