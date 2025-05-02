@@ -1,9 +1,15 @@
 .groups-page {
     min-height: 100vh;
-    background-color: #764cba;
+    /* background-color: #764cba; */
+    background-color: #1C0049;
     padding: 4rem 2rem;
     border-radius: 30px;
-}
+    width: 100%; /* Add this */
+    /* max-width: 1400px; Optional */
+    /* margin: 0 auto; Center if using max-width */
+}*/
+
+
 
 .groups-page h1 {
     text-align: left;

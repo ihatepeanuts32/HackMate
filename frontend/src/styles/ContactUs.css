@@ -70,7 +70,7 @@
 }
 
 .message-input {
-    resize: vertical;
+    resize: none;
     min-height: 120px;
 }
 
@@ -83,6 +83,8 @@
     transition: background-color 0.2s;
     width: 200px;
     margin: 0 auto;
+    background-color: #A855F7;
+
 }
 
 .contact-button:hover {

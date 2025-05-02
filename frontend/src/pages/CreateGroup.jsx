@@ -43,7 +43,7 @@ const CreateGroup = () => {
 
     return(
         <div className="create-group-container">
-            <h2 className="create-group-title">Create a Group</h2>
+            <h1 className="create-group-header">Create a Group</h1>
             
             {error && <p className="create-group-error">{error}</p>}
             {success && <p className="create-group-success">Group created successfully!</p>}
@@ -73,7 +73,7 @@ const CreateGroup = () => {
 
                 <button 
                     type="submit"
-                    className="create-group-button"
+                    className="submit-button"
                 >
                     Create Group
                 </button>

@@ -10,7 +10,7 @@ const EditProfile = () => {
         firstName: "",
         lastName: "",
         preferredRole: "",
-        hackathonsAttended: "",
+        hackathonsAttended: '',
         college: "",
         year: "",
         technicalSkills: "",

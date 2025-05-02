@@ -32,7 +32,7 @@ function BlockedUsers() {
     };
 
     const headingStyle = {
-        fontSize: '2rem',
+        fontSize: '3rem',
         marginBottom: '2rem',
         textAlign: 'center',
         color: 'white'
