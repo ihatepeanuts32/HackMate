@@ -2,6 +2,7 @@ import express from 'express';
 import Message from '../models/Message.js';
 import { verifyToken } from '../utils/verifyToken.js';
 import User from '../models/User.js';
+import BlockedUsers from '../models/BlockedUsers.js'
 
 const router = express.Router();
 
@@ -53,6 +54,17 @@ router.post('/messages', async (req, res) => {
     if (!decoded) return res.status(401).json({ message: "Unauthorized" });
     
     const { recipient, content } = req.body;
+    
+    const isBlocked = await BlockedUsers.findOne({
+      blockerId: recipient, 
+      blockedId: decoded.userId  
+    });
+    
+    if (isBlocked) {
+      return res.status(403).json({ 
+        message: "Cannot send message. You have been blocked by this user." 
+      });
+    }
     
     const newMessage = new Message({
       sender: decoded.userId,

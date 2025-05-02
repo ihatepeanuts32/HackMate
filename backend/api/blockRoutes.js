@@ -218,4 +218,43 @@ router.get("/:userId/blocked-users", async(req, res) => {
     }
 });
 
+/**
+ * Check if a user is blocked by another user
+ */
+router.get("/:userId/is-blocked-by/:id", async(req, res) => {
+    try {
+        console.log('Check if blocked by user request:', { userId: req.params.userId, targetId: req.params.id });
+        
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ message: "No token provided" });
+        }
+
+        const decoded = verifyToken(token);
+        console.log('Decoded token:', decoded);
+        
+        if (!decoded) {
+            return res.status(401).json({ message: "Invalid token" });
+        }
+
+        const { id } = req.params;
+        
+        const isBlocked = await BlockedUsers.exists({ 
+            blockerId: id,  
+            blockedId: decoded  
+        });
+        
+        console.log('Block status:', isBlocked);
+
+        return res.status(200).json({ isBlocked: !!isBlocked });
+    } catch (error) {
+        console.error('Error checking block status:', error);
+        return res.status(500).json({ 
+            message: "Failed to check block status",
+            error: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
+    }
+});
+
 export default router;
