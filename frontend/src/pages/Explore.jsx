@@ -9,7 +9,7 @@ const Explore = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   
-//   const [yearFilter, setYearFilter] = useState('');
+  const [yearFilter, setYearFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [collegeFilter, setCollegeFilter] = useState('');
   const [page, setPage] = useState(0);
@@ -50,7 +50,6 @@ const Explore = () => {
 
 
 const filteredUsers = users.filter((user) => {
-    // Handle UTD variations
     const matchesCollege = !collegeFilter || 
       (collegeFilter === "University of Texas at Dallas" ? 
         (user.college === "University of Texas at Dallas" ||
@@ -60,7 +59,7 @@ const filteredUsers = users.filter((user) => {
         user.college === collegeFilter);
   
     return (
-      (!typeFilter || user.type === typeFilter) &&
+        (!yearFilter || user.year === yearFilter) && (!typeFilter || user.type === typeFilter) &&
       matchesCollege
     );
   });
@@ -89,13 +88,13 @@ const filteredUsers = users.filter((user) => {
       <h3>Explore Users</h3>
 
       <div className="filters">
-        {/* <select value={yearFilter} onChange={(e) => { setPage(0); setYearFilter(e.target.value); }}>
+        <select value={yearFilter} onChange={(e) => { setPage(0); setYearFilter(e.target.value); }}>
           <option value="">All Years</option>
-          <option value="Freshman">Freshman</option>
-          <option value="Sophomore">Sophomore</option>
-          <option value="Junior">Junior</option>
-          <option value="Senior">Senior</option>
-        </select> */}
+          <option value="freshman">Freshman</option>
+          <option value="sophomore">Sophomore</option>
+          <option value="junior">Junior</option>
+          <option value="senior">Senior</option>
+        </select>
 
         <select value={typeFilter} onChange={(e) => { setPage(0); setTypeFilter(e.target.value); }}>
           <option value="">All Developer Types</option>

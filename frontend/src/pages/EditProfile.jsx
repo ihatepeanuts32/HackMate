@@ -11,6 +11,7 @@ const EditProfile = () => {
         preferredRole: "",
         hackathonsAttended: "",
         college: "",
+        year: "",
         technicalSkills: "",
         desiredTeammateQualities: ""
     });
@@ -138,7 +139,9 @@ const EditProfile = () => {
                                 min="0"
                             />
                         </div>
-                        <div>
+                    </div>
+                    <div className="split-row">
+                    <div>
                             <input 
                                 type="text" 
                                 name="college" 
@@ -147,8 +150,16 @@ const EditProfile = () => {
                                 onChange={handleInputChange}
                             />
                         </div>
+                        <div>
+                            <input 
+                                type="text" 
+                                name="year" 
+                                placeholder="Year"
+                                value={formData.year}
+                                onChange={handleInputChange}
+                            />
+                        </div>
                     </div>
-                    
                     <div className="split-row">
                         <div>
                             <textarea 
