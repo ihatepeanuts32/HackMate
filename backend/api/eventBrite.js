@@ -14,7 +14,7 @@ router.get('/eventBriteHackathons', (req, res) => {
             "location": "Everywhere, Online",
             "eventType": "Digital Only",
             "logoUrl": "https://example.com/logos/ghw-api.png",
-            "website": "https://globalhackweek.com/api",
+            "website": "https://ghw.mlh.io/events/api-week",
             "description": "A worldwide virtual hackathon focused on API development and integration",
             "registrationDeadline": "2025-04-10",
             "prizes": {
@@ -50,7 +50,7 @@ router.get('/eventBriteHackathons', (req, res) => {
             "location": "Pasadena, California",
             "eventType": "In-Person Only",
             "logoUrl": "https://example.com/logos/hacktech.png",
-            "website": "https://hacktech.caltech.edu",
+            "website": "https://hack.caltech.edu/",
             "description": "Caltech's premier hackathon bringing together students from across the country",
             "registrationDeadline": "2025-04-18",
             "prizes": {
@@ -105,7 +105,7 @@ router.get('/eventBriteHackathons', (req, res) => {
             "location": "Hanover, New Hampshire",
             "eventType": "In-Person Only",
             "logoUrl": "https://example.com/logos/hackdartmouth.png",
-            "website": "https://hackdartmouth.org",
+            "website": "https://hack-dartmouth.org/",
             "description": "10th anniversary of Dartmouth College's annual hackathon",
             "registrationDeadline": "2025-04-19",
             "prizes": {
@@ -124,7 +124,7 @@ router.get('/eventBriteHackathons', (req, res) => {
             "venue": "Library of John Abbott College",
             "eventType": "In-Person Only",
             "logoUrl": "https://example.com/logos/jachacks.png",
-            "website": "https://jachacks.ca",
+            "website": "https://jachacks.pages.dev/",
             "description": "Annual hackathon at John Abbott College in Montreal",
             "registrationDeadline": "2025-04-20",
             "prizes": {
@@ -142,7 +142,7 @@ router.get('/eventBriteHackathons', (req, res) => {
             "location": "Baltimore, MD",
             "eventType": "In-Person Only",
             "logoUrl": "https://example.com/logos/morganhacks.png",
-            "website": "https://morganhacks.org",
+            "website": "https://morganhacks.com/",
             "description": "A hackathon focused on diversity in tech at Morgan State University",
             "registrationDeadline": "2025-04-19",
             "prizes": {
@@ -196,7 +196,7 @@ router.get('/eventBriteHackathons', (req, res) => {
             "location": "Everywhere, Online",
             "eventType": "Digital Only",
             "logoUrl": "https://example.com/logos/ghw-opensource.png",
-            "website": "https://globalhackweek.com/opensource",
+            "website": "https://ghw.mlh.io/events/open-source",
             "description": "A week-long virtual hackathon focused on contributing to open source projects",
             "registrationDeadline": "2025-05-08",
             "prizes": {
@@ -232,7 +232,7 @@ router.get('/eventBriteHackathons', (req, res) => {
             "location": "Bengaluru, Karnataka",
             "eventType": "In-Person Only",
             "logoUrl": "https://example.com/logos/nmithacks.png",
-            "website": "https://nmithacks.in",
+            "website": "https://nmithacks.com/",
             "description": "#CONNECTIONS FOR CHANGE - Annual hackathon at NMIT Bengaluru",
             "registrationDeadline": "2025-05-10",
             "prizes": {
