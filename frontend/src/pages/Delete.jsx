@@ -2,7 +2,9 @@
 // Description: This code implements a delete chat functionality using React
 
 import React, { useState } from 'react';
+import '../styles/Delete.css';
 
+ 
 const DeleteChat = ({ onDelete }) => {
   const [isConfirming, setIsConfirming] = useState(false);
 
@@ -27,7 +29,7 @@ const DeleteChat = ({ onDelete }) => {
           </button>
           <button
             onClick={() => setIsConfirming(false)}
-            className="px-4 py-2 bg-gray-300 text-black dark:bg-gray-700 dark:text-white rounded font-semibold transition-colors duration-300 hover:bg-gray-400 dark:hover:bg-gray-600"
+            className="px-4 py-2 bg-gray--black dark:bg-gray-700 dark:text-white rounded font-semibold transition-colors duration-300 hover:bg-gray-400 dark:hover:bg-gray-600"
           >
             No
           </button>

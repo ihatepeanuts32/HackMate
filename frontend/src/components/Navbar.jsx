@@ -98,10 +98,6 @@ const Navbar = () => {
             <span className="icon">⚙️</span>
             settings
           </Link>
-          <Link to="/contact" className="menu-item">
-            <span className="icon">📞</span>
-            support
-          </Link>
           {/* <Link to="/login" className="menu-item">
             <span className="icon">↵</span>
             login
@@ -117,6 +113,10 @@ const Navbar = () => {
           <Link to="/blockedUsers" className="menu-item">
             <span className="icon">🚫</span>
             blocked users
+          </Link>
+          <Link to="/contact" className="menu-item">
+            <span className="icon">📞</span>
+            support
           </Link>
           <Link to="/logout" className="menu-item">
             <span className="icon">🚪</span>

@@ -51,7 +51,7 @@ const Settings = () => {
                     </div>
                 </Link>
 
-                <div className="settings-item">
+                {/* <div className="settings-item">
                     <h2>Enable Notifications</h2>
                     <img
                         src={notifications ? toggleOn : toggleOff}
@@ -59,7 +59,7 @@ const Settings = () => {
                         className="toggle-icon"
                         onClick={() => setNotifications(!notifications)}
                     />
-                </div>
+                </div> */}
 
                 <div className="settings-item">
                     <h2>Dark Mode</h2>
