@@ -10,7 +10,7 @@ import { useBlockedUsers } from '../context/BlockedUsersContext';
 const BlockButton = ({ children, className = '', user }) => {
   const [isBlocked, setIsBlocked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { blockUser, unblockUser, isUserBlocked } = useBlockedUsers();
+  const { blockUser, unblockUser, isUserBlocked, getCurrentUserId } = useBlockedUsers();
 
   // Get the ACTUAL USER ID
   const getUserId = (user) => {
@@ -52,9 +52,14 @@ const BlockButton = ({ children, className = '', user }) => {
     return idString;
   };
 
+  // GEt current logged-in user ID
+  const currentUserId = getCurrentUserId && getCurrentUserId();
+  const targetUserId = getUserId(user);
+  const isSelf = currentUserId && targetUserId && currentUserId === targetUserId;
+
   useEffect(() => {
     const checkBlockStatus = async () => {
-      if (user) {
+      if (user && !isSelf) {
         const userId = getUserId(user);
         if (userId) {
           console.log('Checking block status for user:', userId);
@@ -65,7 +70,7 @@ const BlockButton = ({ children, className = '', user }) => {
       }
     };
     checkBlockStatus();
-  }, [user, isUserBlocked]);
+  }, [user, isUserBlocked, isSelf]);
 
   const handleBlock = async (e) => {
     e.preventDefault();
@@ -103,6 +108,9 @@ const BlockButton = ({ children, className = '', user }) => {
   };
 
   // button details
+  if (isSelf) {
+    return null; // HIDeS the block button if trying to block self
+  }
   return (
     <button
       onClick={handleBlock}

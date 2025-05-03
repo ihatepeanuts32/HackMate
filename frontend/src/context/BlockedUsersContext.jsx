@@ -165,7 +165,8 @@ export const BlockedUsersProvider = ({ children }) => {
       blockUser, 
       unblockUser, 
       isUserBlocked,
-      refreshBlockedUsers: fetchBlockedUsers 
+      refreshBlockedUsers: fetchBlockedUsers,
+      getCurrentUserId
     }}>
       {children}
     </BlockedUsersContext.Provider>

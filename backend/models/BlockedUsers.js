@@ -19,7 +19,7 @@ const blockedUsersSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Create a compound index to ensure unique blocking relationships
+// sAme user wont be blocked twice now
 blockedUsersSchema.index({ blockerId: 1, blockedId: 1 }, { unique: true });
 
 const BlockedUsers = mongoose.model('BlockedUsers', blockedUsersSchema);
