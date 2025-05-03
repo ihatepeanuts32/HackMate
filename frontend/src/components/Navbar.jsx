@@ -107,16 +107,16 @@ const Navbar = () => {
             register
           </Link> */}
           <Link to="/bugReport" className="menu-item">
-            <span className="icon">🪲</span>
-            report a bug
+            <span className="icon">📞</span>
+            contact support
           </Link>
           <Link to="/blockedUsers" className="menu-item">
             <span className="icon">🚫</span>
             blocked users
           </Link>
           <Link to="/contact" className="menu-item">
-            <span className="icon">📞</span>
-            support
+            <span className="icon">🤝</span>
+            about us
           </Link>
           <Link to="/logout" className="menu-item">
             <span className="icon">🚪</span>

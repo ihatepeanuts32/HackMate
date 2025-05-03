@@ -65,34 +65,11 @@ const ContactUs = () => {
 
     return (
         <div className="contact-page">
-            <h1>Contact Us</h1>
+            <h1>Meet Our Team</h1>
             
             <div className="contact-container">
-                <div className="contact-form-section">
-                    <h2>Send us a Message</h2>
-                    <form onSubmit={handleSubmit} className="contact-form">
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="Your Email"
-                            className="contact-input"
-                        />
-                        <textarea
-                            value={message}
-                            onChange={(e) => setMessage(e.target.value)}
-                            placeholder="Your Message"
-                            className="contact-input message-input"
-                            rows="5"
-                        />
-                        <button type="submit" className="contact-button">
-                            Send Message
-                        </button>
-                    </form>
-                </div>
 
                 <div className="team-section">
-                    <h2>Meet Our Team</h2>
                     <div className="team-grid">
                         {teamMembers.map((member, index) => (
                             <div key={index} className="team-member-card">
