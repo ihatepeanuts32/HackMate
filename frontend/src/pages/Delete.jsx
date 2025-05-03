@@ -38,6 +38,7 @@ const DeleteChat = ({ onDelete }) => {
         <button
           onClick={() => setIsConfirming(true)}
           className="px-6 py-2 bg-red-600 text-white dark:bg-red-700 dark:text-white rounded font-semibold transition-colors duration-300 hover:bg-red-700 dark:hover:bg-red-800"
+          style = {{minWidth:120}}
         >
           Delete Chat
         </button>
