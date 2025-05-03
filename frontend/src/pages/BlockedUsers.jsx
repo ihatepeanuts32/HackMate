@@ -26,13 +26,13 @@ function BlockedUsers() {
     const containerStyle = {
         maxWidth: '800px',
         margin: '2rem auto',
-        padding: '20px',
+        padding: '0px',
         color: 'white',
         minHeight: '100vh'
     };
 
     const headingStyle = {
-        fontSize: '3rem',
+        fontSize: '2.8rem',
         marginBottom: '2rem',
         textAlign: 'center',
         color: 'white'
