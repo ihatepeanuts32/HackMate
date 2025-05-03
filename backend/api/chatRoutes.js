@@ -80,4 +80,22 @@ router.post('/messages', async (req, res) => {
   }
 });
 
+router.delete('/chat/:userId', async (req, res) => {
+  try {
+    const decoded = verifyToken(req);
+    if (!decoded) return res.status(401).json({ message: "Unauthorized" });
+    const { userId } = req.params;
+    // Delete all messages between the logged-in user and the specified user
+    await Message.deleteMany({
+      $or: [
+        { sender: decoded.userId, recipient: userId },
+        { sender: userId, recipient: decoded.userId }
+      ]
+    });
+    res.json({ success: true, message: 'Chat deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to delete chat", error: error.message });
+  }
+});
+
 export default router;

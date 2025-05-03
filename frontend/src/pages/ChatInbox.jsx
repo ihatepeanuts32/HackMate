@@ -4,6 +4,7 @@ import '../styles/ChatInbox.css';
 import ChatBubble from '../components/ChatBubble';
 import axios from 'axios';
 import { io } from 'socket.io-client';
+import DeleteChat from './Delete'; // Adjust the path if needed
 
 const ChatInbox = () => {
     const location = useLocation();
@@ -15,6 +16,7 @@ const ChatInbox = () => {
     const [newMessage, setNewMessage] = useState('');
     const [loading, setLoading] = useState(true);
     const [blockError, setBlockError] = useState('');
+    const [deletingUserId, setDeletingUserId] = useState(null);
     
     const socketRef = useRef();
     const messagesEndRef = useRef(null);
@@ -144,18 +146,32 @@ const ChatInbox = () => {
                             <div
                                 key={user._id}
                                 className={`chat-user ${selectedUser?.id === user._id ? 'active' : ''}`}
-                                onClick={() => {
-                                    const chatUser = {
-                                        id: user._id,
-                                        name: user.username
-                                    };
-                                    setSelectedUser(chatUser);
-                                    fetchMessages(user._id);
-                                    setBlockError('');
-                                }}
                             >
-                                <span className="user-icon">👤</span>
-                                {user.username}
+                                <span
+                                    onClick={() => {
+                                        const chatUser = { id: user._id, name: user.username };
+                                        setSelectedUser(chatUser);
+                                        fetchMessages(user._id);
+                                        setBlockError('');
+                                    }}
+                                    style={{ flex: 1, cursor: 'pointer' }}
+                                >
+                                    <span className="user-icon">👤</span>
+                                    {user.username}
+                                </span>
+                                <DeleteChat
+                                    onDelete={async () => {
+                                        const token = localStorage.getItem('token');
+                                        await axios.delete(`/api/chat/chat/${user._id}`, {
+                                            headers: { Authorization: `Bearer ${token}` }
+                                        });
+                                        setChatUsers(prev => prev.filter(u => u._id !== user._id));
+                                        if (selectedUser?.id === user._id) {
+                                            setSelectedUser(null);
+                                            setMessages([]);
+                                        }
+                                    }}
+                                />
                             </div>
                         ))
                     ) : (
