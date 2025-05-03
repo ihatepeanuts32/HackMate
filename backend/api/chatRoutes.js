@@ -80,6 +80,8 @@ router.post('/messages', async (req, res) => {
   }
 });
 
+// Delete chat route 
+
 router.delete('/chat/:userId', async (req, res) => {
   try {
     const decoded = verifyToken(req);
