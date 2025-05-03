@@ -44,12 +44,12 @@ const Settings = () => {
                     </div>
                 </Link>
 
-                <Link to="/privacy" className="settings-link">
+                {/* <Link to="/privacy" className="settings-link">
                     <div className="settings-item">
                         <h2>Privacy Settings</h2>
                         <img src={chevronRight} alt=">" className="chevron-icon" />
                     </div>
-                </Link>
+                </Link> */}
 
                 {/* <div className="settings-item">
                     <h2>Enable Notifications</h2>
