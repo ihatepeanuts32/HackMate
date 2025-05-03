@@ -1,10 +1,16 @@
 .bug-report-container {
     background-color: #2D0075;
     min-height: 100vh;
-    padding: 2rem;
     color: white;
     display: flex;
     justify-content: center;
+    /* align-items: flex-start; */
+
+}
+
+h5 {
+    margin-top: 3rem;
+    
 }
 
 .bug-report-form {
@@ -12,8 +18,8 @@
     max-width: 800px;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    padding: 0 1rem;
+    /* gap: 2rem; */
+    /* padding: 0 1rem; */
 }
 
 .form-row {

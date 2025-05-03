@@ -63,7 +63,7 @@ const BugReport = ({ closePopup }) => {
                             {submitStatus.message}
                         </div>
                     )}
-                    <h5>Report a Bug</h5>
+                    <h5 style = {{padding:0}}>Report a Bug</h5>
                     <div className="form-row">
                         <div className="form-group">
                             <label>Full Name</label>
