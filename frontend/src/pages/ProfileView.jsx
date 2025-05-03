@@ -130,10 +130,10 @@ const ProfileView = () => {
             {/* right side */}
             <div className="content-section">
                 <div className="description-section">
-                    <h2>Bio</h2>
+                    <h2>Developer Bio</h2>
                     <p>{bio}</p>
 
-                    <h3>Technical Skills</h3>
+                    <h2>Technical Skills</h2>
                     <div className="skills-container">
                         {skills && skills.length > 0 ? (
                             skills.map((skill, idx) => (
@@ -147,7 +147,7 @@ const ProfileView = () => {
 
                 <div className="members-section">
                     <div className="description-section">
-                        <h3>Developer Profile</h3>
+                        <h2>Developer Profile</h2>
                         <ul className="profile-info">
                             <li>Role: {userData.preferredRole || userData.type || 'Not specified'}</li>
                             <li>College: {userData.college || 'Not specified'}</li>
