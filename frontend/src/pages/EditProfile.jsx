@@ -81,7 +81,7 @@ const EditProfile = () => {
             <h3>Edit Profile</h3>
             {message && <div className={message.includes("success") ? "success-message" : "error-message"}>{message}</div>}
             
-            <div className="profile-photo-container">            
+            {/* <div className="profile-photo-container">            
                 <img src={profilePhoto} id="profile-photo" alt="Profile" />
             </div>
             
@@ -92,7 +92,7 @@ const EditProfile = () => {
                 id="input-file" 
                 className="photo-selector" 
                 onChange={handleFileChange} 
-            />
+            /> */}
             
             <div>
                 <form onSubmit={handleSubmit}>
