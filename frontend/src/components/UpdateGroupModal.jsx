@@ -107,7 +107,6 @@ const UpdateGroupModal = ({ isOpen, onClose, group, onUpdate }) => {
                             required
                         />
                     </div>
-
                     <div className="form-group">
                         <label htmlFor="description">Description:</label>
                         <textarea
@@ -120,57 +119,51 @@ const UpdateGroupModal = ({ isOpen, onClose, group, onUpdate }) => {
                         />
                     </div>
                     <div className="form-group checkbox-group">
-                        <label>
-                            Public Group
-                        </label>
+                        <label>Public Group</label>
                         <input
-                                type="checkbox"
-                                name="isPublic"
-                                checked={formData.isPublic}
-                                onChange={handleCheckboxChange}
-                            />
+                            type="checkbox"
+                            name="isPublic"
+                            checked={formData.isPublic}
+                            onChange={handleCheckboxChange}
+                        />
                     </div>
-
-                    <div className="form-group checkbox-group">
-                        <label>
-                            Group Type:
-                        </label>
-
-                        <select value={formData.groupType} onChange={(e) => setFormData(prev => ({ ...prev, groupType: e.target.value }))}>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <label>Group Type:</label>
+                            <select value={formData.groupType} onChange={(e) => setFormData(prev => ({ ...prev, groupType: e.target.value }))}>
                                 <option value="open">Open to Anyone</option>
                                 <option value="invite-only">Invite Only</option>
                             </select>
+                        </div>
+                        <div className="form-group">
+                            <label>Hackathon:</label>
+                            <select
+                                name="hackathon"
+                                value={formData.hackathon}
+                                onChange={handleChange}
+                                required
+                            >
+                                {hackathons.length > 0 ? (
+                                    hackathons.map((hackathon) => (
+                                        <option key={hackathon.id} value={hackathon.id}>
+                                            {hackathon.name}
+                                        </option>
+                                    ))
+                                ) : (
+                                    <option value="">No hackathons available</option>
+                                )}
+                            </select>
+                        </div>
                     </div>
-
-                    <div className="form-group">
-                        <label>Hackathon:</label>
-                        <select
-                            name="hackathon"
-                            value={formData.hackathon}
-                            onChange={handleChange}
-                            required
-                        >
-                            {hackathons.length > 0 ? (
-                                hackathons.map((hackathon) => (
-                                    <option key={hackathon.id} value={hackathon.id}>
-                                        {hackathon.name}
-                                    </option>
-                                ))
-                            ) : (
-                                <option value="">No hackathons available</option>
-                            )}
-                        </select>
-                    </div>
-
                     <div className="form-group">
                         <label htmlFor="skills">Skills/Tags:</label>
                         <div className="skills-input-container">
-                            <input style={{minWidth:350}}
+                            <input style={{minWidth:200}}
                                 type="text"
                                 id="skills"
                                 value={skillInput}
                                 onChange={(e) => setSkillInput(e.target.value)}
-                                placeholder="Enter a skill and press Add"
+                                placeholder="Enter a skill"
                             />
                             <button 
                                 type="button" 
@@ -195,7 +188,6 @@ const UpdateGroupModal = ({ isOpen, onClose, group, onUpdate }) => {
                             ))}
                         </div>
                     </div>
-
                     <button type="submit" className="submit-button">
                         Update Group
                     </button>

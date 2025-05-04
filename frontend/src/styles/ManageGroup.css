@@ -1,6 +1,6 @@
 .manage-group-page {
     min-height: 100vh;
-    background-color: #1C0049;
+    background-color: #2D0075;
     color: white;
     padding: 4rem 2rem;
 }
@@ -84,4 +84,35 @@
     .management-options {
         grid-template-columns: 1fr;
     }
-} 
+}
+
+[data-theme="light"] .manage-group-page {
+    background-color: #DCC7FF;
+    color: #1C0049;
+}
+[data-theme="light"] .option-section {
+    background-color: #ede6fa;
+}
+[data-theme="light"] .option-section h2 {
+    color: #7c3aed;
+}
+[data-theme="light"] .manage-button {
+    background-color: #a259f7;
+    color: #fff;
+}
+[data-theme="light"] .manage-button:hover {
+    background-color: #7a5cff;
+}
+[data-theme="light"] .manage-button.delete {
+    background-color: #e11d48;
+}
+[data-theme="light"] .manage-button.delete:hover {
+    background-color: #be123c;
+}
+[data-theme="light"] .manage-button.warning {
+    background-color: #f59e42;
+    color: #fff;
+}
+[data-theme="light"] .manage-button.warning:hover {
+    background-color: #ea580c;
+}

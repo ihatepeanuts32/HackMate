@@ -13,10 +13,13 @@
 
 .modal-content {
     background-color: #2A0066;
-    padding: 2rem;
+    padding: 1.5rem 2.5rem;
     border-radius: 15px;
-    width: 90%;
-    max-width: 600px;
+    width: 95%;
+    max-width: 800px;
+    max-height: 100vh;
+    height: 100vh;
+    overflow-y: auto;
     position: relative;
     color: white;
     animation: slideIn 0.3s ease-out;
@@ -68,6 +71,18 @@
     gap: 1.5rem;
 }
 
+.form-row {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+.form-row .form-group {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
 .form-group {
     display: flex;
     flex-direction: column;
@@ -84,7 +99,7 @@
     padding: 0.75rem;
     border-radius: 8px;
     border: 1px solid #4C1D95;
-    background-color: #1C0049;
+    background-color: #ede6fa;
     color: white;
     font-size: 1rem;
 }
@@ -97,14 +112,20 @@
 
 .skills-input-container {
     display: flex;
-    gap: 0.5rem;
+    gap: 1rem;
 }
 
 .skills-input-container input {
-    flex: 1;
+    flex: 2 1 0;
+    min-width: 0;
 }
 
 .add-skill-button {
+    flex: 0 0 120px;
+    min-width: 80px;
+    max-width: 150px;
+    padding-left: 0;
+    padding-right: 0;
     padding: 0.75rem 1.5rem;
     background-color: #4C1D95;
     color: white;
@@ -191,6 +212,40 @@
     margin-left: 1.5rem; 
 }
 
+.form-group.checkbox-group {
+    align-items: center;
+    margin-top: 0;
+}
+
+.form-group.checkbox-group label {
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+.form-group select {
+    padding: 8px 12px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #4C1D95;
+    background-color: #1C0049;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+}
+
+[data-theme="light"] .modal-content {
+    background-color: #DCC7FF;
+    color: #1C0049;
+}
+[data-theme="light"] .form-group select {
+    background-color: #fff;
+    color: #222;
+    border: 1px solid #b794f4;
+}
+
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group textarea {
+    color: #1C0049;
+}
 
 @media (max-width: 768px) {
     .modal-content {

@@ -121,4 +121,46 @@
     color: white;
     font-size: 1.2rem;
     opacity: 0.9;
+}
+
+[data-theme="light"] .modal-content {
+    background-color: #DCC7FF;
+    color: #1C0049;
+}
+[data-theme="light"] .modal-content h2 {
+    color: #7c3aed;
+}
+[data-theme="light"] .modal-content p {
+    color: #1C0049;
+}
+[data-theme="light"] .close-button {
+    color: #7c3aed;
+}
+[data-theme="light"] .close-button:hover {
+    color: #1C0049;
+}
+[data-theme="light"] .confirm-button {
+    background-color: #a259f7;
+    color: #fff;
+}
+[data-theme="light"] .confirm-button:hover {
+    background-color: #7a5cff;
+}
+[data-theme="light"] .cancel-button {
+    background-color: #ede6fa;
+    color: #1C0049;
+}
+[data-theme="light"] .cancel-button:hover {
+    background-color: #d1b3ff;
+    color: #1C0049;
+}
+[data-theme="light"] .confirmation-sent {
+    background-color: #fff;
+    color: #1C0049;
+}
+[data-theme="light"] .confirmation-sent h2 {
+    color: #7c3aed;
+}
+[data-theme="light"] .confirmation-sent p {
+    color: #1C0049;
 } 

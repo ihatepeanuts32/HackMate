@@ -1,7 +1,6 @@
 :root{
     --text-color: black;
-    --contact-form-bg: #8c53e8;
-    --contact-page-bg: #b181ff;
+    --contact-form-bg: #b181ff;
 }
 
 [data-theme="dark"] {
