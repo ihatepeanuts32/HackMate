@@ -159,11 +159,11 @@ const ChatInbox = () => {
                                         fetchMessages(user._id);
                                         setBlockError('');
                                     }}
-                                    style={{ flex: 1, cursor: 'pointer' }}
-                                >
-                                    <span className="user-icon">👤</span>
-                                    {user.username}
-                                </span>
+                                    style={{ flex: 1, cursor: 'pointer', display: 'flex', alignItems: 'center' }}
+                                    >
+                                        <span className="user-icon">👤</span>
+                                        <span className="user-name">{user.username}</span>
+                                    </span>
                                 <DeleteChat
                                     onDelete={async () => {
                                         const token = localStorage.getItem('token');
