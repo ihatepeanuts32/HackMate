@@ -12,7 +12,10 @@ import profileIcon from '../assets/Profile icon.png';
 import ContactGroup from '../components/ContactGroup';
 import JoinRequestModal from '../components/JoinRequestModal';
 import { Link } from 'react-router-dom';
-const currentUser = JSON.parse(localStorage.getItem('user')); // Fetch current user from localStorage
+
+
+const currentUser = JSON.parse(localStorage.getItem('user'));
+const hackathon = JSON.parse(localStorage.getItem('hackathon'));
 
 const GroupView = () => {
     const navigate = useNavigate();
@@ -97,6 +100,13 @@ const GroupView = () => {
             {/* Main Content */}
             <div className="content-section">
                 <div className="description-section">
+                    
+                    <button
+                        className="btn-hack-name"
+                    >
+                        {hackathon?.name || "No Hackathon Assigned"}
+                    </button>
+                    
                     <h2>Description</h2>
                     <p>
                         {group.description}
@@ -107,6 +117,7 @@ const GroupView = () => {
                         <span key={index} className="skill-tag">{skill}</span>
                     ))}
                     </div>
+
                 </div>
 
                 <div className="members-section">
