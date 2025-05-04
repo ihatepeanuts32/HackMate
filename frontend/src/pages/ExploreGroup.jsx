@@ -16,7 +16,13 @@ const ExploreGroup = () => {
   useEffect(() => {
     const fetchGroups = async () => {
       try {
-        const res = await axios.get('/api/groups/search');
+        const res = await axios.get('/api/groups/search',
+          {params:
+            {
+              isPublic: true
+            }
+          }
+        );
         setGroups(Array.isArray(res.data)? res.data :[]);
       } catch (err) {
         console.error('Failed to fetch groups:', err);

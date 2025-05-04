@@ -20,6 +20,7 @@ const UpdateGroupModal = ({ isOpen, onClose, group, onUpdate }) => {
                 description: group.description || '',
                 skills: group.skills || [],
                 isPublic: group.isPublic ?? false,
+                groupType: group.groupType || 'open',
                 isOpen: group.isOpen ?? false
             });
         }

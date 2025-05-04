@@ -460,7 +460,8 @@ router.get('/search', async (req, res) => {
             visibility,  // e.g., "visible", "hidden"
             minMembers,  // Minimum number of members
             maxMembers,  // Maximum number of members
-            owner        // Filter by owner ID
+            owner,        // Filter by owner ID
+            isPublic
         } = req.query;
 
         // Step 1: Build MongoDB query filter
@@ -500,6 +501,11 @@ router.get('/search', async (req, res) => {
             if (maxMembers) {
                 filter.$expr.$and.push({ $lte: [{ $size: "$members" }, parseInt(maxMembers)] });
             }
+        }
+
+        if(isPublic)
+        {
+            filter.isPublic = isPublic === 'true';
         }
 
         // Step 2: Query groups with the built filter
