@@ -6,7 +6,7 @@
 [data-theme="dark"] {
     --text-color: #ffffff;
     --contact-form-bg: #5a25b0;
-    --contact-page-bg: #1C0049;
+    /* --contact-page-bg: #1C0049; */
   }
 
 .contact-page {
