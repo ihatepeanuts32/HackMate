@@ -531,7 +531,8 @@ router.get('/:id/group_details', async (req, res) => {
         // Step 1: Find group by ID and populate owner and members
         const group = await Group.findById(req.params.id)
             .populate('owner')
-            .populate('members');
+            .populate('members')
+            .populate('hackathon');
 
         // Step 2: Return group details or error if not found
         if (!group) {
