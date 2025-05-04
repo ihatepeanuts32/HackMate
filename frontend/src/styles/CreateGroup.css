@@ -83,6 +83,19 @@
 
 .create-group-button:hover {
     background-color: #2A0066;
+} 
+
+.create-group-select {
+    padding: 8px 12px;
+    font-size: 13px;
+    border: 1px solid #ffffff;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff; 
+    outline: none; 
+    width: 100%; 
+    box-sizing: border-box; 
+    background-color: #1C0049;
 }
 
 [data-theme="light"] .create-group-container {
