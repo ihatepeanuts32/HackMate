@@ -69,7 +69,7 @@ const Home = () => {
                 </div>
             </div>
             <div>
-                <h4>Upcoming Hackathons Near You</h4>
+                <h4>Upcoming Hackathons:</h4>
                 <div style={{ paddingBottom: '30px' }}>
                     <CardCarousel data={hackathons} isDarkMode={isDarkMode} />
                 </div>
