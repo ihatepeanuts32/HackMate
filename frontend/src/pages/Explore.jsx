@@ -22,6 +22,12 @@ const Explore = () => {
         setLoading(true);
         const token = localStorage.getItem('token'); 
         
+        if (!token) {
+          setError('Please log in to view users');
+          setLoading(false);
+          return;
+        }
+        
         const response = await axios.get('/api/auth/allUsers', {
           headers: {
             Authorization: `Bearer ${token}`
@@ -32,7 +38,11 @@ const Explore = () => {
         setLoading(false);
       } catch (err) {
         console.error('Error fetching users:', err);
-        setError('Failed to load users. Please try again later.');
+        if (err.response?.status === 401) {
+          setError('Please log in to view users');
+        } else {
+          setError('Failed to load users. Please try again later.');
+        }
         setLoading(false);
       }
     };
