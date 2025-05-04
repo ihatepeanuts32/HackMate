@@ -4,6 +4,7 @@ import axios from 'axios';
 import '../styles/GroupView.css';
 import hackmateLogo from '../assets/hackmateLogo2.png';
 import exampleBanner from '../assets/examplebanner.jpg';
+import banner from '../assets/banner.jpeg';
 import personAddAlt1 from '../assets/person_add_alt_1.png';
 import messageIcon from '../assets/message.png';
 import planeIcon from '../assets/planeIcon.png';
@@ -65,7 +66,7 @@ const GroupView = () => {
             {/* Hero Section with Banner */}
             <div className="hero-section">
                 <div className="banner-overlay"></div>
-                <img src={exampleBanner} alt="group banner" className="banner-image" />
+                <img src={banner} alt="group banner" className="banner-image" />
                 
                 <div className="group-header">
                     <div className="group-info">
