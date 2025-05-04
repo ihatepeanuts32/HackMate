@@ -12,6 +12,7 @@ import profileIcon from '../assets/Profile icon.png';
 import ContactGroup from '../components/ContactGroup';
 import JoinRequestModal from '../components/JoinRequestModal';
 import { Link } from 'react-router-dom';
+const currentUser = JSON.parse(localStorage.getItem('user')); // Fetch current user from localStorage
 
 const GroupView = () => {
     const navigate = useNavigate();
@@ -167,6 +168,8 @@ const GroupView = () => {
                 onConfirm={handleJoinRequest}
                 groupName={group.name}
                 showConfirmation={showJoinConfirmation}
+                isOwner={currentUser.id === group.owner._id}
+                groupId={id}
             />
         </div>
     );
