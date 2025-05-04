@@ -43,10 +43,10 @@ const JoinRequestsModal = ({ isOpen, onClose, groupId }) => {
 
     return (
         <div className="modal-overlay" onClick={onClose}>
-            <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <div className="modal-content-small" onClick={e => e.stopPropagation()}>
+                <button className="close-button" onClick={onClose}>&times;</button>
                 <div className="modal-header">
                     <h2>Join Requests</h2>
-                    <button className="close-button" onClick={onClose}>&times;</button>
                 </div>
                 
                 <div className="modal-body">
