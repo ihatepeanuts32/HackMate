@@ -36,7 +36,7 @@ const AccountSettings = () => {
     return (
         <div>
             <h2>Your Account</h2>
-            <div className="row-wrapper" style={{ color: 'white', borderRadius:25, background:"#5a25b0", minWidth: 1000}}>
+            <div className="row-wrapper" style={{ color: 'white', borderRadius:25, minWidth: 1000}}>
                 <div className="vertical-line" />
 
                 <div className="split-row">

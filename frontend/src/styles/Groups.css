@@ -131,4 +131,25 @@ h5 {
     .view-button, .leave-button, .manage-button {
         padding: 0.75rem 2rem;
     }
+}
+
+[data-theme="light"] .group-row {
+    background-color: #ede6fa;
+}
+[data-theme="light"] .group-name {
+    color: #1C0049;
+}
+[data-theme="light"] .view-button, [data-theme="light"] .manage-button {
+    background-color: #a259f7;
+    color: #fff;
+}
+[data-theme="light"] .view-button:hover, [data-theme="light"] .manage-button:hover {
+    background-color: #c3a0fb;
+}
+[data-theme="light"] .leave-button {
+    background-color: #e57373;
+    color: #fff;
+}
+[data-theme="light"] .leave-button:hover {
+    background-color: #b71c1c;
 } 

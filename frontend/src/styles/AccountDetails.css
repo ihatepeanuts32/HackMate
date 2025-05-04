@@ -40,3 +40,15 @@ h2 {
 .right-side {
   text-align: left;
 }
+
+[data-theme="light"] .row-wrapper {
+    background-color: #DCC7FF;
+    color: #1C0049;
+    border-radius: 20px;
+}
+[data-theme="light"] h2 {
+    color: #1C0049;
+}
+[data-theme="light"] .left-side, [data-theme="light"] .right-side {
+    color: #1C0049;
+}

@@ -1,0 +1,80 @@
+/* Blocked Users Styles */
+.blocked-users-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0px;
+    color: white;
+    min-height: 100vh;
+    background: none;
+}
+
+.blocked-users-heading {
+    font-size: 2.8rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: white;
+}
+
+.blocked-user-card {
+    background-color: #1C0049;
+    padding: 28px 32px;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    gap: 2rem;
+    font-size: 1.15rem;
+    box-sizing: border-box;
+}
+
+.blocked-user-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2.5rem;
+    flex: 1;
+}
+
+.blocked-user-name {
+    font-size: 1.15rem;
+    font-weight: 500;
+    min-width: 120px;
+}
+
+.blocked-user-date {
+    color: #888;
+    font-size: 1.05rem;
+    min-width: 220px;
+    text-align: left;
+}
+
+.unblock-button {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+[data-theme="light"] .blocked-users-container {
+    background: none;
+    color: #1C0049;
+}
+[data-theme="light"] .blocked-users-heading {
+    color: #1C0049;
+}
+[data-theme="light"] .blocked-user-card {
+    background-color: #ede6fa;
+    color: #1C0049;
+}
+[data-theme="light"] .blocked-user-date {
+    color: #6b5ca5;
+}
+[data-theme="light"] .unblock-button {
+    background-color: #e57373;
+    color: #fff;
+} 

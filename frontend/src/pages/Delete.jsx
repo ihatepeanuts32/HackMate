@@ -3,8 +3,8 @@
 
 import React, { useState } from 'react';
 import '../styles/Delete.css';
+import trashIcon from '../assets/trash-03.png';
 
- 
 const DeleteChat = ({ onDelete }) => {
   const [isConfirming, setIsConfirming] = useState(false);
 
@@ -37,10 +37,11 @@ const DeleteChat = ({ onDelete }) => {
       ) : (
         <button
           onClick={() => setIsConfirming(true)}
-          className="px-6 py-2 bg-red-600 text-white dark:bg-red-700 dark:text-white rounded font-semibold transition-colors duration-300 hover:bg-red-700 dark:hover:bg-red-800"
-          style = {{minWidth:120}}
+          className="delete-icon-button"
+          style={{ background: 'none', border: 'none', padding: 0, marginLeft: 8, cursor: 'pointer' }}
+          title="Delete Chat"
         >
-          Delete Chat
+          <img src={trashIcon} alt="Delete" style={{ width: 24, height: 24, display: 'block' }} />
         </button>
       )}
     </div>

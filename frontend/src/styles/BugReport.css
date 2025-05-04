@@ -152,3 +152,36 @@ label {
     cursor: pointer;
   }
   
+[data-theme="light"] .bug-report-container {
+    background-color: #DCC7FF;
+    color: #1C0049;
+}
+[data-theme="light"] .bug-report-form {
+    background-color: #DCC7FF;
+    border-radius: 20px;
+}
+[data-theme="light"] .form-input,
+[data-theme="light"] .description-input {
+    background-color: #fff;
+    color: #1C0049;
+    border: 1px solid #a259f7;
+}
+[data-theme="light"] .submit-button {
+    background-color: #a259f7;
+    color: #fff;
+}
+[data-theme="light"] .submit-button:hover {
+    background-color: #7a5cff;
+}
+[data-theme="light"] .bug-popup {
+    background-color: #ede6fa;
+    color: #1C0049;
+}
+[data-theme="light"] .close-button {
+    color: #1C0049;
+}
+
+[data-theme="light"] label {
+    color: #000 !important;
+}
+  

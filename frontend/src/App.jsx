@@ -1,3 +1,11 @@
+// Set default theme to dark if not set
+if (!localStorage.getItem('theme')) {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  localStorage.setItem('theme', 'dark');
+} else {
+  document.documentElement.setAttribute('data-theme', localStorage.getItem('theme'));
+}
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import Dashboard from './pages/Dashboard';
 import Login from './pages/LogIn';
@@ -25,7 +33,7 @@ import LogOut from './pages/LogOut';
 import { BlockedUsersProvider } from './context/BlockedUsersContext';
 
 function App() {
-  document.documentElement.setAttribute('data-theme', 'dark');
+  // document.documentElement.setAttribute('data-theme', 'dark'); // Removed: now handled above
   return (
     <Router>
       <BlockedUsersProvider>

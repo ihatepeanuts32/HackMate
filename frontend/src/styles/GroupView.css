@@ -296,3 +296,45 @@
 li {
     padding:5px;
 }
+
+/* Light mode overrides */
+[data-theme="light"] .group-view {
+    background-color: #f3eaff;
+    color: #1C0049;
+}
+[data-theme="light"] .nav-header {
+    background-color: #e6eaff;
+}
+[data-theme="light"] .description-section,
+[data-theme="light"] .members-section {
+    background-color: #fff;
+    color: #1C0049;
+}
+[data-theme="light"] .skill-tag {
+    background-color: #c3a0fb;
+    color: #1C0049;
+}
+[data-theme="light"] .btn-chat,
+[data-theme="light"] .btn-request,
+[data-theme="light"] .btn-contact {
+    background-color: #a259f7;
+    color: #fff;
+}
+[data-theme="light"] .banner-overlay {
+    background: linear-gradient(to top, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0.1) 100%);
+}
+[data-theme="light"] .content-section {
+    background: none;
+}
+[data-theme="light"] .member-card {
+    background-color: #ede6fa;
+    color: #1C0049;
+    border: 1px solid #d1c4e9;
+}
+[data-theme="light"] .member-role {
+    color: #7a5cff;
+}
+[data-theme="light"] .message-btn {
+    background-color: #c3a0fb;
+    color: #fff;
+}

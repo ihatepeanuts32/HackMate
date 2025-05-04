@@ -182,3 +182,53 @@
         width: 100%;
     }
 } */
+
+[data-theme="light"] .chat-inbox {
+    background-color: #f3eaff;
+    box-shadow: 0 0 24px rgba(120,90,255,0.08);
+}
+[data-theme="light"] .sidebar {
+    background-color: #e6eaff;
+    color: #1C0049;
+}
+[data-theme="light"] .chat-title {
+    color: #1C0049;
+}
+[data-theme="light"] .chat-user {
+    background-color: #C3A0FB;
+    color: #1C0049;
+}
+[data-theme="light"] .chat-user:hover,
+[data-theme="light"] .chat-user.active {
+    background-color: #a98ada;
+}
+[data-theme="light"] .chat-window {
+    background-color: #c3a0fb;
+}
+[data-theme="light"] .chat-header {
+    background-color: #c3a0fb;
+    border-bottom: 1px solid #a259f7;
+    color: #1C0049;
+}
+[data-theme="light"] .messages {
+    color: #1C0049;
+}
+[data-theme="light"] .message-input-container {
+    background-color: #c3a0fb;
+    border-top: 1px solid #a259f7;
+}
+[data-theme="light"] .message-input-field {
+    background: #ede6fa;
+    color: #1C0049;
+    border: 1px solid #a259f7;
+}
+[data-theme="light"] .send-button {
+    background-color: #a259f7;
+    color: #fff;
+}
+[data-theme="light"] .send-button:hover {
+    background-color: #7a5cff;
+}
+[data-theme="light"] .chat-placeholder {
+    color: #1C0049;
+}

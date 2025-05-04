@@ -1,6 +1,7 @@
 // Ifrah
 // Description: User Homepage
 import hackmateLogo from "../assets/hackmateLogo.png"
+import hackmateLanding from "../assets/hackmate landing.png"
 import CardCarousel from '../components/CardCarousel';
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -10,6 +11,17 @@ import { Link } from 'react-router-dom';
 const Home = () => {
     const [hackathons, setHackathons] = useState([]);
     const [user, setUser] = useState('');
+    const [isDarkMode, setIsDarkMode] = useState(document.documentElement.getAttribute('data-theme') === 'dark');
+
+    useEffect(() => {
+        const checkDarkMode = () => {
+            setIsDarkMode(document.documentElement.getAttribute('data-theme') === 'dark');
+        };
+        checkDarkMode();
+        const observer = new MutationObserver(checkDarkMode);
+        observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+        return () => observer.disconnect();
+    }, []);
 
     //Naomi - Mounting hackathon data being fetched from backend
     useEffect(() => {
@@ -50,12 +62,15 @@ const Home = () => {
     return (
         <div>
             <div>
-                <h3>Welcome {user.firstName || "Guest"}!</h3>
+                <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '20px' }}>Welcome {user.firstName || "Guest"}!</h3>
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '30px' }}>
+                    <img src={hackmateLanding} alt="Hackmate Landing" style={{ maxWidth: '50%', height: 'auto', borderRadius: '18px' }} />
+                </div>
             </div>
             <div>
                 <h4>Upcoming Hackathons Near You</h4>
                 <div style={{ paddingBottom: '30px' }}>
-                    <CardCarousel data={hackathons} />
+                    <CardCarousel data={hackathons} isDarkMode={isDarkMode} />
                 </div>
                 <h4 style={{ padding:15}}>Ready to Find your Perfect Hackathon Group?</h4>
                 <div style={{ maxWidth: '1000px', margin: '0 auto' }}>

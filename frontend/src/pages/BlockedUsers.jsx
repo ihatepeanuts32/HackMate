@@ -1,5 +1,6 @@
 import { useBlockedUsers } from '../context/BlockedUsersContext';
 import { useEffect } from 'react';
+import '../styles/BlockedUsers.css';
 
 //Hrishikesh Srirangam
 
@@ -97,23 +98,23 @@ function BlockedUsers() {
     }
 
     return (
-        <div style={containerStyle}>
-            <h1 style={headingStyle}>Blocked Users</h1>
+        <div className="blocked-users-container">
+            <h1 className="blocked-users-heading">Blocked Users</h1>
             {blockedUsers.map((blockedUser) => (
-                <div key={blockedUser._id || blockedUser.blockedId._id} style={userCardStyle}>
-                    <div style={userInfoStyle}>
-                        <span style={{ fontSize: '1.2rem' }}>
+                <div key={blockedUser._id || blockedUser.blockedId._id} className="blocked-user-card">
+                    <div className="blocked-user-info">
+                        <span className="blocked-user-name">
                             {blockedUser.blockedId?.fullName || 
                              (blockedUser.blockedId?.firstName && blockedUser.blockedId?.lastName ? 
                                 `${blockedUser.blockedId.firstName} ${blockedUser.blockedId.lastName}`.trim() : 
                                 blockedUser.blockedId?.username || 'Unknown User')}
                         </span>
-                        <span style={{ opacity: 0.7 }}>
+                        <span className="blocked-user-date">
                             Blocked on: {formatDate(blockedUser.createdAt)}
                         </span>
                     </div>
                     <button
-                        style={buttonStyle}
+                        className="unblock-button"
                         onClick={() => handleUnblock(blockedUser)}
                     >
                         Unblock
