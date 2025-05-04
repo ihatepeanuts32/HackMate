@@ -11,6 +11,7 @@ import planeIcon from '../assets/planeIcon.png';
 import profileIcon from '../assets/Profile icon.png';
 import ContactGroup from '../components/ContactGroup';
 import JoinRequestModal from '../components/JoinRequestModal';
+import { Link } from 'react-router-dom';
 
 const GroupView = () => {
     const navigate = useNavigate();
@@ -115,7 +116,11 @@ const GroupView = () => {
                             <div className="member-left">
                             <img src={profileIcon} alt="profile" className="member-avatar" />
                             <div className="member-info">
-                                <h3>{group.owner.username}</h3>
+                                <h3>
+                                    <Link to={`/profile/${group.owner._id}`} className="member-link">
+                                        {group.owner.username}
+                                    </Link>
+                                </h3>
                                 <span className="member-role">Leader</span>
                             </div>
                             </div>
@@ -129,7 +134,11 @@ const GroupView = () => {
                         <div className="member-left">
                         <img src={profileIcon} alt="profile" className="member-avatar" />
                         <div className="member-info">
-                            <h3>{member.username}</h3>
+                            <h3>
+                                <Link to={`/profile/${member._id}`} className="member-link">
+                                    {member.username}
+                                </Link>
+                            </h3>
                             <span className="member-role">Member</span>
                         </div>
                         </div>
