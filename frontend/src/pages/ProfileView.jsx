@@ -6,6 +6,7 @@ import exampleBanner from '../assets/examplebanner.jpg';
 import planeIcon from '../assets/planeIcon.png';
 import blockIcon from '../assets/blockIcon.png';
 import blankProfile from '../assets/profile.png';
+import starsBanner from '../assets/starblue.jpeg';
 import BlockButton from '../components/Block';
 
 const ProfileView = () => {
@@ -105,7 +106,7 @@ const ProfileView = () => {
             {/* left side */}
             <div className="hero-section">
                 <div className="banner-overlay"></div>
-                <img src={exampleBanner} alt="group banner" className="banner-image" />
+                <img src={starsBanner} alt="group banner" className="banner-image" />
 
                 <div className="group-header">
                     <div className="group-info">
