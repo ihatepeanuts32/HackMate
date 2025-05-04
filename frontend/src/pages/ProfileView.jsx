@@ -6,6 +6,7 @@ import exampleBanner from '../assets/examplebanner.jpg';
 import planeIcon from '../assets/planeIcon.png';
 import blockIcon from '../assets/blockIcon.png';
 import blankProfile from '../assets/profile.png';
+import pfp from '../assets/Profile icon.png';
 import starsBanner from '../assets/starblue.jpeg';
 import BlockButton from '../components/Block';
 
@@ -132,7 +133,7 @@ const ProfileView = () => {
 
                 <div className="group-header">
                     <div className="group-info">
-                        <img src={userData.profileImage || blankProfile} alt="profile" className="group-logo" />
+                        <img src={userData.profileImage || pfp} alt="profile" className="group-logo" />
                         <h1>{fullName}</h1>
                     </div>
                     <div className='split-row'>

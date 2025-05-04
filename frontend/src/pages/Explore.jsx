@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Explore.css';
 import blankProfile from "../assets/profile.png";
+import pfp from "../assets/Profile icon.png";
 import axios from 'axios';
 
 const Explore = () => {
@@ -130,7 +131,7 @@ const filteredUsers = users.filter((user) => {
                 onClick={() => handleUserClick(user)}
               >
                 <img
-                  src={user.imageUrl || blankProfile}
+                  src={user.imageUrl || pfp}
                   alt={user.name}
                   className="user-image"
                 />
