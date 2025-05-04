@@ -156,4 +156,25 @@ router.get("/", auth, async (req, res) => {
     }
 });
 
+/**
+ * Route: GET /api/reports/bug 
+ * Description: Get all bug reports (or all reports, to match /test)
+ * Access: Public
+ * THIS LINK WILL BE SHOWN IN THE INSPECT PAGE AND MIGHT BE USED DURING DEMO
+ */
+router.get("/bug", async (req, res) => {
+    try {
+
+        // If you want to match /test and show ALL reports:
+        const reports = await Report.find().sort({ createdAt: -1 });
+        res.json(reports);
+    } catch (error) {
+        console.error('Error fetching bug reports:', error);
+        res.status(500).json({ 
+            message: "Error fetching bug reports",
+            error: error.message 
+        });
+    }
+});
+
 export default router;
