@@ -5,6 +5,7 @@ import generateToken from "../utils/generateToken.js"
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
 import { verifyToken } from '../utils/verifyToken.js';
+import BlockedUsers from "../models/BlockedUsers.js";
 
 const router = express.Router();
 
@@ -244,11 +245,44 @@ router.post('/resetPassword', async (req, res) => {
 
 router.get('/allUsers', async (req, res) => {
   try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
+      return res.status(401).json({ message: "No token provided" });
+    }
 
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    if (!decoded) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+
+    // Get all users
     const allUsers = await Onboarding.find({})
-      .populate('userId', 'username'); 
+      .populate('userId', 'username');
+
+    // Get blocked users by getting both blocked by current user and users who blocked current user
+    const blockedUsers = await BlockedUsers.find({
+      $or: [
+        { blockerId: decoded.userId },
+        { blockedId: decoded.userId }
+      ]
+    });
+
+    // Create sets of blocked user IDs will be filtered out
+    const blockedByMe = new Set(blockedUsers
+      .filter(block => block.blockerId.toString() === decoded.userId)
+      .map(block => block.blockedId.toString()));
+    
+    const blockedMe = new Set(blockedUsers
+      .filter(block => block.blockedId.toString() === decoded.userId)
+      .map(block => block.blockerId.toString()));
+
+    // Filter out blocked users
+    const filteredUsers = allUsers.filter(user => {
+      const userId = user.userId._id.toString();
+      return !blockedByMe.has(userId) && !blockedMe.has(userId);
+    });
       
-    const formattedUsers = allUsers.map(user => ({
+    const formattedUsers = filteredUsers.map(user => ({
       id: user.userId,
       name: `${user.firstName} ${user.lastName}`,
       bio: user.bio || `${user.preferredRole} developer`,

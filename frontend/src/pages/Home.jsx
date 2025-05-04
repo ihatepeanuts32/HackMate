@@ -47,13 +47,14 @@ const Home = () => {
 
         const fetchHackathons = async () => {
             try {
-                const response = await axios.get("/api/eventBriteHackathons");
-                console.log("Response data:", response.data);
-                setHackathons(response.data[0]?.hackathons || []);
-              } catch (error) {
+                const response = await axios.get("/api/hackathons/get"); 
+                console.log("Fetched hackathons:", response.data);
+                setHackathons(response.data); 
+            } catch (error) {
                 console.error("Error fetching hackathons:", error);
-              }
-        }
+            }
+        };
+        
         
         fetchUserProfile();
         fetchHackathons();

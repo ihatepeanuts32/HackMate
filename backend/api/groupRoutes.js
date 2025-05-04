@@ -35,29 +35,26 @@ router.get('/test_get_groups', async(req,res) =>{
 
 router.post('/create', async(req, res) => {
     try{
-        // Step 1: Verify the user's token 
         const decoded = verifyToken(req);
         if (!decoded) {
             return res.status(401).json({ message: "Unauthorized - Invalid or missing token" });
         }
         
-        // Step 2: Extract group details from request body 
-        const {groupName, description} = req.body; 
+        const {groupName, description, hackathon} = req.body; 
 
-        // Step 3: Validate required fields 
-        if(!groupName || !description)
+        if(!groupName || !description || !hackathon)
         {
-            return res.status(403).json({message: "REQUIRED: Name and Description"}); 
+            return res.status(403).json({message: "REQUIRED: Name, Description, Hackathon"}); 
         }
 
-        // Step 4: Create new group with the authenticated user as owner 
         const newGroup = new Group({
             name: groupName, 
             description: description, 
             owner: decoded.userId, // Set from decoded token
             members: [decoded.userId], // Owner is a member 
             skills: [], // Default is empty array 
-            isPublic: false // Default is not public
+            isPublic: false, // Default is not public
+            hackathon: hackathon
         })
 
         // Step 5: Save the group to the database 
@@ -99,7 +96,7 @@ router.put('/:groupId/update/', async (req, res) =>{
         }
         
         // Step 2: Extract update fields from request body 
-        const {name, description, skills, isPublic, groupType, maxCapacity} = req.body;        
+        const {name, description, skills, isPublic, groupType, maxCapacity, hackathon} = req.body;        
 
         // Step 3: Find the group by ID. Else return the message(Group not found) if group not found
 
@@ -120,6 +117,7 @@ router.put('/:groupId/update/', async (req, res) =>{
         if(skills !== undefined) group.skills = skills; 
         if(typeof isPublic == "boolean") group.isPublic = isPublic; 
         if(groupType !== undefined) group.groupType = groupType;
+        if(hackathon !== undefined) group.hackathon = hackathon;
         if(maxCapacity !== undefined)
         {
             if(maxCapacity < group.members.length)
@@ -460,7 +458,9 @@ router.get('/search', async (req, res) => {
             visibility,  // e.g., "visible", "hidden"
             minMembers,  // Minimum number of members
             maxMembers,  // Maximum number of members
-            owner        // Filter by owner ID
+            owner,        // Filter by owner ID
+            isPublic,
+            hackathon
         } = req.query;
 
         // Step 1: Build MongoDB query filter
@@ -486,6 +486,9 @@ router.get('/search', async (req, res) => {
         if (owner) {
             filter.owner = owner;
         }
+        if(hackathon){
+            filter.hackathon = hackathon;
+        }
 
         // Populate member count filters
         if (minMembers || maxMembers) {
@@ -500,6 +503,11 @@ router.get('/search', async (req, res) => {
             if (maxMembers) {
                 filter.$expr.$and.push({ $lte: [{ $size: "$members" }, parseInt(maxMembers)] });
             }
+        }
+
+        if(isPublic)
+        {
+            filter.isPublic = isPublic === 'true';
         }
 
         // Step 2: Query groups with the built filter
