@@ -104,7 +104,7 @@ const GroupView = () => {
                     <button
                         className="btn-hack-name"
                     >
-                        {hackathon?.name || "No Hackathon Assigned"}
+                        {group.hackathon || "No Hackathon Assigned"}
                     </button>
                     
                     <h2>Description</h2>
