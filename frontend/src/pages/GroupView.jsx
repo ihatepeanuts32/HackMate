@@ -75,7 +75,7 @@ const GroupView = () => {
                 
                 <div className="group-header">
                     <div className="group-info">
-                        <img src={hackmateLogo} alt="group logo" className="group-logo" />
+                        {/* <img src={hackmateLogo} alt="group logo" className="group-logo" /> */}
                         <h1>{group.name}</h1>
                     </div>
                     <div className="group-actions">

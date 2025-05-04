@@ -6,6 +6,7 @@ import CardCarousel from '../components/CardCarousel';
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
+import banner from "../assets/banner.jpeg"
 
 
 const Home = () => {
