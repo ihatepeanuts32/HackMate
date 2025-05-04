@@ -64,6 +64,10 @@ const GroupSchema = new mongoose.Schema({
     messages:[{
         type:String
     }],
+    hackathon:[{
+        type:String,
+        required: true
+    }],
     // Creation timestamp - automatically set when document is created
     createdAt: {
         type: Date,

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useEffect } from "react";
 import '../styles/CreateGroup.css';
 //Hrishikesh Srirangam
 
@@ -9,7 +10,23 @@ const CreateGroup = () => {
     const [description, setDescription] = useState(""); // State for description
     const [error, setError] = useState(""); // State to hold any error messages
     const [success, setSuccess] = useState(false); // State for success message
-    
+    const [hackathons, setHackathons] = useState([]);
+    const [selectedHackathon, setSelectedHackathon] = useState(""); // State for selected hackathon
+
+    useEffect(() => {
+        const fetchHackathons = async () => {
+            try {
+                const response = await axios.get("/api/hackathons/get"); 
+                console.log("Fetched hackathons:", response.data);
+                setHackathons(response.data); 
+            } catch (error) {
+                console.error("Error fetching hackathons:", error);
+            }
+        };
+        
+        fetchHackathons();
+    }, []); 
+
     // Handle form submission
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent the default form submission
@@ -23,7 +40,8 @@ const CreateGroup = () => {
         // Create the data object to send to the backend
         const groupData = {
             groupName,
-            description
+            description,
+            hackathon: selectedHackathon  // Add the selected hackathon here
         };
 
         try {
@@ -69,6 +87,26 @@ const CreateGroup = () => {
                         className="create-group-textarea"
                         placeholder="Enter group description"
                     />
+                </div>
+                <div className="create-group-field">
+                    <label className="create-group-label">Select Hackathon</label>
+                    <select
+                        value={selectedHackathon}
+                        onChange={(e) => setSelectedHackathon(e.target.value)}
+                        className="create-group-select"
+                        required
+                    >
+                        <option value="">--Select a Hackathon--</option>
+                        {hackathons.length > 0 ? (
+                        hackathons.map((hackathon) => (
+                            <option key={hackathon.id} value={hackathon.id}>
+                            {hackathon.name}
+                            </option>
+                        ))
+                        ) : (
+                        <option value="">No hackathons available</option>
+                        )}
+                    </select>
                 </div>
 
                 <button 

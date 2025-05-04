@@ -9,9 +9,11 @@ const UpdateGroupModal = ({ isOpen, onClose, group, onUpdate }) => {
         skills: group?.skills || [],
         isPublic: group?.isPublic || false,
         groupType: group?.groupType || 'open',
-        maxCapacity: group?.maxCapacity || 5
+        maxCapacity: group?.maxCapacity || 5,
+        hackathon: group?.hackathon || ''  
     });
     const [skillInput, setSkillInput] = useState('');
+    const [hackathons, setHackathons] = useState([]);
 
     useEffect(() => {
         if (group) {
@@ -21,10 +23,24 @@ const UpdateGroupModal = ({ isOpen, onClose, group, onUpdate }) => {
                 skills: group.skills || [],
                 isPublic: group.isPublic ?? false,
                 groupType: group.groupType || 'open',
-                isOpen: group.isOpen ?? false
+                isOpen: group.isOpen ?? false,
+                hackathon: group.hackathon || ''
             });
         }
     }, [group]);
+
+    useEffect(() => {
+        const fetchHackathons = async () => {
+            try {
+                const response = await axios.get('/api/hackathons/get');
+                setHackathons(response.data);
+            } catch (error) {
+                console.error('Error fetching hackathons:', error);
+            }
+        };
+
+        fetchHackathons();
+    }, []);
 
     if (!isOpen) return null;
 
@@ -124,6 +140,26 @@ const UpdateGroupModal = ({ isOpen, onClose, group, onUpdate }) => {
                                 <option value="open">Open to Anyone</option>
                                 <option value="invite-only">Invite Only</option>
                             </select>
+                    </div>
+
+                    <div className="form-group">
+                        <label>Hackathon:</label>
+                        <select
+                            name="hackathon"
+                            value={formData.hackathon}
+                            onChange={handleChange}
+                            required
+                        >
+                            {hackathons.length > 0 ? (
+                                hackathons.map((hackathon) => (
+                                    <option key={hackathon.id} value={hackathon.id}>
+                                        {hackathon.name}
+                                    </option>
+                                ))
+                            ) : (
+                                <option value="">No hackathons available</option>
+                            )}
+                        </select>
                     </div>
 
                     <div className="form-group">
