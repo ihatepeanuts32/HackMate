@@ -9,6 +9,19 @@ import blankProfile from '../assets/profile.png';
 import starsBanner from '../assets/starblue.jpeg';
 import BlockButton from '../components/Block';
 
+// gets getCurrentUserId helper
+const getCurrentUserId = () => {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+    try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return payload.userId;
+    } catch (error) {
+        console.error('Error decoding token:', error);
+        return null;
+    }
+};
+
 const ProfileView = () => {
     const location = useLocation();
     const { id } = useParams();
@@ -101,6 +114,15 @@ const ProfileView = () => {
     const skills = formatArrayData(userData.technicalSkills || userData.skills);
     const qualities = formatArrayData(userData.desiredTeammateQualities || userData.desiredQualities);
 
+    // checks if this is the logged-in user's own profile
+    const loggedInUserId = getCurrentUserId();
+    let profileUserId = userData._id || userData.id || userData.userId;
+    if (profileUserId && typeof profileUserId === 'object' && profileUserId._id) {
+        profileUserId = profileUserId._id;
+    }
+    //console.log('loggedInUserId:', loggedInUserId, 'profileUserId:', profileUserId, typeof profileUserId);
+    const isOwnProfile = loggedInUserId && profileUserId && loggedInUserId.toString() === profileUserId.toString();
+
     return (
         <div className="group-view">
             {/* left side */}
@@ -114,10 +136,13 @@ const ProfileView = () => {
                         <h1>{fullName}</h1>
                     </div>
                     <div className='split-row'>
-                        <button className="btn-chat" onClick={handleChatClick}>
-                            <img src={planeIcon} alt="message" />
-                            Chat
-                        </button>
+                        {/* Only show Chat button if not own profile */}
+                        {!isOwnProfile && (
+                            <button className="btn-chat" onClick={handleChatClick}>
+                                <img src={planeIcon} alt="message" />
+                                Chat
+                            </button>
+                        )}
                         <BlockButton className='btn-chat' user={{
                             id: userData._id || userData.id,
                             ...userData
