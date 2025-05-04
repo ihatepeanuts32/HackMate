@@ -84,3 +84,21 @@
 .create-group-button:hover {
     background-color: #2A0066;
 } 
+
+.create-group-select {
+    padding: 8px 12px;
+    font-size: 13px;
+    border: 1px solid #28025d;
+    border-radius: 6px;
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff; 
+    outline: none; 
+    width: 100%; 
+    box-sizing: border-box; 
+    background-color: #1C0049;
+}
+
+.create-group-select:focus {
+    border-color: #9147ff; 
+    box-shadow: 0 0 5px rgba(145, 71, 255, 0.5); 
+}
