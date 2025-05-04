@@ -13,12 +13,16 @@ const EditProfile = () => {
         hackathonsAttended: '',
         college: "",
         year: "",
-        technicalSkills: "",
-        desiredTeammateQualities: ""
+        // technicalSkills: "",
+        technicalSkills: [],
+        // desiredTeammateQualities: ""
+        desiredTeammateQualities: []
     });
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const [fetchingProfile, setFetchingProfile] = useState(true);
+    const [skillInput, setSkillInput] = useState('');
+    const [qualityInput, setQualityInput] = useState('');
 
     useEffect(() => {
         const fetchUserProfile = async () => {
@@ -45,8 +49,8 @@ const EditProfile = () => {
                     preferredRole: response.data.preferredRole || "",
                     hackathonsAttended: response.data.hackathonsAttended || "",
                     college: response.data.college || "",
-                    technicalSkills: response.data.technicalSkills || "",
-                    desiredTeammateQualities: response.data.desiredTeammateQualities || "",
+                    technicalSkills: response.data.technicalSkills || [],
+                    desiredTeammateQualities: response.data.desiredTeammateQualities || [],
                     year: response.data.year || ""
                 });
 
@@ -126,6 +130,42 @@ const EditProfile = () => {
     if (fetchingProfile) {
         return <div>Loading profile data...</div>;
     }
+
+    const handleAddQuality = (e) => {
+        e.preventDefault();
+        if (qualityInput.trim() && !formData.desiredTeammateQualities.includes(qualityInput.trim())) {
+            setFormData(prev => ({
+                ...prev,
+                desiredTeammateQualities: [...prev.desiredTeammateQualities, qualityInput.trim()]
+            }));
+            setQualityInput('');
+        }
+    };
+
+    const handleRemoveQuality = (qualityToRemove) => {
+        setFormData(prev => ({
+            ...prev,
+            desiredTeammateQualities: prev.desiredTeammateQualities.filter(quality => quality !== qualityToRemove)
+        }));
+    };
+
+    const handleAddSkill = (e) => {
+        e.preventDefault();
+        if (skillInput.trim() && !formData.technicalSkills.includes(skillInput.trim())) {
+            setFormData(prev => ({
+                ...prev,
+                technicalSkills: [...prev.technicalSkills, skillInput.trim()]
+            }));
+            setSkillInput('');
+        }
+    };
+
+    const handleRemoveSkill = (skillToRemove) => {
+        setFormData(prev => ({
+            ...prev,
+            technicalSkills: prev.technicalSkills.filter(skill => skill !== skillToRemove)
+        }));
+    };
 
     return (
         <div>
@@ -236,8 +276,8 @@ const EditProfile = () => {
                             />
                         </div> */}
                        
-                    <div className="split-row">
-                        <div>
+                    <div>
+                        {/* <div>
                             <textarea 
                                 name="technicalSkills" 
                                 placeholder="Technical Skills" 
@@ -246,8 +286,9 @@ const EditProfile = () => {
                                 value={formData.technicalSkills}
                                 onChange={handleInputChange}
                             />
-                        </div>
-                        <div>
+                        </div> */}
+                           
+                        {/* <div>
                             <textarea 
                                 name="desiredTeammateQualities" 
                                 placeholder="Desired Teammate Qualities" 
@@ -256,6 +297,72 @@ const EditProfile = () => {
                                 value={formData.desiredTeammateQualities}
                                 onChange={handleInputChange}
                             />
+                        </div> */}
+                         <div className="form-group">
+                            <label htmlFor="skills">Technical Skills:</label>
+                            <div className="skills-input-container">
+                                <input style={{ minWidth: 200 }}
+                                    type="text"
+                                    id="technicalSkills"
+                                    value={skillInput}
+                                    onChange={(e) => setSkillInput(e.target.value)}
+                                    placeholder="Enter a skill"
+                                />
+                                <button 
+                                    type="button" 
+                                    onClick={handleAddSkill}
+                                    className="add-skill-button"
+                                >
+                                    Add
+                                </button>
+                            </div>
+                            <div className="skills-list">
+                                {formData.technicalSkills.map((skill, index) => (
+                                    <div key={index} className="skill-tag">
+                                        {skill}
+                                        <button
+                                            type="button"
+                                            onClick={() => handleRemoveSkill(skill)}
+                                            className="remove-skill"
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="skills">Desired Teammate Qualities:</label>
+                            <div className="skills-input-container">
+                                <input style={{ minWidth: 200 }}
+                                    type="text"
+                                    id="desiredTeammateQualities"
+                                    value={qualityInput}
+                                    onChange={(e) => setQualityInput(e.target.value)}
+                                    placeholder="Enter a desired teammate quality"
+                                />
+                                <button 
+                                    type="button" 
+                                    onClick={handleAddQuality}
+                                    className="add-skill-button"
+                                >
+                                    Add
+                                </button>
+                            </div>
+                            <div className="skills-list">
+                                {formData.desiredTeammateQualities.map((quality, index) => (
+                                    <div key={index} className="skill-tag">
+                                        {quality}
+                                        <button
+                                            type="button"
+                                            onClick={() => handleRemoveQuality(quality)}
+                                            className="remove-skill"
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                     

@@ -26,10 +26,10 @@ const OnboardingSchema = new mongoose.Schema({
     type: String,
   },
   technicalSkills: {
-    type: String,
+    type: [String],
   },
   desiredTeammateQualities: {
-    type: String,
+    type: [String],
   },
   profilePhoto: {
     type: String, 

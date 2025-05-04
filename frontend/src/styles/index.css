@@ -263,6 +263,23 @@ textarea{
   margin-bottom: 10px;
 }
 
+/* .split-row-space-between {
+  display: flex;
+  justify-content: center; 
+  align-items: center;  
+  gap: 30px; 
+  margin-bottom: 10px;
+} */
+
+.split-row-space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 120px; 
+  margin-bottom: 10px;
+}
+
+
 .login-link {
   padding: 20px;
   display: inline-block;
