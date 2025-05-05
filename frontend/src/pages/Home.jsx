@@ -66,7 +66,7 @@ const Home = () => {
             <div>
                 <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '0px' , paddingBottom: '0px'}}>Welcome {user.firstName || "Guest"}!</h3>
                 <div style={{ display: 'flex', justifyContent: 'center', marginTop: '0px', marginBottom: '20px', paddingLeft: '70px', paddingTop: '0px'}}>
-                    <img src={banner} alt="Hackmate Landing" style={{ maxWidth: '65%', height: 'auto', borderRadius: '20px'}} />
+                    <img src={hackmateLanding} alt="Hackmate Landing" style={{ maxWidth: '55%', height: 'auto', borderRadius: '30px'}} />
                 </div>
             </div>
             <div>
