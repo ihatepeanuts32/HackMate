@@ -5,7 +5,7 @@ import ChatBubble from '../components/ChatBubble';
 import axios from 'axios';
 import { io } from 'socket.io-client';
 import DeleteChat from './Delete'; 
-// import { useBlockedUsers } from '../context/BlockedUsersContext';
+import { useBlockedUsers } from '../context/BlockedUsersContext';
 
 const ChatInbox = () => {
     const location = useLocation();
@@ -20,7 +20,7 @@ const ChatInbox = () => {
     
     const socketRef = useRef();
     const messagesEndRef = useRef(null);
-    // const { isUserBlocked } = useBlockedUsers();
+    const { isUserBlocked } = useBlockedUsers();
     
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -118,10 +118,10 @@ const ChatInbox = () => {
     
     const handleSendMessage = async () => {
         if (!newMessage.trim() || !selectedUser) return;
-        /* if (isUserBlocked && isUserBlocked(selectedUser.id)) {
-             setBlockError('You have blocked this user. You cannot send messages to blocked users.');
+        if (isUserBlocked(selectedUser.id)) {
+            setBlockError('You have blocked this user. You cannot send messages to blocked users.');
             return;
-        }*/
+        }
         try {
             const token = localStorage.getItem('token');
             const userId = JSON.parse(atob(token.split('.')[1])).userId;
@@ -202,11 +202,11 @@ const ChatInbox = () => {
                                 {blockError}
                             </div>
                         )}
-                        {/* {isUserBlocked && isUserBlocked(selectedUser.id) ? (
+                        {isUserBlocked(selectedUser.id) && (
                             <div className="block-error-message" style={{ color: 'red', textAlign: 'center', margin: '1rem 0' }}>
                                 You have blocked this user. You cannot send messages to blocked users.
                             </div>
-                        ) : null} */}
+                        )}
                         <div className="message-input-container">
                             <input
                                 type="text"
@@ -217,9 +217,9 @@ const ChatInbox = () => {
                                 onKeyDown={(e) => {
                                     if (e.key === 'Enter') handleSendMessage();
                                 }}
-                                // disabled={isUserBlocked && isUserBlocked(selectedUser.id)}
+                                disabled={isUserBlocked(selectedUser.id)}
                             />
-                            <button className="send-button" onClick={handleSendMessage} /* disabled={isUserBlocked && isUserBlocked(selectedUser.id)} */>Send</button>
+                            <button className="send-button" onClick={handleSendMessage} disabled={isUserBlocked(selectedUser.id)}>Send</button>
                         </div>
                     </div>
                 ) : (
