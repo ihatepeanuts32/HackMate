@@ -37,11 +37,17 @@ const CreateGroup = () => {
             return;
         } 
 
+        // hackathon name
+        const selectedHackathonName = hackathons.find(
+            (hackathon) => hackathon.id === selectedHackathon
+        )?.name;
+
         // Create the data object to send to the backend
         const groupData = {
             groupName,
             description,
-            hackathon: selectedHackathon  // Add the selected hackathon here
+            hackathon: selectedHackathon,  // Add the selected hackathon here
+            hackathonName: selectedHackathonName
         };
 
         try {

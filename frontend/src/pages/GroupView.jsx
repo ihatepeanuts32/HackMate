@@ -26,13 +26,58 @@ const GroupView = () => {
     const { id } = useParams();
     const [group, setGroup] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [hackathonName, setHackathonName] = useState("No Hackathon Assigned");
+
+    const fetchHackathonNameById = async (hackathonId) => {
+        try {
+            const res = await axios.get('/api/hackathons/get');
+            console.log('Hackathons:', res.data); // Logs all hackathons
+            console.log('Hackathon ID:', hackathonId); // Logs the hackathon ID being searched for
+            console.log('Group Data:', group); // Logs the group data   
+
+            // Find the hackathon with the matching ID
+            let hackathonName = "Hackathon Not Found"; // Default fallback
+            for (let i = 0; i < (res.data).length; i++) {
+                if ((res.data[i]).id === hackathonId[0]) {
+                    hackathonName = (res.data[i]).name;
+                    console.log(`Hackathon found at index ${i}:`, hackathonName);
+                    break; // Exit the loop once the hackathon is found
+                }
+            }// Logs the found hackathon name
+
+            return hackathonName; // Return the found hackathon name
+    
+        } catch (err) {
+            console.error('Failed to fetch hackathons:', err);
+            return "Error Fetching Hackathon Name";
+        }
+    };
 
     useEffect(() => {
         const fetchGroup = async () => {
             const token = localStorage.getItem('token');
             try {
                 const res = await axios.get(`/api/groups/${id}/group_details`, null, {headers: { Authorization: `Bearer ${token}` }});
-                setGroup(res.data);
+                const groupData = res.data;
+                setGroup(groupData);
+
+                if (groupData.hackathon) {
+                    console.log('Group Data:', groupData);
+                    console.log('Hackathon ID:', groupData.hackathon);
+                    const fetchedHackathonName = await fetchHackathonNameById(groupData.hackathon);
+                    console.log('Hackathon Name:', fetchedHackathonName);
+
+                    setHackathonName(fetchedHackathonName);
+
+                    setGroup(prevGroup => ({
+                        ...prevGroup,
+                        hackathon: {
+                            ...prevGroup.hackathon,
+                            name: fetchedHackathonName,
+                        },
+                    }));
+                }
+                
             } catch (err) {
                 console.error('Failed to fetch group:', err);
             } finally {
@@ -42,6 +87,17 @@ const GroupView = () => {
 
         fetchGroup();
     }, [id]);
+
+    const fetchHackathonNames = async () => {
+        try {
+            const res = await axios.get('/api/hackathons/getNames');
+            console.log('Hackathon Names:', res.data); // Logs the array of hackathon names
+            return res.data; // Returns the array of hackathon names
+        } catch (err) {
+            console.error('Failed to fetch hackathon names:', err);
+            return [];
+        }
+    };
     
     const handleMessageUser = (user) => {
         const chatUser = {
@@ -101,10 +157,8 @@ const GroupView = () => {
             <div className="content-section">
                 <div className="description-section">
                     
-                    <button
-                        className="btn-hack-name"
-                    >
-                        {group.hackathon || "No Hackathon Assigned"}
+                    <button className="btn-hack-name">
+                        {hackathonName || "No Hackathon Assigned"}
                     </button>
                     
                     <h2>Description</h2>

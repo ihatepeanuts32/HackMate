@@ -21,6 +21,10 @@ router.get('/get', async (req, res) => {
         // Fetch all hackathons and sort them by startDate in ascending order
         const hackathons = await Hackathon.find().sort({ startDate: 1 });
 
+        // Extract the names of all hackathons
+        const hackathonNames = hackathons.map(hackathon => hackathon.name);
+        console.log('Hackathon Names in hackroute:', hackathonNames);
+
         // Return the list of hackathons as the response
         res.status(200).json(hackathons); 
     } catch (error) {
@@ -28,6 +32,22 @@ router.get('/get', async (req, res) => {
             message: "Unable to fetch hackathons", 
             error: error.message
         }); 
+    }
+});
+
+router.get('/getNames', async (req, res) => {
+    try {
+        // Fetch all hackathons and extract their names
+        const hackathons = await Hackathon.find().sort({ startDate: 1 });
+        const hackathonNames = hackathons.map(hackathon => hackathon.name);
+
+        // Return the hackathon names as the response
+        res.status(200).json(hackathonNames);
+    } catch (error) {
+        return res.status(500).json({
+            message: "Unable to fetch hackathon names",
+            error: error.message
+        });
     }
 });
 
