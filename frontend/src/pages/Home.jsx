@@ -6,7 +6,7 @@ import CardCarousel from '../components/CardCarousel';
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from 'react-router-dom';
-import banner from "../assets/banner.jpeg"
+import banner from "../assets/friends.png"
 
 
 const Home = () => {
@@ -64,9 +64,9 @@ const Home = () => {
     return (
         <div>
             <div>
-                <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '20px' }}>Welcome {user.firstName || "Guest"}!</h3>
-                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '30px' }}>
-                    <img src={hackmateLanding} alt="Hackmate Landing" style={{ maxWidth: '50%', height: 'auto', borderRadius: '18px' }} />
+                <h3 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '0px' , paddingBottom: '0px'}}>Welcome {user.firstName || "Guest"}!</h3>
+                <div style={{ display: 'flex', justifyContent: 'center', marginTop: '0px', marginBottom: '20px', paddingLeft: '70px', paddingTop: '0px'}}>
+                    <img src={banner} alt="Hackmate Landing" style={{ maxWidth: '65%', height: 'auto', borderRadius: '20px'}} />
                 </div>
             </div>
             <div>
